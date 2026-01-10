@@ -182,7 +182,7 @@ const finalGuessOptions = document.getElementById('final-guess-options');
 
 // Botón "Hecho" (Antes Start Game) -> Configuración
 btnStartGame.addEventListener('click', () => {
-  const maxImpostors = Math.floor((players.length - 0.1) / 3) || 1; // Mínimo 1 lógico aunque la regla sea estricta
+  const maxImpostors = Math.ceil(players.length / 2) - 1; // Regla: Max = ceil(N/2) - 1
 
   inputImpostorCount.max = maxImpostors;
   inputImpostorCount.value = 1;
