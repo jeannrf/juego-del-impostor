@@ -276,6 +276,9 @@ function startRoleRevealPhase() {
 
 function showHandoverScreen() {
   if (!cardTitle) return; // Si no hay tarjeta, salir
+  setRevealMode(false);
+  cardReveal.classList.remove('is-impostor'); // Reiniciar estado de impostor
+  cardReveal.classList.remove('is-civil');    // Reiniciar estado de civil
   const pIndex = gameSession.currentPlayerRevealIndex;
 
   // Si ya pasaron todos, iniciar juego
@@ -299,6 +302,7 @@ function showHandoverScreen() {
 }
 
 function showReadyToRevealScreen() {
+  setRevealMode(false);
   revealState = 'ready';
 
   // UI: "Presiona para ver"
@@ -311,6 +315,7 @@ function showReadyToRevealScreen() {
 }
 
 function showRevealedScreen() {
+  setRevealMode(true);
   revealState = 'revealed';
   const pIndex = gameSession.currentPlayerRevealIndex;
   const player = gameSession.playersRoles[pIndex];
@@ -324,16 +329,20 @@ function showRevealedScreen() {
 
   if (player.isImpostor) {
     // IMPOSTOR: Ve la PISTA (Hint)
+    cardReveal.classList.add('is-impostor');
+    cardReveal.classList.remove('is-civil');
     cardWord.textContent = `PISTA: ${gameSession.currentWordObj.hint}`;
-    cardWord.style.color = "#ff6b6b";
-    cardWord.style.fontSize = "2.5rem";
-    cardInstruction.textContent = "Eres el IMPOSTOR. Intenta deducir la palabra con esta pista.";
+    // Estilos en línea eliminados a favor de clases CSS
+    cardWord.removeAttribute('style');
+    cardInstruction.textContent = "Eres el IMPOSTOR";
     cardRoleDesc.textContent = "¡Nadie sabe que eres tú!";
   } else {
     // CIVIL: Ve la PALABRA (Word)
+    cardReveal.classList.remove('is-impostor');
+    cardReveal.classList.add('is-civil');
     cardWord.textContent = gameSession.currentWordObj.word;
-    cardWord.style.color = "#E85D04";
-    cardWord.style.fontSize = "3rem";
+    // Estilos en línea eliminados a favor de clases CSS
+    cardWord.removeAttribute('style');
     cardInstruction.textContent = "Memoriza tu palabra secreta.";
     cardRoleDesc.textContent = "Eres un CIVIL.";
   }
@@ -354,6 +363,15 @@ if (btnCardAction) {
       showHandoverScreen();
     }
   });
+}
+
+// Ayudante para mantener consistente el tamaño de la tarjeta
+function setRevealMode(isRevealed) {
+  if (isRevealed) {
+    cardReveal.classList.add('revealed-mode');
+  } else {
+    cardReveal.classList.remove('revealed-mode');
+  }
 }
 
 const btnNewWord = document.getElementById('btn-new-word');

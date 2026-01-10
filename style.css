@@ -699,3 +699,111 @@ body {
     margin: 0;
   }
 }
+
+/* =========================================
+   USER REQUEST: UNIFORM CARD SIZING
+   ========================================= */
+
+/* Enforce a fixed height so both 'Turn' and 'Reveal' cards look identical */
+.role-card {
+  height: 380px;
+  max-height: 60vh;
+  justify-content: center;
+}
+
+/* When the role is revealed, hide the icon to save space and match the height of the Turn card */
+.role-card.revealed-mode .role-icon {
+  display: none;
+}
+
+/* Adjust title size in revealed mode to compensate visually */
+.role-card.revealed-mode h2 {
+  margin-bottom: 0.5rem;
+  font-size: 2.5rem;
+}
+
+/* --- IMPOSTOR ALERT STYLES --- */
+.role-card.is-impostor {
+  border: 2px solid #ff4444;
+  /* Bright red border */
+  box-shadow: 0 0 30px rgba(255, 68, 68, 0.4);
+  /* Red glow */
+  background: radial-gradient(circle at center, #2a1111 0%, #000000 100%);
+}
+
+.role-card.is-impostor h2 {
+  color: #ff4444 !important;
+  text-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
+  background: none;
+  -webkit-text-fill-color: initial;
+}
+
+.role-card.is-impostor .instruction {
+  color: #ffcccc;
+  font-weight: bold;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.role-card.is-impostor .secret-reveal {
+  color: #ff4444 !important;
+  font-size: 2.8rem;
+}
+
+
+/* --- ESTILOS DE CIVIL (SEGURO/AZUL) --- */
+.role-card.is-civil {
+  border: 2px solid #3B82F6;
+  /* Borde Azul Heroico */
+  box-shadow: 0 0 30px rgba(59, 130, 246, 0.4);
+  /* Resplandor Azul */
+  background: radial-gradient(circle at center, #0f1c2e 0%, #000000 100%);
+  /* Fondo azul oscuro profundo */
+}
+
+.role-card.is-civil h2 {
+  color: #3B82F6 !important;
+  text-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+  background: none;
+  -webkit-text-fill-color: initial;
+}
+
+.role-card.is-civil .instruction {
+  color: #bfdbfe;
+  /* Azul muy claro para texto instructivo */
+  font-weight: bold;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.role-card.is-civil .secret-reveal {
+  color: #3B82F6 !important;
+  font-size: 3rem;
+}
+
+/* --- LAYOUT FIXES FOR REVEAL MODE --- */
+/* Compact vertical spacing when in revealed mode to lift the button */
+.role-card.revealed-mode {
+  justify-content: space-evenly;
+  /* Better distribution than center */
+  padding-bottom: 2rem;
+  /* Ensure button isn't stuck to bottom */
+}
+
+.role-card.revealed-mode .secret-reveal {
+  margin: 0;
+  /* Remove default margins to save space */
+  line-height: 1.1;
+}
+
+.role-card.revealed-mode .instruction {
+  margin-bottom: 0.5rem;
+}
+
+/* Default color for Civil word */
+.role-card:not(.is-impostor) .secret-reveal {
+  color: #E85D04;
+  font-size: 3rem;
+}
