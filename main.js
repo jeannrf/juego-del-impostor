@@ -140,18 +140,124 @@ window.removePlayer = (index) => {
   updateUI();
 };
 
-/* LOGICA DE JUEGO Y DATOS (TEMPORAL hasta tener JSON) */
-const CATEGORIES = {
-  'Comida': ['Pizza', 'Sushi', 'Hamburguesa', 'Tacos', 'Helado', 'Paella'],
-  'Animales': ['León', 'Elefante', 'Perro', 'Gato', 'Águila', 'Tiburón'],
-  'Lugares': ['Playa', 'Montaña', 'Cine', 'Escuela', 'Hospital', 'Parque'],
-  'Objetos': ['Teléfono', 'Silla', 'Computadora', 'Reloj', 'Cuchara', 'Libro']
-};
+/* LOGICA DE JUEGO Y DATOS */
+// Base de datos importada del JSON provisto
+const GAME_DATABASE = [
+  { "id": 1, "word": "Cajero Automático", "hint": "Transacción" },
+  { "id": 2, "word": "Paracaídas", "hint": "Gravedad" },
+  { "id": 3, "word": "Gimnasio", "hint": "Esfuerzo" },
+  { "id": 4, "word": "Biblioteca", "hint": "Silencio" },
+  { "id": 5, "word": "Cine", "hint": "Espectador" },
+  { "id": 6, "word": "Dentista", "hint": "Instrumentos" },
+  { "id": 7, "word": "Zoológico", "hint": "Cautiverio" },
+  { "id": 8, "word": "Panadería", "hint": "Temperatura" },
+  { "id": 9, "word": "Boda", "hint": "Compromiso" },
+  { "id": 10, "word": "Submarino", "hint": "Profundidad" },
+  { "id": 11, "word": "Cansado", "hint": "Reposo" },
+  { "id": 12, "word": "Luz", "hint": "Claridad" },
+  { "id": 13, "word": "Almuerzo", "hint": "Nutrición" },
+  { "id": 14, "word": "Golpe", "hint": "Impacto" },
+  { "id": 15, "word": "Arena", "hint": "Partícula" },
+  { "id": 16, "word": "Agua", "hint": "Hidratación" },
+  { "id": 17, "word": "Peso", "hint": "Carga" },
+  { "id": 18, "word": "Número", "hint": "Cantidad" },
+  { "id": 19, "word": "Suave", "hint": "Textura" },
+  { "id": 20, "word": "Pasta", "hint": "Trigo" },
+  { "id": 21, "word": "Entrar", "hint": "Acceso" },
+  { "id": 22, "word": "Brujas", "hint": "Magia" },
+  { "id": 23, "word": "Ratón", "hint": "Pequeño" },
+  { "id": 24, "word": "Círculo", "hint": "Geometría" },
+  { "id": 25, "word": "Verano", "hint": "Estación" },
+  { "id": 26, "word": "Dulce", "hint": "Sabor" },
+  { "id": 27, "word": "Desvelar", "hint": "Nocturno" },
+  { "id": 28, "word": "Cáscara", "hint": "Protección" },
+  { "id": 29, "word": "Mañana", "hint": "Inicio" },
+  { "id": 30, "word": "Amigo", "hint": "Vínculo" },
+  { "id": 31, "word": "Salvaje", "hint": "Naturaleza" },
+  { "id": 32, "word": "Cuernos", "hint": "Animal" },
+  { "id": 33, "word": "Fruta", "hint": "Saludable" },
+  { "id": 34, "word": "Silla", "hint": "Soporte" },
+  { "id": 35, "word": "Espejo", "hint": "Reflejo" },
+  { "id": 36, "word": "Reloj", "hint": "Medición" },
+  { "id": 37, "word": "Paraguas", "hint": "Clima" },
+  { "id": 38, "word": "Mochila", "hint": "Traslado" },
+  { "id": 39, "word": "Teléfono", "hint": "Señal" },
+  { "id": 40, "word": "Almohada", "hint": "Descanso" },
+  { "id": 41, "word": "Llave", "hint": "Seguridad" },
+  { "id": 42, "word": "Escoba", "hint": "Higiene" },
+  { "id": 43, "word": "Computadora", "hint": "Procesamiento" },
+  { "id": 44, "word": "Lentes", "hint": "Visión" },
+  { "id": 45, "word": "Botella", "hint": "Contenedor" },
+  { "id": 46, "word": "Control remoto", "hint": "Distancia" },
+  { "id": 47, "word": "Cámara", "hint": "Recuerdo" },
+  { "id": 48, "word": "Jabón", "hint": "Espuma" },
+  { "id": 49, "word": "Toalla", "hint": "Secado" },
+  { "id": 50, "word": "Tijeras", "hint": "Corte" },
+  { "id": 51, "word": "Pizza", "hint": "Circular" },
+  { "id": 52, "word": "Helado", "hint": "Frío" },
+  { "id": 53, "word": "Chocolate", "hint": "Cacao" },
+  { "id": 54, "word": "Café", "hint": "Energía" },
+  { "id": 55, "word": "Hamburguesa", "hint": "Capas" },
+  { "id": 56, "word": "Huevo", "hint": "Origen" },
+  { "id": 57, "word": "Pan", "hint": "Horno" },
+  { "id": 58, "word": "Leche", "hint": "Ordeño" },
+  { "id": 59, "word": "Queso", "hint": "Lácteo" },
+  { "id": 60, "word": "Sopa", "hint": "Caliente" },
+  { "id": 61, "word": "Pastel", "hint": "Celebración" },
+  { "id": 62, "word": "Papas fritas", "hint": "Aceite" },
+  { "id": 63, "word": "Jugo", "hint": "Exprimido" },
+  { "id": 64, "word": "Arroz", "hint": "Grano" },
+  { "id": 65, "word": "Galleta", "hint": "Crujiente" },
+  { "id": 66, "word": "Sal", "hint": "Mineral" },
+  { "id": 67, "word": "Mantequilla", "hint": "Grasa" },
+  { "id": 68, "word": "Ensalada", "hint": "Vegetal" },
+  { "id": 69, "word": "Perro", "hint": "Lealtad" },
+  { "id": 70, "word": "Gato", "hint": "Felino" },
+  { "id": 71, "word": "Elefante", "hint": "Memoria" },
+  { "id": 72, "word": "Jirafa", "hint": "Altura" },
+  { "id": 73, "word": "León", "hint": "Realeza" },
+  { "id": 74, "word": "Vaca", "hint": "Granja" },
+  { "id": 75, "word": "Caballo", "hint": "Galope" },
+  { "id": 76, "word": "Mono", "hint": "Agilidad" },
+  { "id": 77, "word": "Pájaro", "hint": "Plumas" },
+  { "id": 78, "word": "Pez", "hint": "Escamas" },
+  { "id": 79, "word": "Conejo", "hint": "Salto" },
+  { "id": 80, "word": "Pato", "hint": "Pico" },
+  { "id": 81, "word": "Mariposa", "hint": "Vuelo" },
+  { "id": 82, "word": "Cerdo", "hint": "Lodo" },
+  { "id": 83, "word": "Tigre", "hint": "Rayas" },
+  { "id": 84, "word": "Oso", "hint": "Hibernación" },
+  { "id": 85, "word": "Serpiente", "hint": "Reptil" },
+  { "id": 86, "word": "Oveja", "hint": "Lana" },
+  { "id": 87, "word": "Gallina", "hint": "Cresta" },
+  { "id": 88, "word": "Tiburón", "hint": "Depredador" },
+  { "id": 89, "word": "Escuela", "hint": "Educación" },
+  { "id": 90, "word": "Hospital", "hint": "Emergencia" },
+  { "id": 91, "word": "Playa", "hint": "Costa" },
+  { "id": 92, "word": "Parque", "hint": "Recreación" },
+  { "id": 93, "word": "Supermercado", "hint": "Abastecimiento" },
+  { "id": 94, "word": "Restaurante", "hint": "Servicio" },
+  { "id": 95, "word": "Cine", "hint": "Pantalla" },
+  { "id": 96, "word": "Estadio", "hint": "Multitud" },
+  { "id": 97, "word": "Aeropuerto", "hint": "Equipaje" },
+  { "id": 98, "word": "Banco", "hint": "Finanzas" },
+  { "id": 99, "word": "Iglesia", "hint": "Fe" },
+  { "id": 100, "word": "Gimnasio", "hint": "Rutina" },
+  { "id": 101, "word": "Farmacia", "hint": "Medicina" },
+  { "id": 102, "word": "Nieve", "hint": "Congelado" },
+  { "id": 103, "word": "Lluvia", "hint": "Humedad" },
+  { "id": 104, "word": "Sol", "hint": "Estrella" },
+  { "id": 105, "word": "Montaña", "hint": "Elevación" },
+  { "id": 106, "word": "Río", "hint": "Corriente" },
+  { "id": 107, "word": "Desierto", "hint": "Aridez" },
+  { "id": 108, "word": "Isla", "hint": "Aislamiento" },
+  { "id": 109, "word": "Profesor", "hint": "Enseñanza" },
+  { "id": 110, "word": "Doctor", "hint": "Anatomía" }
+];
 
 let gameSession = {
   impostorCount: 1,
-  category: '',
-  secretWord: '',
+  currentWordObj: null, // {id, word, hint}
   playersRoles: [], // { name, isImpostor, isAlive }
   currentPlayerRevealIndex: 0,
   votes: {}
@@ -163,7 +269,7 @@ const btnCancelImpostors = document.getElementById('btn-cancel-impostors');
 const btnConfirmImpostors = document.getElementById('btn-confirm-impostors');
 const inputImpostorCount = document.getElementById('input-impostor-count');
 const labelMaxImpostors = document.getElementById('label-max-impostors');
-const selectCategory = document.getElementById('select-category');
+// Nota: selectCategory ya no es necesario con el nuevo JSON sin categorías fijas.
 
 // Referencias nuevas pantallas
 const screenRoleReveal = document.getElementById('screen-role-reveal');
@@ -206,7 +312,7 @@ if (btnCancelImpostors) {
 if (btnConfirmImpostors) {
   btnConfirmImpostors.addEventListener('click', () => {
     const count = parseInt(inputImpostorCount.value);
-    const cat = selectCategory.value;
+    // const cat = selectCategory.value; // Ya no usamos categorías
 
     if (players.length < 3) {
       alert("Necesitas al menos 3 jugadores para jugar.");
@@ -214,7 +320,7 @@ if (btnConfirmImpostors) {
     }
 
     modalImpostors.classList.add('hidden');
-    initGame(count, cat);
+    initGame(count);
   });
 }
 
@@ -222,15 +328,10 @@ if (btnConfirmImpostors) {
    LÓGICA DEL CORE DEL JUEGO
    ========================================== */
 
-function initGame(impostorCount, categoryName) {
-  // 1. Elegir Categoría y Palabra
-  let finalCategory = categoryName;
-  if (categoryName === 'Random') {
-    const keys = Object.keys(CATEGORIES);
-    finalCategory = keys[Math.floor(Math.random() * keys.length)];
-  }
-  const words = CATEGORIES[finalCategory];
-  const secretWord = words[Math.floor(Math.random() * words.length)];
+function initGame(impostorCount) {
+  // 1. Elegir Palabra Random de la Base de Datos
+  const randomIndex = Math.floor(Math.random() * GAME_DATABASE.length);
+  const selectedObj = GAME_DATABASE[randomIndex];
 
   // 2. Asignar Roles
   // Creamos array de indices [0, 1, 2...]
@@ -243,8 +344,7 @@ function initGame(impostorCount, categoryName) {
 
   gameSession = {
     impostorCount: impostorCount,
-    category: finalCategory,
-    secretWord: secretWord,
+    currentWordObj: selectedObj, // Guardamos el objeto completo (word + hint)
     playersRoles: players.map((p, i) => ({
       name: p,
       isImpostor: impostorIndices.includes(i),
@@ -322,17 +422,23 @@ function showRevealedScreen() {
 
   // Contenido secreto
   cardSecretContent.classList.remove('hidden');
-  cardInstruction.textContent = "Memoriza tu palabra secreta.";
   cardTitle.textContent = "Tu Rol";
 
   if (player.isImpostor) {
-    cardWord.textContent = "EL IMPOSTOR";
+    // IMPOSTOR: Ve la PISTA (Hint)
+    // La instrucción anterior decía "finge que sabes". Ahora le damos una ayuda real.
+    cardWord.textContent = `PISTA: ${gameSession.currentWordObj.hint}`;
     cardWord.style.color = "#ff6b6b";
-    cardRoleDesc.textContent = `Categoría: ${gameSession.category}. Finge que sabes la palabra.`;
+    cardWord.style.fontSize = "2.5rem"; // Un poco más pequeño si la pista es larga
+    cardInstruction.textContent = "Eres el IMPOSTOR. Intenta deducir la palabra con esta pista.";
+    cardRoleDesc.textContent = "¡Nadie sabe que eres tú!";
   } else {
-    cardWord.textContent = gameSession.secretWord;
+    // CIVIL: Ve la PALABRA (Word)
+    cardWord.textContent = gameSession.currentWordObj.word;
     cardWord.style.color = "#E85D04";
-    cardRoleDesc.textContent = `Categoría: ${gameSession.category}. Eres un civil.`;
+    cardWord.style.fontSize = "3rem";
+    cardInstruction.textContent = "Memoriza tu palabra secreta.";
+    cardRoleDesc.textContent = "Eres un CIVIL.";
   }
 
   btnCardAction.textContent = "Entendido / Borrar";
@@ -471,10 +577,12 @@ function startFinalDuel(impostorPlayer) {
 
     // Normalizar para comparar (ignorando mayúsculas y tildes si se quiere ser flexible)
     // Para simplificar: comparación directa insensitive
-    if (guees.toLowerCase() === gameSession.secretWord.toLowerCase()) {
-      alert(`¡${impostorPlayer.name} HA ACERTADO! 🎭\nLa palabra era "${gameSession.secretWord}".\nEL IMPOSTOR GANA LA PARTIDA.`);
+    const correctWord = gameSession.currentWordObj.word;
+
+    if (guees.toLowerCase() === correctWord.toLowerCase()) {
+      alert(`¡${impostorPlayer.name} HA ACERTADO! 🎭\nLa palabra era "${correctWord}".\nEL IMPOSTOR GANA LA PARTIDA.`);
     } else {
-      alert(`¡FALLÓ! Escribió "${guees}".\nLa palabra correcta era "${gameSession.secretWord}".\n👮 LOS CIVILES GANAN.`);
+      alert(`¡FALLÓ! Escribió "${guees}".\nLa palabra correcta era "${correctWord}".\n👮 LOS CIVILES GANAN.`);
     }
     navigateTo('screen-welcome');
   });
