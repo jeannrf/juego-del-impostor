@@ -140,28 +140,58 @@ window.removePlayer = (index) => {
   updateUI();
 };
 
-/* LOGICA DE IMPOSTORES */
+/* LOGICA DE JUEGO Y DATOS (TEMPORAL hasta tener JSON) */
+const CATEGORIES = {
+  'Comida': ['Pizza', 'Sushi', 'Hamburguesa', 'Tacos', 'Helado', 'Paella'],
+  'Animales': ['León', 'Elefante', 'Perro', 'Gato', 'Águila', 'Tiburón'],
+  'Lugares': ['Playa', 'Montaña', 'Cine', 'Escuela', 'Hospital', 'Parque'],
+  'Objetos': ['Teléfono', 'Silla', 'Computadora', 'Reloj', 'Cuchara', 'Libro']
+};
+
+let gameSession = {
+  impostorCount: 1,
+  category: '',
+  secretWord: '',
+  playersRoles: [], // { name, isImpostor, isAlive }
+  currentPlayerRevealIndex: 0,
+  votes: {}
+};
+
+/* LOGICA DE IMPOSTORES Y CONFIGITURACIÓN */
 const modalImpostors = document.getElementById('modal-impostors');
 const btnCancelImpostors = document.getElementById('btn-cancel-impostors');
 const btnConfirmImpostors = document.getElementById('btn-confirm-impostors');
 const inputImpostorCount = document.getElementById('input-impostor-count');
 const labelMaxImpostors = document.getElementById('label-max-impostors');
+const selectCategory = document.getElementById('select-category');
 
-// Botón "Hecho" (Antes Start Game)
+// Referencias nuevas pantallas
+const screenRoleReveal = document.getElementById('screen-role-reveal');
+const roleRevealTitle = document.getElementById('role-reveal-title');
+const btnRevealRole = document.getElementById('btn-reveal-role');
+const roleSecretContainer = document.getElementById('role-secret-container');
+const secretWordDisplay = document.getElementById('secret-word-display');
+const secretRoleDesc = document.getElementById('secret-role-desc');
+
+const screenGameRound = document.getElementById('screen-game-round');
+const roundOrderList = document.getElementById('round-order-list');
+const btnGotoVote = document.getElementById('btn-goto-vote');
+
+const screenVoting = document.getElementById('screen-voting');
+const votingGrid = document.getElementById('voting-grid');
+
+const screenFinalDuel = document.getElementById('screen-final-duel');
+const finalGuessOptions = document.getElementById('final-guess-options');
+
+// Botón "Hecho" (Antes Start Game) -> Configuración
 btnStartGame.addEventListener('click', () => {
-  // Calcular maximo de impostores: < 1/3 del total
-  // Ejemplo: 8 jugadores -> 8/3 = 2.66 -> Max 2
-  // Ejemplo: 4 jugadores -> 4/3 = 1.33 -> Max 1
-  const maxImpostors = Math.floor((players.length - 0.1) / 3);
+  const maxImpostors = Math.floor((players.length - 0.1) / 3) || 1; // Mínimo 1 lógico aunque la regla sea estricta
 
-  // Actualizar UI del modal
   inputImpostorCount.max = maxImpostors;
-  inputImpostorCount.value = 1; // Resetear a 1
+  inputImpostorCount.value = 1;
   if (inputImpostorCount.value > maxImpostors) inputImpostorCount.value = maxImpostors;
 
-  labelMaxImpostors.textContent = `Máximo: ${maxImpostors}`;
-
-  // Mostrar modal
+  labelMaxImpostors.textContent = `Impostores (Máximo: ${maxImpostors})`;
   modalImpostors.classList.remove('hidden');
 });
 
@@ -172,18 +202,280 @@ if (btnCancelImpostors) {
   });
 }
 
-// Confirmar impostores
+// Confirmar impostores -> INICIAR JUEGO
 if (btnConfirmImpostors) {
   btnConfirmImpostors.addEventListener('click', () => {
     const count = parseInt(inputImpostorCount.value);
-    const max = parseInt(inputImpostorCount.max);
+    const cat = selectCategory.value;
 
-    if (count > 0 && count <= max) {
-      alert(`Juego comenzaría con ${count} impostores para ${players.length} jugadores.`);
-      modalImpostors.classList.add('hidden');
-      // Aquí iría la lógica para iniciar el juego...
-    } else {
-      alert(`Por favor elige entre 1 y ${max} impostores.`);
+    if (players.length < 3) {
+      alert("Necesitas al menos 3 jugadores para jugar.");
+      return;
     }
+
+    modalImpostors.classList.add('hidden');
+    initGame(count, cat);
+  });
+}
+
+/* ==========================================
+   LÓGICA DEL CORE DEL JUEGO
+   ========================================== */
+
+function initGame(impostorCount, categoryName) {
+  // 1. Elegir Categoría y Palabra
+  let finalCategory = categoryName;
+  if (categoryName === 'Random') {
+    const keys = Object.keys(CATEGORIES);
+    finalCategory = keys[Math.floor(Math.random() * keys.length)];
+  }
+  const words = CATEGORIES[finalCategory];
+  const secretWord = words[Math.floor(Math.random() * words.length)];
+
+  // 2. Asignar Roles
+  // Creamos array de indices [0, 1, 2...]
+  let indices = players.map((_, i) => i);
+  // Mezclamos indices
+  indices.sort(() => Math.random() - 0.5);
+
+  // Los primeros 'impostorCount' son impostores
+  const impostorIndices = indices.slice(0, impostorCount);
+
+  gameSession = {
+    impostorCount: impostorCount,
+    category: finalCategory,
+    secretWord: secretWord,
+    playersRoles: players.map((p, i) => ({
+      name: p,
+      isImpostor: impostorIndices.includes(i),
+      isAlive: true
+    })),
+    currentPlayerRevealIndex: 0
+  };
+
+  // 3. Ir a Pantalla de "Pasar el móvil"
+  startRoleRevealPhase();
+}
+
+/* FASE 1: REVELAR ROLES (Cartas paso a paso) */
+
+// Referencias nuevas de la tarjeta
+const cardReveal = document.getElementById('card-reveal');
+const cardIcon = document.getElementById('card-icon');
+const cardTitle = document.getElementById('card-title');
+const cardInstruction = document.getElementById('card-instruction');
+const cardSecretContent = document.getElementById('card-secret-content');
+const cardWord = document.getElementById('card-word');
+const cardRoleDesc = document.getElementById('card-role-desc');
+const btnCardAction = document.getElementById('btn-card-action');
+
+// Estado interno de la fase de revelación
+let revealState = 'handover'; // 'handover' (pasar movil) | 'ready' (listo para revelar) | 'revealed' (viendo rol)
+
+function startRoleRevealPhase() {
+  navigateTo('screen-role-reveal');
+  showHandoverScreen();
+}
+
+function showHandoverScreen() {
+  const pIndex = gameSession.currentPlayerRevealIndex;
+
+  // Si ya pasaron todos, iniciar juego
+  if (pIndex >= gameSession.playersRoles.length) {
+    startGameRound();
+    return;
+  }
+
+  const player = gameSession.playersRoles[pIndex];
+  revealState = 'handover';
+
+  // UI: "Pasa el móvil A..."
+  cardIcon.textContent = "📱";
+  cardTitle.textContent = `Turno de ${player.name}`;
+  cardTitle.style.color = "white";
+  cardInstruction.textContent = "Pasa el móvil a este jugador. Nadie más debe mirar.";
+  cardSecretContent.classList.add('hidden');
+
+  btnCardAction.textContent = `Soy ${player.name}`;
+  btnCardAction.classList.remove('btn-secondary');
+}
+
+function showReadyToRevealScreen() {
+  revealState = 'ready';
+
+  // UI: "Presiona para ver"
+  cardIcon.textContent = "🔒";
+  cardTitle.textContent = "¿Listo?";
+  cardInstruction.textContent = "Asegúrate de que nadie más esté mirando la pantalla.";
+
+  btnCardAction.textContent = "Revelar Rol";
+  btnCardAction.classList.remove('btn-secondary');
+}
+
+function showRevealedScreen() {
+  revealState = 'revealed';
+  const pIndex = gameSession.currentPlayerRevealIndex;
+  const player = gameSession.playersRoles[pIndex];
+
+  // UI: El Rol
+  cardIcon.textContent = player.isImpostor ? "😈" : "😇";
+
+  // Contenido secreto
+  cardSecretContent.classList.remove('hidden');
+  cardInstruction.textContent = "Memoriza tu palabra secreta.";
+  cardTitle.textContent = "Tu Rol";
+
+  if (player.isImpostor) {
+    cardWord.textContent = "EL IMPOSTOR";
+    cardWord.style.color = "#ff6b6b";
+    cardRoleDesc.textContent = `Categoría: ${gameSession.category}. Finge que sabes la palabra.`;
+  } else {
+    cardWord.textContent = gameSession.secretWord;
+    cardWord.style.color = "#E85D04";
+    cardRoleDesc.textContent = `Categoría: ${gameSession.category}. Eres un civil.`;
+  }
+
+  btnCardAction.textContent = "Entendido / Borrar";
+  btnCardAction.classList.add('btn-secondary');
+}
+
+// Único botón de acción para controlar el flujo
+btnCardAction.addEventListener('click', () => {
+  if (revealState === 'handover') {
+    // Del paso "Soy Juan" a "Revelar"
+    showReadyToRevealScreen();
+  } else if (revealState === 'ready') {
+    // Del paso "Revelar" a ver la palabra
+    showRevealedScreen();
+  } else if (revealState === 'revealed') {
+    // Del paso "Viendo palabra" a "Siguiente jugador"
+    gameSession.currentPlayerRevealIndex++;
+    showHandoverScreen();
+  }
+});
+
+/* FASE 2: RONDA DE MESA */
+let timerInterval;
+
+function startGameRound() {
+  navigateTo('screen-game-round');
+
+  roundOrderList.innerHTML = '';
+  // Mostrar orden de jugadores aleatorio o secuencial
+  gameSession.playersRoles.forEach(p => {
+    const li = document.createElement('li');
+    li.textContent = `🗣️ ${p.name}`;
+    roundOrderList.appendChild(li);
+  });
+
+  // Iniciar cronómetro (Ejemplo: 5 minutos)
+  startTimer(5 * 60);
+}
+
+function startTimer(durationSeconds) {
+  const timerDisplay = document.getElementById('game-timer');
+  if (timerInterval) clearInterval(timerInterval);
+
+  let timer = durationSeconds;
+  updateTimerDisplay(timer, timerDisplay);
+
+  timerInterval = setInterval(() => {
+    timer--;
+    updateTimerDisplay(timer, timerDisplay);
+
+    if (timer <= 0) {
+      clearInterval(timerInterval);
+      timerDisplay.textContent = "00:00";
+      alert("¡Tiempo agotado! Es hora de votar.");
+      startVotingPhase();
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay(time, displayElement) {
+  if (!displayElement) return;
+  const minutes = Math.floor(time / 60);
+  const seconds = time % 60;
+  displayElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+}
+
+btnGotoVote.addEventListener('click', () => {
+  if (timerInterval) clearInterval(timerInterval);
+  startVotingPhase();
+});
+
+/* FASE 3: VOTACIÓN */
+function startVotingPhase() {
+  navigateTo('screen-voting');
+  renderVotingGrid();
+}
+
+function renderVotingGrid() {
+  votingGrid.innerHTML = '';
+  gameSession.playersRoles.forEach((p, index) => {
+    if (!p.isAlive) return; // Si ya fue eliminado (para futuras versiones con múltiples rondas)
+
+    const btn = document.createElement('button');
+    btn.innerHTML = `<div style="font-size:2rem; margin-bottom:0.5rem;">👤</div>${p.name}`;
+    btn.onclick = () => handleVote(index);
+    votingGrid.appendChild(btn);
+  });
+}
+
+function handleVote(targetIndex) {
+  const target = gameSession.playersRoles[targetIndex];
+  const isImpostor = target.isImpostor;
+
+  if (confirm(`¿Seguros que quieren expulsar a ${target.name}?`)) {
+    if (isImpostor) {
+      // IMPOSTOR ATRAPADO -> VA A DUELO FINAL
+      startFinalDuel(target);
+    } else {
+      // CIVIL ELIMINADO
+      alert(`${target.name} ERA... ¡UN CIVIL! 😱`);
+      target.isAlive = false;
+
+      // Verificar si ganaron los impostores (Impostores >= Civiles)
+      const aliveImpostors = gameSession.playersRoles.filter(p => p.isImpostor && p.isAlive).length;
+      const aliveCivilians = gameSession.playersRoles.filter(p => !p.isImpostor && p.isAlive).length;
+
+      if (aliveImpostors >= aliveCivilians) {
+        alert("¡LOS IMPOSTORES GANAN! Han igualado en número a los civiles.");
+        navigateTo('screen-welcome');
+      } else {
+        // Vuelve a la ronda o votación? Simplifiquemos: Volver a ronda (podrían querer hablar más)
+        alert("El juego continúa...");
+        startGameRound();
+      }
+    }
+  }
+}
+
+/* FASE 4: DUELO FINAL (Impostor Opportunity) */
+function startFinalDuel(impostorPlayer) {
+  navigateTo('screen-final-duel');
+
+  const inputGuess = document.getElementById('final-guess-input');
+  const btnSubmitGuess = document.getElementById('btn-submit-guess');
+
+  // Limpiar input anterior
+  inputGuess.value = '';
+
+  // Remover listeners anteriores para evitar duplicados (clonando el nodo es un truco rápido, o usando 'onclick')
+  const newBtn = btnSubmitGuess.cloneNode(true);
+  btnSubmitGuess.parentNode.replaceChild(newBtn, btnSubmitGuess);
+
+  newBtn.addEventListener('click', () => {
+    const guees = inputGuess.value.trim();
+    if (!guees) return;
+
+    // Normalizar para comparar (ignorando mayúsculas y tildes si se quiere ser flexible)
+    // Para simplificar: comparación directa insensitive
+    if (guees.toLowerCase() === gameSession.secretWord.toLowerCase()) {
+      alert(`¡${impostorPlayer.name} HA ACERTADO! 🎭\nLa palabra era "${gameSession.secretWord}".\nEL IMPOSTOR GANA LA PARTIDA.`);
+    } else {
+      alert(`¡FALLÓ! Escribió "${guees}".\nLa palabra correcta era "${gameSession.secretWord}".\n👮 LOS CIVILES GANAN.`);
+    }
+    navigateTo('screen-welcome');
   });
 }

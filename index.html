@@ -146,14 +146,107 @@
       <h2>¿Quiénes mienten?</h2>
       <p>Selecciona la cantidad de impostores</p>
 
+      <!-- Selector de Categoría añadido -->
+      <div class="input-group" style="margin-bottom: 1rem;">
+        <label for="select-category" style="display:block; margin-bottom:0.5rem; color:#B0B0B0;">Categoría</label>
+        <select id="select-category"
+          style="padding: 10px; width: 100%; border-radius: 8px; background: #222; color: white; border: 1px solid #333;">
+          <option value="Random">Aleatorio</option>
+          <option value="Comida">Comida</option>
+          <option value="Animales">Animales</option>
+          <option value="Lugares">Lugares</option>
+          <option value="Objetos">Objetos</option>
+        </select>
+      </div>
+
       <div class="input-group">
-        <label for="input-impostor-count" id="label-max-impostors">Máximo: 1</label>
+        <label for="input-impostor-count" id="label-max-impostors"
+          style="display:block; margin-bottom:0.5rem; color:#B0B0B0;">Impostores (Máximo: 1)</label>
         <input type="number" id="input-impostor-count" min="1" value="1" class="input-dark">
       </div>
 
       <div class="modal-actions">
         <button id="btn-cancel-impostors" class="btn btn-secondary">Cancelar</button>
         <button id="btn-confirm-impostors" class="btn">Confirmar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANTALLA 4: REVELAR ROL (Cartas) -->
+  <div id="screen-role-reveal" class="container hidden"
+    style="height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+
+    <!-- Tarjeta Dinámica -->
+    <div id="card-reveal" class="role-card">
+      <div class="role-icon" id="card-icon">📱</div>
+      <h2 id="card-title">Turno de Juan</h2>
+      <p id="card-instruction" class="instruction">Pasa el móvil a Juan</p>
+
+      <!-- Contenido Secreto (Oculto inicialmente) -->
+      <div id="card-secret-content" class="hidden">
+        <div id="card-word" class="secret-reveal">PALABRA</div>
+        <p id="card-role-desc">Descripción</p>
+      </div>
+
+      <button id="btn-card-action" class="btn btn-large" style="margin-top: 1rem;">Soy Juan</button>
+    </div>
+
+  </div>
+
+  <!-- PANTALLA 5: RONDA DE JUEGO -->
+  <div id="screen-game-round" class="container hidden" style="text-align: center;">
+    <header class="navbar">
+      <div class="logo">🎭 En Juego</div>
+    </header>
+
+    <div class="hero">
+      <h2>Ronda de Palabras</h2>
+
+      <!-- Timer -->
+      <div id="game-timer"
+        style="font-size: 4rem; font-weight: bold; color: var(--primary-color); margin: 1rem 0; font-variant-numeric: tabular-nums;">
+        05:00
+      </div>
+
+      <p class="subtitle">Orden de turnos sugerido</p>
+
+      <ul id="round-order-list" style="list-style: none; padding: 0; font-size: 1.5rem; line-height: 2;">
+        <!-- Lista generada por JS -->
+      </ul>
+
+      <div style="margin-top: 2rem;">
+        <button id="btn-goto-vote" class="btn btn-large">Ir a Votación</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANTALLA 6: VOTACIÓN -->
+  <div id="screen-voting" class="container hidden" style="text-align: center;">
+    <header class="navbar">
+      <div class="logo">🗳️ Votación</div>
+    </header>
+
+    <h2>¿Quién es el impostor?</h2>
+    <p class="subtitle">Discutan y toquen al sospechoso para eliminarlo.</p>
+
+    <div id="voting-grid" class="cards-grid"
+      style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 1rem; margin-top: 2rem;">
+      <!-- Botones de jugadores generados por JS -->
+    </div>
+  </div>
+
+  <!-- PANTALLA 7: DUELO FINAL (Impostor descubierto) -->
+  <div id="screen-final-duel" class="container hidden" style="text-align: center;">
+    <h1 style="color: #ff6b6b;">¡IMPOSTOR DESCUBIERTO!</h1>
+    <p id="final-duel-msg" class="subtitle">Pero aún tiene una oportunidad...</p>
+
+    <div style="margin: 2rem 0; padding: 2rem; background: #222; border-radius: 12px;">
+      <h3>Adivina la palabra secreta</h3>
+      <p>Si aciertas, ganas la partida.</p>
+      <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 20px;">
+        <input type="text" id="final-guess-input" placeholder="Escribe la palabra secreta..." class="input-dark"
+          style="width: 100%; box-sizing: border-box; font-size: 1.2rem;">
+        <button id="btn-submit-guess" class="btn btn-large">Intentar</button>
       </div>
     </div>
   </div>
