@@ -7,6 +7,44 @@
   <title>Juego del Impostor</title>
   <!-- CSS Normal -->
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* Ajustes para celular (Responsive) */
+    @media (max-width: 768px) {
+      .hero-actions {
+        flex-direction: column;
+        /* Botones uno encima del otro */
+        width: 100%;
+        max-width: 300px;
+        /* Que no sean exageradamente anchos */
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .btn-large {
+        width: 100%;
+        /* Botón ocupa todo el ancho disponible */
+        margin-bottom: 10px;
+        /* Separación entre botones */
+      }
+
+      .hero .subtitle {
+        padding: 0 20px;
+        font-size: 1rem;
+        max-width: 80%;
+        /* Limitar el ancho */
+        margin-left: auto;
+        /* Centrar el bloque */
+        margin-right: auto;
+        /* Centrar el bloque */
+      }
+
+      .title {
+        font-size: 2.5rem;
+        /* Título un poco más pequeño en móvil */
+        padding: 0 10px;
+      }
+    }
+  </style>
 </head>
 
 <body>
