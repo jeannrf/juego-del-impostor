@@ -172,7 +172,7 @@ const secretRoleDesc = document.getElementById('secret-role-desc');
 
 const screenGameRound = document.getElementById('screen-game-round');
 const roundOrderList = document.getElementById('round-order-list');
-const btnGotoVote = document.getElementById('btn-goto-vote');
+// btnGotoVote se declarará más abajo junto a la lógica de la ronda
 
 const screenVoting = document.getElementById('screen-voting');
 const votingGrid = document.getElementById('voting-grid');
@@ -356,6 +356,12 @@ if (btnCardAction) {
   });
 }
 
+const btnNewWord = document.getElementById('btn-new-word');
+const btnGotoVote = document.getElementById('btn-goto-vote'); // This might be already declared but checking won't hurt
+const roundStarterMsg = document.getElementById('round-starter-msg');
+
+let currentStarterIndex = 0; // Se mantiene durante la sesión mientras no se cierre la página
+
 /* FASE 2: RONDA DE MESA */
 let timerInterval;
 
@@ -365,51 +371,39 @@ function startGameRound() {
   // En caso de volver de votación:
   if (screenVoting) screenVoting.classList.add('hidden');
 
-  if (roundOrderList) {
-    roundOrderList.innerHTML = '';
-    // Mostrar orden de jugadores
-    gameSession.playersRoles.forEach(p => {
-      const li = document.createElement('li');
-      li.textContent = `🗣️ ${p.name}`;
-      roundOrderList.appendChild(li);
-    });
+  // Actualizar mensaje del jugador inicial
+  if (roundStarterMsg && players.length > 0) {
+    const starterName = players[currentStarterIndex % players.length];
+    roundStarterMsg.innerHTML = `El jugador <strong style="color:var(--primary-color)">${starterName}</strong> comienza la ronda`;
   }
-
-  // Iniciar cronómetro
-  startTimer(5 * 60);
 }
 
-function startTimer(durationSeconds) {
-  const timerDisplay = document.getElementById('game-timer');
-  if (timerInterval) clearInterval(timerInterval);
+// Botón "Mostrar resultados" (Ir a votación)
+if (btnGotoVote) {
+  btnGotoVote.addEventListener('click', () => {
+    startVotingPhase();
+  });
+}
 
-  let timer = durationSeconds;
-  updateTimerDisplay(timer, timerDisplay);
+// Botón "Nueva Palabra" (Reiniciar ronda con mismos players)
+if (btnNewWord) {
+  btnNewWord.addEventListener('click', () => {
+    if (confirm("¿Estás seguro? Se sorteará una nueva palabra y nuevos roles.")) {
+      // Rotar jugador inicial
+      currentStarterIndex = (currentStarterIndex + 1) % players.length;
 
-  timerInterval = setInterval(() => {
-    timer--;
-    updateTimerDisplay(timer, timerDisplay);
+      // Reiniciar juego con los mismos parámetros
+      // Necesitamos recordar cuantos impostores habíamos configurado en la sesión actual
+      const currentImpostorCount = gameSession.impostorCount || 1;
 
-    if (timer <= 0) {
-      clearInterval(timerInterval);
-      timerDisplay.textContent = "00:00";
-      alert("¡Tiempo agotado! Es hora de votar.");
-      startVotingPhase();
+      // Ocultar pantalla actual
+      screenGameRound.classList.add('hidden');
+
+      // Re-init
+      initGame(currentImpostorCount);
     }
-  }, 1000);
+  });
 }
-
-function updateTimerDisplay(time, displayElement) {
-  if (!displayElement) return;
-  const minutes = Math.floor(time / 60);
-  const seconds = time % 60;
-  displayElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-}
-
-btnGotoVote.addEventListener('click', () => {
-  if (timerInterval) clearInterval(timerInterval);
-  startVotingPhase();
-});
 
 /* FASE 3: VOTACIÓN */
 function startVotingPhase() {

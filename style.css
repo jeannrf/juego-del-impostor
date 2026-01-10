@@ -543,3 +543,63 @@ body {
     /* Space for bottom interaction areas if any */
   }
 }
+
+/* Game Instruction Step Cards (Blue Style) */
+.instruction-step {
+  background: rgba(30, 40, 60, 0.6);
+  border: 1px solid rgba(100, 150, 255, 0.2);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: transform 0.2s;
+}
+
+.instruction-step:hover {
+  transform: translateY(-2px);
+  background: rgba(40, 50, 80, 0.8);
+  border-color: rgba(100, 150, 255, 0.4);
+}
+
+.step-badge {
+  background: #3b82f6;
+  color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.step-content {
+  flex-grow: 1;
+}
+
+.step-content h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: white;
+}
+
+.step-content p {
+  margin: 0.2rem 0 0 0;
+  font-size: 0.9rem;
+  color: #b0c4de;
+}
+
+.step-icon {
+  font-size: 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.5rem;
+  border-radius: 8px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

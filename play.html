@@ -87,17 +87,52 @@
         </header>
 
         <div class="hero">
-            <h2>Ronda de Palabras</h2>
-            <div id="game-timer"
-                style="font-size: 4rem; font-weight: bold; color: var(--primary-color); margin: 1rem 0; font-variant-numeric: tabular-nums;">
-                05:00
+            <!-- Instructions List instead of Timer -->
+            <div class="game-instructions-list" style="text-align: left; max-width: 500px; margin: 0 auto;">
+
+                <div class="instruction-step">
+                    <div class="step-badge">1</div>
+                    <div class="step-content">
+                        <h3>Jugador inicial</h3>
+                        <p id="round-starter-msg">El jugador [Nombre] comienza la ronda</p>
+                    </div>
+                    <div class="step-icon">👤</div>
+                </div>
+
+                <div class="instruction-step">
+                    <div class="step-badge">2</div>
+                    <div class="step-content">
+                        <h3>Discusión en grupo</h3>
+                        <p>Continúa en el sentido de las agujas del reloj</p>
+                    </div>
+                    <div class="step-icon">👥</div>
+                </div>
+
+                <div class="instruction-step">
+                    <div class="step-badge">3</div>
+                    <div class="step-content">
+                        <h3>Tiempo de votación</h3>
+                        <p>Cada jugador dice una palabra relacionada. Haz dos o tres rondas.</p>
+                    </div>
+                    <div class="step-icon">🗳️</div>
+                </div>
+
+                <div class="instruction-step">
+                    <div class="step-badge">4</div>
+                    <div class="step-content">
+                        <h3>Fase de revelación</h3>
+                        <p>Vota por el impostor y mira los resultados.</p>
+                    </div>
+                    <div class="step-icon">🕵️</div>
+                </div>
+
             </div>
 
-            <p class="subtitle">Orden de turnos sugerido</p>
-            <ul id="round-order-list" style="list-style: none; padding: 0; font-size: 1.5rem; line-height: 2;"></ul>
-
-            <div style="margin-top: 2rem;">
-                <button id="btn-goto-vote" class="btn btn-large">Ir a Votación</button>
+            <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <button id="btn-goto-vote" class="btn btn-large" style="background-color: #d62828;">Mostrar
+                    resultados</button>
+                <button id="btn-new-word" class="btn btn-large" style="background-color: #2a9d8f;">Nueva
+                    Palabra</button>
             </div>
         </div>
     </div>
