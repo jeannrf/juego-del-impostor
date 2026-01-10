@@ -10,6 +10,9 @@
 
 <body>
 
+    <!-- EXIT BUTTON (Fixed) -->
+    <button id="btn-exit-game" class="btn-exit-fixed" title="Salir del juego">✕</button>
+
     <!-- PANTALLA 2: CONFIGURACIÓN DEL JUEGO (Visible al inicio de esta página) -->
     <div id="screen-setup" class="container">
         <header class="navbar">
@@ -57,8 +60,7 @@
     </div>
 
     <!-- PANTALLA 4: REVELAR ROL -->
-    <div id="screen-role-reveal" class="container hidden"
-        style="height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+    <div id="screen-role-reveal" class="container hidden fullscreen-center">
 
         <div id="card-reveal" class="role-card">
             <div class="role-icon" id="card-icon">📱</div>
@@ -127,6 +129,18 @@
                 <input type="text" id="final-guess-input" placeholder="Escribe la palabra secreta..." class="input-dark"
                     style="width: 100%; box-sizing: border-box; font-size: 1.2rem;">
                 <button id="btn-submit-guess" class="btn btn-large">Intentar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: CONFIRM EXIT -->
+    <div id="modal-exit-confirm" class="modal hidden">
+        <div class="modal-content">
+            <h2>¿Abanadonar partida?</h2>
+            <p>Se perderá todo el progreso actual.</p>
+            <div class="modal-actions">
+                <button id="btn-cancel-exit" class="btn btn-secondary">Cancelar</button>
+                <button id="btn-confirm-exit" class="btn" style="background-color: #ef4444;">Salir</button>
             </div>
         </div>
     </div>

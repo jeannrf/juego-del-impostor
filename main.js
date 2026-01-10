@@ -490,3 +490,27 @@ function startFinalDuel(impostorPlayer) {
     window.location.href = 'index.html';
   });
 }
+
+/* LOGICA SALIDA DEL JUEGO (Botón X) */
+const btnExitGame = document.getElementById('btn-exit-game');
+const modalExitConfirm = document.getElementById('modal-exit-confirm');
+const btnCancelExit = document.getElementById('btn-cancel-exit');
+const btnConfirmExit = document.getElementById('btn-confirm-exit');
+
+if (btnExitGame) {
+  btnExitGame.addEventListener('click', () => {
+    if (modalExitConfirm) modalExitConfirm.classList.remove('hidden');
+  });
+}
+
+if (btnCancelExit) {
+  btnCancelExit.addEventListener('click', () => {
+    if (modalExitConfirm) modalExitConfirm.classList.add('hidden');
+  });
+}
+
+if (btnConfirmExit) {
+  btnConfirmExit.addEventListener('click', () => {
+    window.location.href = 'index.html';
+  });
+}

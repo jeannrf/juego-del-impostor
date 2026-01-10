@@ -388,3 +388,158 @@ body {
   background: #3a3a3a;
   border-color: var(--primary-color);
 }
+
+/* Fixed Exit Button */
+.btn-exit-fixed {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ff6b6b;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 2000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(5px);
+  transition: all 0.2s ease;
+}
+
+.btn-exit-fixed:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: #ef4444;
+  transform: rotate(90deg);
+}
+
+/* =========================================
+   PREMIUM MOBILE DESIGN & RESPONSIVE
+   ========================================= */
+
+/* Background Enhancements */
+#screen-role-reveal {
+  background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
+}
+
+/* Premium Card Design */
+.role-card {
+  background: rgba(25, 25, 25, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  border-radius: 24px;
+  padding: 3rem 2rem;
+  width: 85%;
+  max-width: 380px;
+  margin: 0 auto;
+  transform: translateY(0);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Icon Glow Effect */
+.role-icon {
+  font-size: 5rem;
+  margin-bottom: 1.5rem;
+  filter: drop-shadow(0 0 20px rgba(232, 93, 4, 0.2));
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Typography Boost */
+.role-card h2 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, #fff 0%, #ccc 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.role-card .instruction {
+  font-size: 1.1rem;
+  color: #888;
+  margin-bottom: 2rem;
+  font-weight: 500;
+}
+
+/* Premium Action Button */
+#btn-card-action {
+  width: 100%;
+  padding: 1.2rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #E85D04 0%, #dc2626 100%);
+  box-shadow: 0 10px 20px -5px rgba(232, 93, 4, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  letter-spacing: 0.5px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#btn-card-action:active {
+  transform: scale(0.96);
+  box-shadow: 0 5px 10px -5px rgba(232, 93, 4, 0.4);
+}
+
+/* Fixed Exit Button Refinement */
+.btn-exit-fixed {
+  top: 24px;
+  right: 24px;
+  width: 48px;
+  height: 48px;
+  background: rgba(20, 20, 20, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  color: #ff4444;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Floating Animation */
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Base Responsive Utilities */
+.fullscreen-center {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+  .role-card {
+    width: 100%;
+    /* Wider on small mobile */
+    padding: 2.5rem 1.5rem;
+    border-radius: 20px;
+  }
+
+  .role-card h2 {
+    font-size: 2rem;
+  }
+
+  #screen-role-reveal {
+    padding-bottom: 40px;
+    /* Space for bottom interaction areas if any */
+  }
+}
