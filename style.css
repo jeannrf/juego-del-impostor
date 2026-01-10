@@ -748,7 +748,8 @@ body {
 
 .role-card.is-impostor .secret-reveal {
   color: #ff4444 !important;
-  font-size: 2.8rem;
+  font-size: clamp(2rem, 7vw, 2.8rem);
+  /* Fuente flexible para impostor */
 }
 
 
@@ -780,22 +781,37 @@ body {
 
 .role-card.is-civil .secret-reveal {
   color: #3B82F6 !important;
-  font-size: 3rem;
+  font-size: clamp(2rem, 8vw, 3rem);
+  /* Fuente flexible: se encoge si no hay espacio */
 }
 
-/* --- LAYOUT FIXES FOR REVEAL MODE --- */
-/* Compact vertical spacing when in revealed mode to lift the button */
+/* --- SOLUCIONES DE AJUSTE (LAYOUT) --- */
+/* Manejo inteligente de palabras largas */
+.role-card .secret-reveal {
+  word-wrap: break-word;
+  /* Romper palabras largas si es necesario */
+  overflow-wrap: break-word;
+  hyphens: auto;
+  width: 100%;
+  line-height: 1.1;
+  padding: 0 10px;
+  /* Margen de seguridad lateral */
+  box-sizing: border-box;
+}
+
+/* Espaciado vertical compacto en modo revelado */
 .role-card.revealed-mode {
-  justify-content: space-evenly;
-  /* Better distribution than center */
+  justify-content: space-between;
+  /* Usar space-between para máxima separación controlada */
+  padding-top: 2rem;
   padding-bottom: 2rem;
-  /* Ensure button isn't stuck to bottom */
+  gap: 0.5rem;
+  /* Pequeño espacio flexible entre elementos */
 }
 
 .role-card.revealed-mode .secret-reveal {
-  margin: 0;
-  /* Remove default margins to save space */
-  line-height: 1.1;
+  margin: auto 0;
+  /* Centrar verticalmente en el espacio disponible */
 }
 
 .role-card.revealed-mode .instruction {
@@ -805,5 +821,5 @@ body {
 /* Default color for Civil word */
 .role-card:not(.is-impostor) .secret-reveal {
   color: #E85D04;
-  font-size: 3rem;
+  font-size: clamp(2rem, 8vw, 3rem);
 }
