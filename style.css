@@ -599,7 +599,103 @@ body {
   border-radius: 8px;
   width: 40px;
   height: 40px;
+  align-items: center;
+}
+
+/* =========================================
+   COMPACT MODE FOR GAME ROUND
+   ========================================= */
+
+/* Desktop & General Tweak: Change buttons position */
+#screen-game-round .hero {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  /* Centrar verticalmente en desktop también */
+}
+
+#screen-game-round div[style*="margin-top"] {
+  margin-top: 1rem !important;
+  /* Reducir espacio superior de botones */
+}
+
+/* Mobile Fit (No Scroll) */
+@media (max-width: 600px),
+(max-height: 750px) {
+
+  #screen-game-round .hero {
+    padding: 0;
+    height: calc(100vh - 70px);
+    /* Usar altura exacta disponible */
+    justify-content: center;
+    /* Empaquetar todo al centro */
+    gap: 0.5rem;
+  }
+
+  /* Título más compacto */
+  #screen-game-round h2 {
+    font-size: 1.3rem;
+    margin: 0.2rem 0;
+  }
+
+  /* Lista compacta */
+  .game-instructions-list {
+    width: 100%;
+    margin: 0 !important;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    /* Menos espacio entre items */
+  }
+
+  .instruction-step {
+    padding: 0.5rem;
+    margin-bottom: 0;
+    /* Quitar margen externo */
+    gap: 0.6rem;
+    border-radius: 8px;
+    background: rgba(30, 40, 60, 0.4);
+    /* Fondo más sutil */
+  }
+
+  .step-badge {
+    width: 20px;
+    height: 20px;
+    font-size: 0.8rem;
+  }
+
+  .step-icon {
+    width: 28px;
+    height: 28px;
+    font-size: 1rem;
+    padding: 0.2rem;
+  }
+
+  .step-content h3 {
+    font-size: 0.95rem;
+    margin-bottom: 0.1rem;
+  }
+
+  .step-content p {
+    font-size: 0.75rem;
+    line-height: 1.1;
+  }
+
+  /* Contenedor de botones pegado */
+  #screen-game-round div[style*="margin-top"] {
+    margin-top: 0.5rem !important;
+    gap: 0.5rem !important;
+    width: 100%;
+    padding: 0 10px;
+    box-sizing: border-box;
+  }
+
+  #btn-goto-vote,
+  #btn-new-word {
+    padding: 0.6rem;
+    font-size: 0.95rem;
+    flex: 1;
+    margin: 0;
+  }
 }

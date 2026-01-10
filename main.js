@@ -371,6 +371,9 @@ function startGameRound() {
   // En caso de volver de votación:
   if (screenVoting) screenVoting.classList.add('hidden');
 
+  // Mostrar botón de Nueva Palabra (Fixed)
+  if (btnNewWord) btnNewWord.classList.remove('hidden');
+
   // Actualizar mensaje del jugador inicial
   if (roundStarterMsg && players.length > 0) {
     const starterName = players[currentStarterIndex % players.length];
@@ -389,6 +392,9 @@ if (btnGotoVote) {
 if (btnNewWord) {
   btnNewWord.addEventListener('click', () => {
     if (confirm("¿Estás seguro? Se sorteará una nueva palabra y nuevos roles.")) {
+      // Ocultar botón al reiniciar
+      btnNewWord.classList.add('hidden');
+
       // Rotar jugador inicial
       currentStarterIndex = (currentStarterIndex + 1) % players.length;
 
@@ -409,6 +415,10 @@ if (btnNewWord) {
 function startVotingPhase() {
   if (screenGameRound) screenGameRound.classList.add('hidden');
   if (screenVoting) screenVoting.classList.remove('hidden');
+
+  // Ocultar botón de nueva palabra en votación
+  if (btnNewWord) btnNewWord.classList.add('hidden');
+
   renderVotingGrid();
 }
 

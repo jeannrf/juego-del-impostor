@@ -13,6 +13,11 @@
     <!-- EXIT BUTTON (Fixed) -->
     <button id="btn-exit-game" class="btn-exit-fixed" title="Salir del juego">✕</button>
 
+    <!-- NEW WORD BUTTON (Fixed near Exit) - Initially hidden -->
+    <button id="btn-new-word" class="btn-exit-fixed hidden"
+        style="right: 80px; background: rgba(42, 157, 143, 0.2); color: #2a9d8f; border-color: #2a9d8f;"
+        title="Nueva Palabra">🔄</button>
+
     <!-- PANTALLA 2: CONFIGURACIÓN DEL JUEGO (Visible al inicio de esta página) -->
     <div id="screen-setup" class="container">
         <header class="navbar">
@@ -128,11 +133,9 @@
 
             </div>
 
-            <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center;">
                 <button id="btn-goto-vote" class="btn btn-large" style="background-color: #d62828;">Mostrar
                     resultados</button>
-                <button id="btn-new-word" class="btn btn-large" style="background-color: #2a9d8f;">Nueva
-                    Palabra</button>
             </div>
         </div>
     </div>
