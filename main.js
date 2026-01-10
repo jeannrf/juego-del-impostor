@@ -1,16 +1,17 @@
 /* REFERENCIAS DEL DOM (Los huesos) */
+// Usamos comprobación de nulidad antes de usar
 const screenWelcome = document.getElementById('screen-welcome');
 const screenSetup = document.getElementById('screen-setup');
-const btnStart = document.getElementById('btn-start');
-const btnAddPlayer = document.getElementById('btn-add-player');
+const btnStart = document.getElementById('btn-start'); // En index.html
+const btnAddPlayer = document.getElementById('btn-add-player'); // En play.html
 const inputPlayer = document.getElementById('input-player');
 const playerList = document.getElementById('player-list');
 const btnStartGame = document.getElementById('btn-start-game');
 
 // Referencias para Instrucciones
 const screenInstructions = document.getElementById('screen-instructions');
-const btnHowToPlay = document.getElementById('btn-how-to-play');
-const btnBackHome = document.getElementById('btn-back-home');
+const btnHowToPlay = document.getElementById('btn-how-to-play'); // En index.html
+const btnBackHome = document.getElementById('btn-back-home'); // En how_to_play.html
 
 /* ESTADO (La memoria) */
 let players = [];
@@ -18,62 +19,34 @@ let players = [];
 /* EVENTOS (Las acciones) */
 
 /* GESTIÓN DE NAVEGACIÓN (History API) */
-
-// Función centralizada para navegar
-function navigateTo(screenId, pushToHistory = true) {
-  // 1. Ocultar todas las pantallas
-  screenWelcome.classList.add('hidden');
-  screenSetup.classList.add('hidden');
-  screenInstructions.classList.add('hidden');
-
-  // 2. Mostrar la pantalla deseada
-  const targetScreen = document.getElementById(screenId);
-  if (targetScreen) {
-    targetScreen.classList.remove('hidden');
-  }
-
-  // 3. Modificar historial del navegador
-  if (pushToHistory) {
-    // Si vamos al inicio, limpiamos el hash o usamos 'home'
-    const stateId = screenId === 'screen-welcome' ? 'home' : screenId;
-    history.pushState({ screen: screenId }, '', `#${stateId}`);
-  }
-}
-
-// Escuchar eventos de atrás/adelante del navegador
-window.addEventListener('popstate', (event) => {
-  if (event.state && event.state.screen) {
-    navigateTo(event.state.screen, false); // false para no volver a empujar al historial
-  } else {
-    // Si no hay estado (carga inicial o raiz), ir a welcome
-    navigateTo('screen-welcome', false);
-  }
-});
+// La navegación ahora se gestiona directamente con enlaces HTML o window.location.href
 
 // Guardar estado inicial al cargar
-if (!history.state) {
-  history.replaceState({ screen: 'screen-welcome' }, '', '#home');
-}
+// if (!history.state) {
+//   history.replaceState({ screen: 'screen-welcome' }, '', '#home');
+// }
 
 
 /* EVENTOS (Las acciones) */
 
 // 1. Botón Jugar Ahora
-btnStart.addEventListener('click', () => {
-  navigateTo('screen-setup');
-});
+if (btnStart) {
+  btnStart.addEventListener('click', () => {
+    window.location.href = 'play.html';
+  });
+}
 
 // Navegación a Instrucciones
 if (btnHowToPlay) {
   btnHowToPlay.addEventListener('click', (e) => {
     e.preventDefault();
-    navigateTo('screen-instructions');
+    window.location.href = 'how_to_play.html';
   });
 }
 
 if (btnBackHome) {
   btnBackHome.addEventListener('click', () => {
-    navigateTo('screen-welcome');
+    window.location.href = 'index.html';
   });
 }
 
@@ -81,12 +54,13 @@ if (btnBackHome) {
 const logos = document.querySelectorAll('.logo');
 logos.forEach(logo => {
   logo.addEventListener('click', () => {
-    navigateTo('screen-welcome');
+    window.location.href = 'index.html';
   });
 });
 
 // Lógica de agregar jugador
 function addPlayer() {
+  if (!inputPlayer) return;
   const name = inputPlayer.value.trim();
   if (name) {
     players.push(name);
@@ -97,17 +71,22 @@ function addPlayer() {
 }
 
 // 2. Agregar jugador (Click)
-btnAddPlayer.addEventListener('click', addPlayer);
+if (btnAddPlayer) {
+  btnAddPlayer.addEventListener('click', addPlayer);
+}
 
 // 3. Agregar jugador (Enter)
-inputPlayer.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') {
-    addPlayer();
-  }
-});
+if (inputPlayer) {
+  inputPlayer.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      addPlayer();
+    }
+  });
+}
 
 // Función para pintar la lista en pantalla
 function updateUI() {
+  if (!playerList) return;
   playerList.innerHTML = ''; // Borrar lista actual
 
   players.forEach((player, index) => {
@@ -126,11 +105,13 @@ function updateUI() {
     playerList.appendChild(li);
   });
 
-  // Mostrar botón de inicio si hay al menos 4 jugadores (Regla < 1/3)
-  if (players.length >= 4) {
-    btnStartGame.style.display = 'inline-block';
-  } else {
-    btnStartGame.style.display = 'none';
+  // Mostrar botón de inicio si hay al menos 3 jugadores
+  if (btnStartGame) { // Asegurarse de que el botón existe en la página actual
+    if (players.length >= 3) {
+      btnStartGame.style.display = 'inline-block';
+    } else {
+      btnStartGame.style.display = 'none';
+    }
   }
 }
 
@@ -158,7 +139,10 @@ fetch('basededatos.json')
   })
   .catch(error => {
     console.error("No se pudo cargar la base de datos:", error);
-    alert("Error crítico: No se puede cargar 'basededatos.json'. Asegúrate de usar un servidor local.");
+    // Solo alertar si estamos en la página de jugar
+    if (screenSetup) {
+      alert("Error: No se carga la base de datos. Usa live-server o servidor local.");
+    }
   });
 
 
@@ -282,14 +266,16 @@ const cardRoleDesc = document.getElementById('card-role-desc');
 const btnCardAction = document.getElementById('btn-card-action');
 
 // Estado interno de la fase de revelación
-let revealState = 'handover'; // 'handover' (pasar movil) | 'ready' (listo para revelar) | 'revealed' (viendo rol)
+let revealState = 'handover';
 
 function startRoleRevealPhase() {
-  navigateTo('screen-role-reveal');
+  if (screenSetup) screenSetup.classList.add('hidden');
+  if (screenRoleReveal) screenRoleReveal.classList.remove('hidden');
   showHandoverScreen();
 }
 
 function showHandoverScreen() {
+  if (!cardTitle) return; // Si no hay tarjeta, salir
   const pIndex = gameSession.currentPlayerRevealIndex;
 
   // Si ya pasaron todos, iniciar juego
@@ -338,10 +324,9 @@ function showRevealedScreen() {
 
   if (player.isImpostor) {
     // IMPOSTOR: Ve la PISTA (Hint)
-    // La instrucción anterior decía "finge que sabes". Ahora le damos una ayuda real.
     cardWord.textContent = `PISTA: ${gameSession.currentWordObj.hint}`;
     cardWord.style.color = "#ff6b6b";
-    cardWord.style.fontSize = "2.5rem"; // Un poco más pequeño si la pista es larga
+    cardWord.style.fontSize = "2.5rem";
     cardInstruction.textContent = "Eres el IMPOSTOR. Intenta deducir la palabra con esta pista.";
     cardRoleDesc.textContent = "¡Nadie sabe que eres tú!";
   } else {
@@ -358,35 +343,39 @@ function showRevealedScreen() {
 }
 
 // Único botón de acción para controlar el flujo
-btnCardAction.addEventListener('click', () => {
-  if (revealState === 'handover') {
-    // Del paso "Soy Juan" a "Revelar"
-    showReadyToRevealScreen();
-  } else if (revealState === 'ready') {
-    // Del paso "Revelar" a ver la palabra
-    showRevealedScreen();
-  } else if (revealState === 'revealed') {
-    // Del paso "Viendo palabra" a "Siguiente jugador"
-    gameSession.currentPlayerRevealIndex++;
-    showHandoverScreen();
-  }
-});
+if (btnCardAction) {
+  btnCardAction.addEventListener('click', () => {
+    if (revealState === 'handover') {
+      showReadyToRevealScreen();
+    } else if (revealState === 'ready') {
+      showRevealedScreen();
+    } else if (revealState === 'revealed') {
+      gameSession.currentPlayerRevealIndex++;
+      showHandoverScreen();
+    }
+  });
+}
 
 /* FASE 2: RONDA DE MESA */
 let timerInterval;
 
 function startGameRound() {
-  navigateTo('screen-game-round');
+  if (screenRoleReveal) screenRoleReveal.classList.add('hidden');
+  if (screenGameRound) screenGameRound.classList.remove('hidden');
+  // En caso de volver de votación:
+  if (screenVoting) screenVoting.classList.add('hidden');
 
-  roundOrderList.innerHTML = '';
-  // Mostrar orden de jugadores aleatorio o secuencial
-  gameSession.playersRoles.forEach(p => {
-    const li = document.createElement('li');
-    li.textContent = `🗣️ ${p.name}`;
-    roundOrderList.appendChild(li);
-  });
+  if (roundOrderList) {
+    roundOrderList.innerHTML = '';
+    // Mostrar orden de jugadores
+    gameSession.playersRoles.forEach(p => {
+      const li = document.createElement('li');
+      li.textContent = `🗣️ ${p.name}`;
+      roundOrderList.appendChild(li);
+    });
+  }
 
-  // Iniciar cronómetro (Ejemplo: 5 minutos)
+  // Iniciar cronómetro
   startTimer(5 * 60);
 }
 
@@ -424,14 +413,16 @@ btnGotoVote.addEventListener('click', () => {
 
 /* FASE 3: VOTACIÓN */
 function startVotingPhase() {
-  navigateTo('screen-voting');
+  if (screenGameRound) screenGameRound.classList.add('hidden');
+  if (screenVoting) screenVoting.classList.remove('hidden');
   renderVotingGrid();
 }
 
 function renderVotingGrid() {
+  if (!votingGrid) return;
   votingGrid.innerHTML = '';
   gameSession.playersRoles.forEach((p, index) => {
-    if (!p.isAlive) return; // Si ya fue eliminado (para futuras versiones con múltiples rondas)
+    if (!p.isAlive) return; // Si ya fue eliminado 
 
     const btn = document.createElement('button');
     btn.innerHTML = `<div style="font-size:2rem; margin-bottom:0.5rem;">👤</div>${p.name}`;
@@ -459,9 +450,8 @@ function handleVote(targetIndex) {
 
       if (aliveImpostors >= aliveCivilians) {
         alert("¡LOS IMPOSTORES GANAN! Han igualado en número a los civiles.");
-        navigateTo('screen-welcome');
+        window.location.href = 'index.html'; // Volver al inicio
       } else {
-        // Vuelve a la ronda o votación? Simplifiquemos: Volver a ronda (podrían querer hablar más)
         alert("El juego continúa...");
         startGameRound();
       }
@@ -471,15 +461,18 @@ function handleVote(targetIndex) {
 
 /* FASE 4: DUELO FINAL (Impostor Opportunity) */
 function startFinalDuel(impostorPlayer) {
-  navigateTo('screen-final-duel');
+  if (screenVoting) screenVoting.classList.add('hidden');
+  if (screenFinalDuel) screenFinalDuel.classList.remove('hidden');
 
   const inputGuess = document.getElementById('final-guess-input');
   const btnSubmitGuess = document.getElementById('btn-submit-guess');
 
+  if (!inputGuess || !btnSubmitGuess) return;
+
   // Limpiar input anterior
   inputGuess.value = '';
 
-  // Remover listeners anteriores para evitar duplicados (clonando el nodo es un truco rápido, o usando 'onclick')
+  // Remover listeners anteriores para evitar duplicados
   const newBtn = btnSubmitGuess.cloneNode(true);
   btnSubmitGuess.parentNode.replaceChild(newBtn, btnSubmitGuess);
 
@@ -487,8 +480,6 @@ function startFinalDuel(impostorPlayer) {
     const guees = inputGuess.value.trim();
     if (!guees) return;
 
-    // Normalizar para comparar (ignorando mayúsculas y tildes si se quiere ser flexible)
-    // Para simplificar: comparación directa insensitive
     const correctWord = gameSession.currentWordObj.word;
 
     if (guees.toLowerCase() === correctWord.toLowerCase()) {
@@ -496,6 +487,6 @@ function startFinalDuel(impostorPlayer) {
     } else {
       alert(`¡FALLÓ! Escribió "${guees}".\nLa palabra correcta era "${correctWord}".\n👮 LOS CIVILES GANAN.`);
     }
-    navigateTo('screen-welcome');
+    window.location.href = 'index.html';
   });
 }

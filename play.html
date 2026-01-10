@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Juego - El Impostor</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- PANTALLA 2: CONFIGURACIÓN DEL JUEGO (Visible al inicio de esta página) -->
+    <div id="screen-setup" class="container">
+        <header class="navbar">
+            <div class="logo" style="cursor: pointer;" onclick="window.location.href='index.html'">
+                <span class="icon">🎭</span> El Impostor
+            </div>
+        </header>
+
+        <div style="text-align: center; margin-top: 2rem;">
+            <h1>Configuración de Partida</h1>
+            <p class="subtitle">Agrega a los jugadores para comenzar</p>
+
+            <div style="display: flex; gap: 1rem; justify-content: center; margin-bottom: 2rem;">
+                <input type="text" id="input-player" placeholder="Nombre del jugador"
+                    style="padding: 10px; border-radius: 8px; border: 1px solid #333; background: #222; color: white;">
+                <button id="btn-add-player" class="btn">Agregar</button>
+            </div>
+
+            <ul id="player-list" style="list-style: none; padding: 0; max-width: 400px; margin: 0 auto;">
+                <!-- JS -->
+            </ul>
+
+            <br>
+            <button id="btn-start-game" class="btn" style="background-color: #2a9d8f; display: none;">Hecho</button>
+        </div>
+    </div>
+
+    <!-- MODAL: CANTIDAD DE IMPOSTORES -->
+    <div id="modal-impostors" class="modal hidden">
+        <div class="modal-content">
+            <h2>¿Quiénes mienten?</h2>
+            <p>Selecciona la cantidad de impostores</p>
+
+            <div class="input-group">
+                <label for="input-impostor-count" id="label-max-impostors"
+                    style="display:block; margin-bottom:0.5rem; color:#B0B0B0;">Impostores (Máximo: 1)</label>
+                <input type="number" id="input-impostor-count" min="1" value="1" class="input-dark">
+            </div>
+
+            <div class="modal-actions">
+                <button id="btn-cancel-impostors" class="btn btn-secondary">Cancelar</button>
+                <button id="btn-confirm-impostors" class="btn">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PANTALLA 4: REVELAR ROL -->
+    <div id="screen-role-reveal" class="container hidden"
+        style="height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+
+        <div id="card-reveal" class="role-card">
+            <div class="role-icon" id="card-icon">📱</div>
+            <h2 id="card-title">Turno de Juan</h2>
+            <p id="card-instruction" class="instruction">Pasa el móvil a Juan</p>
+
+            <div id="card-secret-content" class="hidden">
+                <div id="card-word" class="secret-reveal">PALABRA</div>
+                <p id="card-role-desc">Descripción</p>
+            </div>
+
+            <button id="btn-card-action" class="btn btn-large" style="margin-top: 1rem;">Soy Juan</button>
+        </div>
+    </div>
+
+    <!-- PANTALLA 5: RONDA DE JUEGO -->
+    <div id="screen-game-round" class="container hidden" style="text-align: center;">
+        <header class="navbar" style="position: relative; justify-content: center;">
+            <div class="logo" style="cursor: pointer; position: absolute; left: 0;"
+                onclick="window.location.href='index.html'">
+                <span class="icon">🎭</span> El Impostor
+            </div>
+            <div style="font-size: 1.5rem; font-weight: bold;">En Juego</div>
+        </header>
+
+        <div class="hero">
+            <h2>Ronda de Palabras</h2>
+            <div id="game-timer"
+                style="font-size: 4rem; font-weight: bold; color: var(--primary-color); margin: 1rem 0; font-variant-numeric: tabular-nums;">
+                05:00
+            </div>
+
+            <p class="subtitle">Orden de turnos sugerido</p>
+            <ul id="round-order-list" style="list-style: none; padding: 0; font-size: 1.5rem; line-height: 2;"></ul>
+
+            <div style="margin-top: 2rem;">
+                <button id="btn-goto-vote" class="btn btn-large">Ir a Votación</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PANTALLA 6: VOTACIÓN -->
+    <div id="screen-voting" class="container hidden" style="text-align: center;">
+        <header class="navbar" style="position: relative; justify-content: center;">
+            <div class="logo" style="cursor: pointer; position: absolute; left: 0;"
+                onclick="window.location.href='index.html'">
+                <span class="icon">🎭</span> El Impostor
+            </div>
+            <div style="font-size: 1.5rem; font-weight: bold;">Votación</div>
+        </header>
+        <h2>¿Quién es el impostor?</h2>
+        <p class="subtitle">Discutan y toquen al sospechoso para eliminarlo.</p>
+        <div id="voting-grid" class="cards-grid"
+            style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 1rem; margin-top: 2rem;">
+        </div>
+    </div>
+
+    <!-- PANTALLA 7: DUELO FINAL -->
+    <div id="screen-final-duel" class="container hidden" style="text-align: center;">
+        <h1 style="color: #ff6b6b;">¡IMPOSTOR DESCUBIERTO!</h1>
+        <p id="final-duel-msg" class="subtitle">Pero aún tiene una oportunidad...</p>
+        <div style="margin: 2rem 0; padding: 2rem; background: #222; border-radius: 12px;">
+            <h3>Adivina la palabra secreta</h3>
+            <p>Si aciertas, ganas la partida.</p>
+            <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 20px;">
+                <input type="text" id="final-guess-input" placeholder="Escribe la palabra secreta..." class="input-dark"
+                    style="width: 100%; box-sizing: border-box; font-size: 1.2rem;">
+                <button id="btn-submit-guess" class="btn btn-large">Intentar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+
+</html>
