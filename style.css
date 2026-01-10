@@ -1,0 +1,163 @@
+:root {
+  --bg-color: #0F0E0E;
+  /* Fondo oscuro profundo */
+  --card-bg: #1A1A1A;
+  --primary-color: #E85D04;
+  /* Naranja estilo botón */
+  --text-main: #FFFFFF;
+  --text-muted: #B0B0B0;
+  --font-family: system-ui, -apple-system, sans-serif;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family);
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  line-height: 1.6;
+}
+
+/* utilidades */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.btn {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+  background-color: #dc5000;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 0;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.navbar nav a {
+  color: var(--text-muted);
+  text-decoration: none;
+  margin: 0 1rem;
+  font-size: 0.9rem;
+  transition: color 0.2s;
+}
+
+.navbar nav a:hover {
+  color: var(--text-main);
+}
+
+/* Hero Section */
+.hero {
+  text-align: center;
+  padding: 4rem 0;
+}
+
+.title {
+  font-family: 'Georgia', serif;
+  /* Simular fuente serif del título */
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+}
+
+.subtitle {
+  color: var(--text-muted);
+  max-width: 600px;
+  margin: 0 auto 4rem auto;
+  font-size: 1.1rem;
+}
+
+/* Grid de tarjetas */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  justify-content: center;
+}
+
+.card {
+  background-color: var(--card-bg);
+  background: linear-gradient(180deg, #1e1e1e 0%, #0f0e0e 100%);
+  border-radius: 16px;
+  overflow: hidden;
+  text-align: left;
+  border: 1px solid #333;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  border-color: #555;
+}
+
+.card-image-placeholder {
+  height: 200px;
+  width: 100%;
+  background-color: #2a2a2a;
+}
+
+/* Gradientes artísticos para las imagenes */
+.art-1 {
+  background: radial-gradient(circle at center, #d4a373, #222);
+}
+
+.art-2 {
+  background: radial-gradient(circle at center, #ea580c, #121212);
+}
+
+.art-3 {
+  background: radial-gradient(circle at center, #65a30d, #1a1a1a);
+}
+
+.card-content {
+  padding: 2rem;
+}
+
+.step-number {
+  font-family: 'Georgia', serif;
+  font-size: 4rem;
+  color: var(--primary-color);
+  opacity: 0.9;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+  margin-top: 0;
+}
+
+.card p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.highlight {
+  color: var(--primary-color);
+  font-weight: bold;
+}
+.hidden { display: none !important; }

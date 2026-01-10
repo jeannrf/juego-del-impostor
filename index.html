@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Juego del Impostor</title>
+  <!-- CSS Normal -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- PANTALLA 1: PORTADA -->
+  <div id="screen-welcome" class="landing-page">
+    <header class="navbar container">
+      <div class="logo">
+        <span class="icon">🎭</span> El Impostor
+      </div>
+      <nav>
+        <a href="#">Cómo se juega</a>
+        <a href="#">Reglas</a>
+      </nav>
+      <button id="btn-start" class="btn">Jugar Ahora</button>
+    </header>
+
+    <main class="hero container">
+      <h1 class="title">Cómo se juega a El Impostor</h1>
+      <p class="subtitle">Una mecánica de roles ocultos fácil de aprender. Descubre quién miente en partidas rápidas de
+        deducción.</p>
+
+      <div class="cards-grid">
+        <!-- Tarjeta 1 -->
+        <div class="card">
+          <div class="card-image-placeholder art-1"></div>
+          <div class="card-content">
+            <div class="step-number">1</div>
+            <h3>Recibe tu palabra</h3>
+            <p>Todos reciben la misma palabra secreta, excepto el <span class="highlight">Impostor</span>. Él no sabe
+              nada, pero debe fingir que sí.</p>
+          </div>
+        </div>
+
+        <!-- Tarjeta 2 -->
+        <div class="card">
+          <div class="card-image-placeholder art-2"></div>
+          <div class="card-content">
+            <div class="step-number">2</div>
+            <h3>Describe y Debate</h3>
+            <p>Cada jugador da una pista sobre la palabra. El Impostor debe escuchar atentamente y mentir para no ser
+              descubierto.</p>
+          </div>
+        </div>
+
+        <!-- Tarjeta 3 -->
+        <div class="card">
+          <div class="card-image-placeholder art-3"></div>
+          <div class="card-content">
+            <div class="step-number">3</div>
+            <h3>Vota y Gana</h3>
+            <p>¿Quién es el sospechoso? Vota para expulsarlo. Si atrapan al Impostor, ganan los amigos. ¡Si escapa, gana
+              él!</p>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- PANTALLA 2: CONFIGURACIÓN DEL JUEGO (Oculta al inicio) -->
+  <div id="screen-setup" class="container hidden">
+    <div style="text-align: center; margin-top: 4rem;">
+      <h1>Configuración de Partida</h1>
+      <p class="subtitle">Agrega a los jugadores para comenzar</p>
+
+      <div style="display: flex; gap: 1rem; justify-content: center; margin-bottom: 2rem;">
+        <input type="text" id="input-player" placeholder="Nombre del jugador"
+          style="padding: 10px; border-radius: 8px; border: 1px solid #333; background: #222; color: white;">
+        <button id="btn-add-player" class="btn">Agregar</button>
+      </div>
+
+      <ul id="player-list" style="list-style: none; padding: 0; max-width: 400px; margin: 0 auto;">
+        <!-- Aquí aparecerán los jugadores con JS -->
+      </ul>
+
+      <br>
+      <button id="btn-start-game" class="btn" style="background-color: #2a9d8f; display: none;">Comenzar
+        Reparto</button>
+    </div>
+  </div>
+
+  <!-- JS Normal al final del body -->
+  <script src="main.js"></script>
+</body>
+
+</html>
