@@ -1,0 +1,52 @@
+[
+    {
+        "id": 1,
+        "word": "Cajero Automático",
+        "hint": "Transacción"
+    },
+    {
+        "id": 2,
+        "word": "Paracaídas",
+        "hint": "Gravedad"
+    },
+    {
+        "id": 3,
+        "word": "Gimnasio",
+        "hint": "Esfuerzo"
+    },
+    {
+        "id": 4,
+        "word": "Biblioteca",
+        "hint": "Silencio"
+    },
+    {
+        "id": 5,
+        "word": "Cine",
+        "hint": "Espectador"
+    },
+    {
+        "id": 6,
+        "word": "Dentista",
+        "hint": "Instrumentos"
+    },
+    {
+        "id": 7,
+        "word": "Zoológico",
+        "hint": "Cautiverio"
+    },
+    {
+        "id": 8,
+        "word": "Panadería",
+        "hint": "Temperatura"
+    },
+    {
+        "id": 9,
+        "word": "Boda",
+        "hint": "Compromiso"
+    },
+    {
+        "id": 10,
+        "word": "Submarino",
+        "hint": "Profundidad"
+    }
+]
