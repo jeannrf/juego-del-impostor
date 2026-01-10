@@ -14,61 +14,114 @@
   <!-- PANTALLA 1: PORTADA -->
   <div id="screen-welcome" class="landing-page">
     <header class="navbar container">
-      <div class="logo">
+      <div class="logo" style="cursor: pointer;">
         <span class="icon">🎭</span> El Impostor
       </div>
-      <nav>
-        <a href="#">Cómo se juega</a>
-        <a href="#">Reglas</a>
-      </nav>
-      <button id="btn-start" class="btn">Jugar Ahora</button>
+      <!-- Navbar looks cleaner with just the logo now that actions are central -->
     </header>
 
     <main class="hero container">
-      <h1 class="title">Cómo se juega a El Impostor</h1>
-      <p class="subtitle">Una mecánica de roles ocultos fácil de aprender. Descubre quién miente en partidas rápidas de
-        deducción.</p>
+      <h1 class="title">Juego del impostor</h1>
+      <p class="subtitle">Un divertido juego de deducción, el objetivo es descubrir quién o quienes son los que no
+        conocen la palabra.</p>
 
-      <div class="cards-grid">
-        <!-- Tarjeta 1 -->
-        <div class="card">
-          <div class="card-image-placeholder art-1"></div>
-          <div class="card-content">
-            <div class="step-number">1</div>
-            <h3>Recibe tu palabra</h3>
-            <p>Todos reciben la misma palabra secreta, excepto el <span class="highlight">Impostor</span>. Él no sabe
-              nada, pero debe fingir que sí.</p>
-          </div>
-        </div>
-
-        <!-- Tarjeta 2 -->
-        <div class="card">
-          <div class="card-image-placeholder art-2"></div>
-          <div class="card-content">
-            <div class="step-number">2</div>
-            <h3>Describe y Debate</h3>
-            <p>Cada jugador da una pista sobre la palabra. El Impostor debe escuchar atentamente y mentir para no ser
-              descubierto.</p>
-          </div>
-        </div>
-
-        <!-- Tarjeta 3 -->
-        <div class="card">
-          <div class="card-image-placeholder art-3"></div>
-          <div class="card-content">
-            <div class="step-number">3</div>
-            <h3>Vota y Gana</h3>
-            <p>¿Quién es el sospechoso? Vota para expulsarlo. Si atrapan al Impostor, ganan los amigos. ¡Si escapa, gana
-              él!</p>
-          </div>
-        </div>
+      <div class="hero-actions">
+        <button id="btn-start" class="btn btn-large">Jugar Ahora</button>
+        <button id="btn-how-to-play" class="btn btn-large btn-secondary">Cómo se juega</button>
       </div>
     </main>
   </div>
 
+  <!-- PANTALLA 3: INSTRUCCIONES -->
+  <div id="screen-instructions" class="container hidden">
+    <header class="navbar">
+      <div class="logo" style="cursor: pointer;">
+        <span class="icon">🎭</span> El Impostor
+      </div>
+      <button id="btn-back-home" class="btn" style="background: transparent; border: 1px solid #555;">Volver</button>
+    </header>
+
+    <div class="hero">
+      <div style="text-align: center; margin-bottom: 1rem;">
+        <span style="font-size: 4rem; display: block; margin-bottom: 0.5rem;">📜</span>
+        <h1 style="font-size: 3rem; margin: 0; font-family: 'Georgia', serif;">Cómo Jugar</h1>
+      </div>
+      <h2 class="title" style="font-size: 2rem; color: #B0B0B0; margin-top: 0;">Guía de Supervivencia</h2>
+      <p class="subtitle">Sigue estos pasos para dominar el juego</p>
+
+      <div class="cards-grid instructions-container">
+        <!-- Paso 1 -->
+        <div class="card instruction-card" style="animation-delay: 0.1s;">
+          <div class="card-content">
+            <div class="step-icon">👥</div>
+            <h3>Configuración</h3>
+            <p>Decidan cuántos participan y cuántos serán impostores. <br><small style="color:#E85D04">(Impostores < 1/3
+                  del total)</small>
+            </p>
+          </div>
+        </div>
+
+        <!-- Paso 2 -->
+        <div class="card instruction-card" style="animation-delay: 0.2s;">
+          <div class="card-content">
+            <div class="step-icon">🤫</div>
+            <h3>Tu Rol</h3>
+            <p>Cada uno verá su rol en secreto. Solo la persona con el dispositivo en mano debe ver la pantalla en ese
+              momento.</p>
+          </div>
+        </div>
+
+        <!-- Paso 3 -->
+        <div class="card instruction-card" style="animation-delay: 0.3s;">
+          <div class="card-content">
+            <div class="step-icon">👀</div>
+            <h3>Civiles</h3>
+            <p>Si no eres impostor, verás la palabra secreta "En Juego". ¡Cuídala y no reveles demasiado!</p>
+          </div>
+        </div>
+
+        <!-- Paso 4 -->
+        <div class="card instruction-card" style="animation-delay: 0.4s;">
+          <div class="card-content">
+            <div class="step-icon">🎭</div>
+            <h3>Impostores</h3>
+            <p>Verán una palabra pista para guiarse. También podrán ver quiénes son los otros impostores (si hay más).
+            </p>
+          </div>
+        </div>
+
+        <!-- Paso 5 -->
+        <div class="card instruction-card" style="animation-delay: 0.5s;">
+          <div class="card-content">
+            <div class="step-icon">🔪</div>
+            <h3>Ganan Impostores</h3>
+            <p>Si igualan o superan en número a los civiles, o si el último impostor deduce la palabra secreta al final.
+            </p>
+          </div>
+        </div>
+
+        <!-- Paso 6 -->
+        <div class="card instruction-card" style="animation-delay: 0.6s;">
+          <div class="card-content">
+            <div class="step-icon">🕵️</div>
+            <h3>Ganan Civiles</h3>
+            <p>Deben descubrir y expulsar a todos los impostores antes de que sea demasiado tarde.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- PANTALLA 2: CONFIGURACIÓN DEL JUEGO (Oculta al inicio) -->
   <div id="screen-setup" class="container hidden">
-    <div style="text-align: center; margin-top: 4rem;">
+    <header class="navbar">
+      <div class="logo" style="cursor: pointer;">
+        <span class="icon">🎭</span> El Impostor
+      </div>
+      <!-- No nav links needed here, just the persistent logo -->
+    </header>
+
+    <div style="text-align: center; margin-top: 2rem;">
       <h1>Configuración de Partida</h1>
       <p class="subtitle">Agrega a los jugadores para comenzar</p>
 
@@ -83,8 +136,25 @@
       </ul>
 
       <br>
-      <button id="btn-start-game" class="btn" style="background-color: #2a9d8f; display: none;">Comenzar
-        Reparto</button>
+      <button id="btn-start-game" class="btn" style="background-color: #2a9d8f; display: none;">Hecho</button>
+    </div>
+  </div>
+
+  <!-- MODAL: CANTIDAD DE IMPOSTORES -->
+  <div id="modal-impostors" class="modal hidden">
+    <div class="modal-content">
+      <h2>¿Quiénes mienten?</h2>
+      <p>Selecciona la cantidad de impostores</p>
+
+      <div class="input-group">
+        <label for="input-impostor-count" id="label-max-impostors">Máximo: 1</label>
+        <input type="number" id="input-impostor-count" min="1" value="1" class="input-dark">
+      </div>
+
+      <div class="modal-actions">
+        <button id="btn-cancel-impostors" class="btn btn-secondary">Cancelar</button>
+        <button id="btn-confirm-impostors" class="btn">Confirmar</button>
+      </div>
     </div>
   </div>
 
