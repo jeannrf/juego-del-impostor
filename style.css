@@ -598,6 +598,17 @@ body {
     box-sizing: border-box;
     /* Ensure no transforms are offsetting it */
     transform: translate(0, 0) !important;
+
+    /* FIX OVERFLOW: Allow height to grow */
+    height: auto !important;
+    min-height: 380px !important;
+    /* Keep the desired look but allow growth */
+    max-height: 85vh !important;
+    /* Cap it safely within screen */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* Center content vertically if scarce */
   }
 
   .role-card h2 {
