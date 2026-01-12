@@ -441,6 +441,14 @@ body {
 /* Background Enhancements */
 #screen-role-reveal {
   background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 100;
+  margin: 0;
+  padding: 0;
 }
 
 /* Premium Card Design */
