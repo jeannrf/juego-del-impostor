@@ -1004,6 +1004,6 @@ body {
 
   /* Espacio extra en la lista para que no quede tapada por el botón fijo */
   #player-list {
-    margin-bottom: 20px;
+    margin-bottom: 0;
   }
 }
