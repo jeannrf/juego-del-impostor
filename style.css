@@ -10,10 +10,15 @@
   --font-family: system-ui, -apple-system, sans-serif;
 }
 
+html,
 body {
   margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
   font-family: var(--font-family);
-  background-color: var(--bg-color);
+  background-color: #0F0E0E !important;
+  /* Force dark background */
   color: var(--text-main);
   line-height: 1.6;
 }
