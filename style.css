@@ -588,13 +588,16 @@ body {
 
 @media (max-width: 768px) {
   .role-card {
-    width: 85% !important;
-    /* Force width */
-    max-width: 340px !important;
+    width: 90% !important;
+    /* Slightly more relaxed than 85% */
+    max-width: 320px !important;
+    /* Safe zone for smaller devices */
     margin: 0 auto !important;
     padding: 2rem 1.5rem !important;
     border-radius: 20px;
     box-sizing: border-box;
+    /* Ensure no transforms are offsetting it */
+    transform: translate(0, 0) !important;
   }
 
   .role-card h2 {
@@ -604,10 +607,20 @@ body {
 
   #screen-role-reveal {
     padding: 0 !important;
+    margin: 0 !important;
     box-sizing: border-box;
-    width: 100vw;
-    /* Ensure full viewport width */
+    width: 100%;
+    /* Switch to % to avoid scrollbar logic issues */
+    height: 100%;
+    top: 0;
     left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+    display: flex;
+    /* Re-affirm flex */
+    justify-content: center;
+    align-items: center;
   }
 }
 

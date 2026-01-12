@@ -71,11 +71,20 @@
 
         /* MOBILE FIXES */
         @media (max-width: 768px) {
+            .instructions-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
             .instruction-card {
                 aspect-ratio: auto;
                 /* Dejar de forzar cuadrado en móvil */
                 min-height: auto;
                 padding: 1.5rem;
+                width: 90%;
+                max-width: 350px;
+                margin-bottom: 1rem;
             }
 
             .instruction-card .step-icon {
@@ -93,17 +102,17 @@
                 font-size: 0.95rem;
             }
 
-            /* Ajustes para los títulos principales (que usan clases de style.css pero reforzamos aquí) */
+            /* Ajustes para los títulos principales */
             .main-title {
                 font-size: 2.2rem !important;
             }
 
             .subtitle-header {
-                font-size: 1.4rem !important;
+                font-size: 1.2rem !important;
             }
 
             .icon-header {
-                font-size: 3rem !important;
+                font-size: 2.5rem !important;
             }
         }
     </style>
