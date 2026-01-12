@@ -114,6 +114,39 @@ body {
   font-size: 1.1rem;
 }
 
+/* How to Play Typography */
+.icon-header {
+  font-size: 4rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.main-title {
+  font-size: 3rem;
+  margin: 0;
+  font-family: 'Georgia', serif;
+}
+
+.subtitle-header {
+  font-size: 2rem;
+  color: #B0B0B0;
+  margin-top: 0;
+}
+
+@media (max-width: 768px) {
+  .icon-header {
+    font-size: 3rem;
+  }
+
+  .main-title {
+    font-size: 2.2rem;
+  }
+
+  .subtitle-header {
+    font-size: 1.5rem;
+  }
+}
+
 /* Grid de tarjetas (Removed) */
 
 .card {
@@ -548,25 +581,55 @@ body {
   justify-content: center;
   align-items: center;
   width: 100%;
-  padding: 20px;
+  padding: 0;
+  /* Remove padding as it might conflict */
   box-sizing: border-box;
 }
 
 @media (max-width: 600px) {
   .role-card {
-    width: 100%;
-    /* Wider on small mobile */
-    padding: 2.5rem 1.5rem;
+    width: 90%;
+    /* Prevent touching edges */
+    max-width: 350px;
+    /* Limit max width */
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
     border-radius: 20px;
+    box-sizing: border-box;
   }
 
   .role-card h2 {
-    font-size: 2rem;
+    font-size: 1.8rem;
+    /* Smaller title */
   }
 
   #screen-role-reveal {
-    padding-bottom: 40px;
-    /* Space for bottom interaction areas if any */
+    padding: 0 1rem;
+    /* Safe breathing room */
+    box-sizing: border-box;
+  }
+}
+
+/* Typography fix for How To Play on Mobile */
+@media (max-width: 768px) {
+  .hero .title {
+    font-size: 2rem;
+    /* Reduce main title size */
+  }
+
+  .instruction-card {
+    min-height: auto;
+    /* Remove forced height */
+    aspect-ratio: auto;
+    padding: 1.5rem;
+  }
+
+  .instruction-card h3 {
+    font-size: 1.4rem;
+  }
+
+  .instruction-card .step-icon {
+    font-size: 3.5rem;
   }
 }
 
@@ -626,6 +689,9 @@ body {
   width: 40px;
   height: 40px;
   align-items: center;
+  display: flex;
+  /* Ensure flex behavior */
+  justify-content: center;
 }
 
 /* =========================================
