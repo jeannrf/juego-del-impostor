@@ -586,14 +586,13 @@ body {
   box-sizing: border-box;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .role-card {
-    width: 90%;
-    /* Prevent touching edges */
-    max-width: 350px;
-    /* Limit max width */
-    margin: 0 auto;
-    padding: 2rem 1.5rem;
+    width: 85% !important;
+    /* Force width */
+    max-width: 340px !important;
+    margin: 0 auto !important;
+    padding: 2rem 1.5rem !important;
     border-radius: 20px;
     box-sizing: border-box;
   }
@@ -604,9 +603,11 @@ body {
   }
 
   #screen-role-reveal {
-    padding: 0 1rem;
-    /* Safe breathing room */
+    padding: 0 !important;
     box-sizing: border-box;
+    width: 100vw;
+    /* Ensure full viewport width */
+    left: 0;
   }
 }
 

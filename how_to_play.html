@@ -31,13 +31,10 @@
             align-items: center;
             text-align: center;
             aspect-ratio: 1 / 0.9;
-            /* Casi cuadradas */
             padding: 2rem;
             min-height: 300px;
-            /* Asegurar buena altura */
         }
 
-        /* Asegurar que el contenido interno se centre */
         .instruction-card .card-content {
             display: flex;
             flex-direction: column;
@@ -52,7 +49,6 @@
             margin-bottom: 1rem;
             line-height: 1;
             display: block;
-            /* Reset overrides from generic .step-icon in style.css */
             width: auto;
             height: auto;
             background: transparent;
@@ -71,6 +67,44 @@
         .instruction-card p {
             color: var(--text-muted);
             line-height: 1.6;
+        }
+
+        /* MOBILE FIXES */
+        @media (max-width: 768px) {
+            .instruction-card {
+                aspect-ratio: auto;
+                /* Dejar de forzar cuadrado en móvil */
+                min-height: auto;
+                padding: 1.5rem;
+            }
+
+            .instruction-card .step-icon {
+                font-size: 3rem;
+                /* Icono más pequeño */
+                margin-bottom: 0.5rem;
+            }
+
+            .instruction-card h3 {
+                font-size: 1.4rem;
+                /* Texto más pequeño */
+            }
+
+            .instruction-card p {
+                font-size: 0.95rem;
+            }
+
+            /* Ajustes para los títulos principales (que usan clases de style.css pero reforzamos aquí) */
+            .main-title {
+                font-size: 2.2rem !important;
+            }
+
+            .subtitle-header {
+                font-size: 1.4rem !important;
+            }
+
+            .icon-header {
+                font-size: 3rem !important;
+            }
         }
     </style>
 </head>
