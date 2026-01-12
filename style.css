@@ -939,3 +939,46 @@ body {
 .player-list-scroll::-webkit-scrollbar-thumb:hover {
   background: var(--primary-color);
 }
+
+/* =========================================
+   GLOBAL MOBILE OPTIMIZATIONS
+   ========================================= */
+@media (max-width: 768px) {
+
+  /* Reducir tamaño de títulos gigantes en móviles */
+  .title,
+  h1 {
+    font-size: clamp(2rem, 5vw, 2.5rem);
+  }
+
+  /* Ajustar Hero para pantallas pequeñas */
+  .hero {
+    padding: 2rem 0;
+    min-height: auto;
+    /* Permitir que fluya si hace falta */
+  }
+
+  /* Aprovechar mejor el ancho en móvil */
+  .container {
+    padding: 0 16px;
+  }
+
+  /* Cartas e instrucciones más compactas */
+  .instruction-card,
+  .card {
+    padding: 1.5rem;
+    min-height: auto;
+  }
+
+  /* Inputs más amigables (evita zoom en iOS con 16px) */
+  input[type="text"],
+  input[type="number"] {
+    font-size: 16px !important;
+    padding: 12px !important;
+  }
+
+  /* Botones fáciles de tocar */
+  .btn {
+    padding: 0.8rem 1.5rem;
+  }
+}
