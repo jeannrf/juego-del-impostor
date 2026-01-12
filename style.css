@@ -982,16 +982,24 @@ body {
     padding: 0.8rem 1.5rem;
   }
 
-  /* FIX: Botón 'Hecho' fijo abajo para que no desaparezca con la lista larga */
+  /* Habilitar scroll en TODA la página para móvil */
+  html,
+  body {
+    overflow-y: auto !important;
+    height: auto !important;
+    position: static !important;
+  }
+
+  /* REVERT: Botón 'Hecho' vuelve al flujo normal, ya que ahora hay scroll */
   #btn-start-game {
-    position: fixed;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1000;
-    width: auto;
-    min-width: 200px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+    position: static;
+    transform: none;
+    box-shadow: none;
+    width: 100%;
+    /* Botón ancho fácil de ver */
+    margin-top: 1rem;
+    display: block;
+    /* Asegurar que se comporte como bloque */
   }
 
   /* Espacio extra en la lista para que no quede tapada por el botón fijo */
