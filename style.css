@@ -823,3 +823,63 @@ body {
   color: #E85D04;
   font-size: clamp(2rem, 8vw, 3rem);
 }
+
+/* BOTÓN NUEVA PALABRA (Rectangular y Resaltante) */
+.btn-new-word-rect {
+  position: fixed;
+  top: 24px;
+  right: 90px;
+  /* Separado del botón de salida */
+  background: rgba(42, 157, 143, 0.2);
+  color: #2a9d8f;
+  border: 2px solid #2a9d8f;
+  padding: 0.5rem 1.2rem;
+  border-radius: 8px;
+  /* Rectangular con bordes suaves */
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  z-index: 2000;
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(42, 157, 143, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.btn-new-word-rect:hover {
+  background: #2a9d8f;
+  color: #000;
+  box-shadow: 0 0 20px rgba(42, 157, 143, 0.6);
+  transform: translateY(-2px);
+}
+
+.btn-new-word-rect.hidden {
+  display: none !important;
+}
+
+@media (max-width: 600px) {
+  .btn-new-word-rect {
+    top: 24px;
+    right: 80px;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 10px rgba(42, 157, 143, 0.3);
+  }
+
+  50% {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(42, 157, 143, 0.8);
+  }
+
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 10px rgba(42, 157, 143, 0.3);
+  }
+}

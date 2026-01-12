@@ -206,7 +206,7 @@ if (btnConfirmImpostors) {
     // const cat = selectCategory.value; // Ya no usamos categorías
 
     if (players.length < 3) {
-      alert("Necesitas al menos 3 jugadores para jugar.");
+      showModal("Error", "Necesitas al menos 3 jugadores para jugar.", null, null, "Entendido");
       return;
     }
 
@@ -232,8 +232,11 @@ function initGame(impostorCount) {
   // 2. Asignar Roles
   // Creamos array de indices [0, 1, 2...]
   let indices = players.map((_, i) => i);
-  // Mezclamos indices
-  indices.sort(() => Math.random() - 0.5);
+  // Mezclamos indices usando Fisher-Yates (Mejor aleatoriedad)
+  for (let i = indices.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [indices[i], indices[j]] = [indices[j], indices[i]];
+  }
 
   // Los primeros 'impostorCount' son impostores
   const impostorIndices = indices.slice(0, impostorCount);
@@ -406,26 +409,70 @@ if (btnGotoVote) {
   });
 }
 
+// Sistema de Modal Personalizado para reemplazar alert/confirm
+function showModal(title, msg, onConfirm, onCancel, confirmText = "Aceptar", cancelText = "Cancelar") {
+  const modal = document.getElementById('modal-generic');
+  const mTitle = document.getElementById('modal-generic-title');
+  const mMsg = document.getElementById('modal-generic-msg');
+  const mActions = document.getElementById('modal-generic-actions');
+
+  if (!modal) return;
+
+  mTitle.textContent = title;
+  // Permitir HTML en el mensaje para saltos de línea
+  mMsg.innerHTML = msg.replace(/\n/g, '<br>');
+  mActions.innerHTML = '';
+
+  // Botón Cancelar (Solo si hay callback de cancelar o es tipo confirmación)
+  if (onCancel) {
+    const btnCancel = document.createElement('button');
+    btnCancel.textContent = cancelText;
+    btnCancel.className = 'btn btn-secondary';
+    btnCancel.onclick = () => {
+      modal.classList.add('hidden');
+      onCancel();
+    };
+    mActions.appendChild(btnCancel);
+  }
+
+  // Botón Confirmar
+  const btnConfirm = document.createElement('button');
+  btnConfirm.textContent = confirmText;
+  btnConfirm.className = 'btn';
+  // Si es alerta simple, quizás queramos otro color, pero dejémoslo estándar por ahora
+  btnConfirm.onclick = () => {
+    modal.classList.add('hidden');
+    if (onConfirm) onConfirm();
+  };
+  mActions.appendChild(btnConfirm);
+
+  modal.classList.remove('hidden');
+}
+
 // Botón "Nueva Palabra" (Reiniciar ronda con mismos players)
 if (btnNewWord) {
   btnNewWord.addEventListener('click', () => {
-    if (confirm("¿Estás seguro? Se sorteará una nueva palabra y nuevos roles.")) {
-      // Ocultar botón al reiniciar
-      btnNewWord.classList.add('hidden');
+    showModal(
+      "¿Nueva Ronda?",
+      "Se sorteará una nueva palabra y nuevos roles.",
+      () => {
+        // Ocultar botón al reiniciar
+        btnNewWord.classList.add('hidden');
 
-      // Rotar jugador inicial
-      currentStarterIndex = (currentStarterIndex + 1) % players.length;
+        // Rotar jugador inicial
+        currentStarterIndex = (currentStarterIndex + 1) % players.length;
 
-      // Reiniciar juego con los mismos parámetros
-      // Necesitamos recordar cuantos impostores habíamos configurado en la sesión actual
-      const currentImpostorCount = gameSession.impostorCount || 1;
+        // Reiniciar juego con los mismos parámetros
+        const currentImpostorCount = gameSession.impostorCount || 1;
 
-      // Ocultar pantalla actual
-      screenGameRound.classList.add('hidden');
+        // Ocultar pantalla actual
+        screenGameRound.classList.add('hidden');
 
-      // Re-init
-      initGame(currentImpostorCount);
-    }
+        // Re-init
+        initGame(currentImpostorCount);
+      },
+      () => { } // Cancelar hace nada
+    );
   });
 }
 
@@ -457,30 +504,72 @@ function handleVote(targetIndex) {
   const target = gameSession.playersRoles[targetIndex];
   const isImpostor = target.isImpostor;
 
-  if (confirm(`¿Seguros que quieren expulsar a ${target.name}?`)) {
-    if (isImpostor) {
-      // IMPOSTOR ATRAPADO -> VA A DUELO FINAL
-      startFinalDuel(target);
-    } else {
-      // CIVIL ELIMINADO
-      alert(`${target.name} ERA... ¡UN CIVIL! 😱`);
-      target.isAlive = false;
+  showModal(
+    "¿Expulsar Jugador?",
+    `¿Seguros que quieren expulsar a ${target.name}?`,
+    () => {
+      // CONFIRMADO
+      if (isImpostor) {
+        // Verificar cuántos impostores quedan (incluyendo al actual que vamos a eliminar)
+        const activeImpostorsCount = gameSession.playersRoles.filter(p => p.isImpostor && p.isAlive).length;
 
-      // Verificar si ganaron los impostores (Impostores >= Civiles)
-      const aliveImpostors = gameSession.playersRoles.filter(p => p.isImpostor && p.isAlive).length;
-      const aliveCivilians = gameSession.playersRoles.filter(p => !p.isImpostor && p.isAlive).length;
-
-      if (aliveImpostors >= aliveCivilians) {
-        alert("¡LOS IMPOSTORES GANAN! Han igualado en número a los civiles.");
-        window.location.href = 'index.html'; // Volver al inicio
+        if (activeImpostorsCount > 1) {
+          // HAY MÁS IMPOSTORES: Solo se elimina a este
+          target.isAlive = false;
+          showModal(
+            "¡IMPOSTOR ELIMINADO! 🎭",
+            `Has atrapado a ${target.name}. Pero cuidado... ¡Quedan más impostores!`,
+            () => {
+              // Verificar si con esta baja los civiles ya ganaron automáticamente 
+              // (Aunque usualmente si quedan impostores el juego sigue, a menos que queden 0, que es el `else` de abajo)
+              startGameRound();
+            },
+            null,
+            "Continuar Juego"
+          );
+        } else {
+          // ES EL ÚLTIMO IMPOSTOR -> VA A DUELO FINAL (Oportunidad de ganar)
+          startFinalDuel(target);
+        }
       } else {
-        alert("El juego continúa...");
-        startGameRound();
+        // CIVIL ELIMINADO
+        target.isAlive = false;
+
+        showModal(
+          "¡ERROR! 😱",
+          `${target.name} ERA... ¡UN CIVIL!`,
+          () => {
+            // AL CERRAR EL MODAL DE ERROR...
+            // Verificar si ganaron los impostores
+            const aliveImpostors = gameSession.playersRoles.filter(p => p.isImpostor && p.isAlive).length;
+            const aliveCivilians = gameSession.playersRoles.filter(p => !p.isImpostor && p.isAlive).length;
+
+            if (aliveImpostors >= aliveCivilians) {
+              showGameOver(
+                "¡LOS IMPOSTORES GANAN!",
+                "Han igualado en número a los civiles."
+              );
+            } else {
+              // Si el juego sigue
+              showModal(
+                "El juego continúa",
+                "Quedan más civiles que impostores.",
+                () => { startGameRound(); },
+                null,
+                "Seguir Jugando"
+              );
+            }
+          },
+          null,
+          "Entendido"
+        );
       }
-    }
-  }
+    },
+    () => { }
+  );
 }
 
+/* FASE 4: DUELO FINAL (Impostor Opportunity) */
 /* FASE 4: DUELO FINAL (Impostor Opportunity) */
 function startFinalDuel(impostorPlayer) {
   if (screenVoting) screenVoting.classList.add('hidden');
@@ -505,13 +594,81 @@ function startFinalDuel(impostorPlayer) {
     const correctWord = gameSession.currentWordObj.word;
 
     if (guees.toLowerCase() === correctWord.toLowerCase()) {
-      alert(`¡${impostorPlayer.name} HA ACERTADO! 🎭\nLa palabra era "${correctWord}".\nEL IMPOSTOR GANA LA PARTIDA.`);
+      showGameOver(
+        `¡${impostorPlayer.name} HA ACERTADO! 🎭`,
+        `La palabra era "${correctWord}".\nEL IMPOSTOR GANA.`
+      );
     } else {
-      alert(`¡FALLÓ! Escribió "${guees}".\nLa palabra correcta era "${correctWord}".\n👮 LOS CIVILES GANAN.`);
+      showGameOver(
+        `¡${impostorPlayer.name} FALLÓ!`,
+        `La palabra era "${correctWord}".\n👮 LOS CIVILES GANAN.`
+      );
     }
-    window.location.href = 'index.html';
   });
 }
+
+// Nueva función para manejar el fin del juego sin salir de play.html
+function showGameOver(title, description) {
+  // Ocultar pantallas activas
+  if (screenVoting) screenVoting.classList.add('hidden');
+  if (screenFinalDuel) screenFinalDuel.classList.add('hidden');
+
+  // Mostrar pantalla principal de ronda
+  if (screenGameRound) screenGameRound.classList.remove('hidden');
+
+  // Referencias a elementos de Game Over
+  const resultContainer = document.getElementById('game-result-container');
+  const resultTitle = document.getElementById('game-result-title');
+  const resultDesc = document.getElementById('game-result-desc');
+  const instructionsList = document.getElementById('game-instructions-list');
+  const btnGotoVote = document.getElementById('btn-goto-vote');
+
+  // Actualizar contenido
+  if (resultTitle) resultTitle.textContent = title;
+  if (resultDesc) resultDesc.innerText = description; // innerText permite saltos de línea
+
+  // Mostrar contenedor de resultado y ocultar instrucciones
+  if (resultContainer) resultContainer.classList.remove('hidden');
+  if (instructionsList) instructionsList.classList.add('hidden');
+  if (btnGotoVote) btnGotoVote.classList.add('hidden');
+
+  // Mostrar botón "Nueva Palabra" RESALTADO
+  if (btnNewWord) {
+    btnNewWord.classList.remove('hidden');
+    // Añadir animación pulsante extra si se desea
+    btnNewWord.style.animation = "pulse 1.5s infinite";
+  }
+}
+
+// Actualizar startGameRound para resetear la vista de Game Over
+const originalStartGameRound = startGameRound;
+startGameRound = function () {
+  // Resetear UI de Game Over
+  const resultContainer = document.getElementById('game-result-container');
+  const instructionsList = document.getElementById('game-instructions-list');
+  const btnGotoVote = document.getElementById('btn-goto-vote');
+
+  if (resultContainer) resultContainer.classList.add('hidden');
+  if (instructionsList) instructionsList.classList.remove('hidden');
+  if (btnGotoVote) btnGotoVote.classList.remove('hidden');
+
+  // Resetear animación del botón
+  if (btnNewWord) btnNewWord.style.animation = "";
+
+  // Llamar a la función original (que ya habíamos definido arriba, pero como es function declaration, esto puede ser tricky. 
+  // Mejor reescribimos el cuerpo de la función original aquí para evitar problemas de hoisting/redefinición complejos).
+
+  if (screenRoleReveal) screenRoleReveal.classList.add('hidden');
+  if (screenGameRound) screenGameRound.classList.remove('hidden');
+  if (screenVoting) screenVoting.classList.add('hidden');
+
+  if (btnNewWord) btnNewWord.classList.remove('hidden');
+
+  if (roundStarterMsg && players.length > 0) {
+    const starterName = players[currentStarterIndex % players.length];
+    roundStarterMsg.innerHTML = `El jugador <strong style="color:var(--primary-color)">${starterName}</strong> comienza la ronda`;
+  }
+};
 
 /* LOGICA SALIDA DEL JUEGO (Botón X) */
 const btnExitGame = document.getElementById('btn-exit-game');

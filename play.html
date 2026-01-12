@@ -14,9 +14,8 @@
     <button id="btn-exit-game" class="btn-exit-fixed" title="Salir del juego">✕</button>
 
     <!-- NEW WORD BUTTON (Fixed near Exit) - Initially hidden -->
-    <button id="btn-new-word" class="btn-exit-fixed hidden"
-        style="right: 80px; background: rgba(42, 157, 143, 0.2); color: #2a9d8f; border-color: #2a9d8f;"
-        title="Nueva Palabra">🔄</button>
+    <!-- NEW WORD BUTTON (Fixed near Exit) - Initially hidden -->
+    <button id="btn-new-word" class="btn-new-word-rect hidden" title="Nueva Palabra">Nueva Palabras</button>
 
     <!-- PANTALLA 2: CONFIGURACIÓN DEL JUEGO (Visible al inicio de esta página) -->
     <div id="screen-setup" class="container">
@@ -92,8 +91,18 @@
         </header>
 
         <div class="hero">
-            <!-- Instructions List instead of Timer -->
-            <div class="game-instructions-list" style="text-align: left; max-width: 500px; margin: 0 auto;">
+            <!-- MENSAJE DE FIN DE JUEGO (Inicialmente oculto) -->
+            <div id="game-result-container" class="hidden" style="margin-bottom: 2rem;">
+                <h1 id="game-result-title" style="font-size: 3rem; margin-bottom: 0.5rem;">GANAN LOS CIVILES</h1>
+                <p id="game-result-desc" style="color: #ccc; font-size: 1.2rem;">El impostor era...</p>
+                <div style="margin-top: 3rem;">
+                    <p style="color: var(--primary-color);">⬇️ ¡Presiona arriba para Jugar de Nuevo! ↗️</p>
+                </div>
+            </div>
+
+            <!-- Lista de instrucciones (En lugar de temporizador) -->
+            <div id="game-instructions-list" class="game-instructions-list"
+                style="text-align: left; max-width: 500px; margin: 0 auto;">
 
                 <div class="instruction-step">
                     <div class="step-badge">1</div>
@@ -179,6 +188,17 @@
             <div class="modal-actions">
                 <button id="btn-cancel-exit" class="btn btn-secondary">Cancelar</button>
                 <button id="btn-confirm-exit" class="btn" style="background-color: #ef4444;">Salir</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: PREGUNTA / ALERTA (GENÉRICO) -->
+    <div id="modal-generic" class="modal hidden" style="z-index: 3000;">
+        <div class="modal-content" style="border: 1px solid var(--primary-color);">
+            <h2 id="modal-generic-title" style="margin-top:0;">Título</h2>
+            <p id="modal-generic-msg" style="margin: 1.5rem 0; font-size: 1.1rem;">Mensaje aquí...</p>
+            <div id="modal-generic-actions" class="modal-actions">
+                <!-- Se inyectarán botones por JS -->
             </div>
         </div>
     </div>
