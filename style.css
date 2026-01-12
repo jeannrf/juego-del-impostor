@@ -17,6 +17,15 @@ body {
   line-height: 1.6;
 }
 
+/* MODIFICADOR: Sin Scroll (Para la página de Juego) */
+.no-scroll {
+  overflow: hidden;
+  height: 100vh;
+  position: fixed;
+  /* Asegura que no se mueva en iOS */
+  width: 100%;
+}
+
 /* utilidades */
 .container {
   max-width: 1200px;
@@ -79,7 +88,16 @@ body {
 /* Hero Section */
 .hero {
   text-align: center;
-  padding: 4rem 0;
+  padding: 2rem 0;
+  /* Reduced padding slightly */
+  min-height: calc(100vh - 140px);
+  /* Fill remaining space minus header */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* Center content vertically */
+  align-items: center;
+  box-sizing: border-box;
 }
 
 .title {
@@ -826,18 +844,20 @@ body {
 
 /* BOTÓN NUEVA PALABRA (Rectangular y Resaltante) */
 .btn-new-word-rect {
-  position: fixed;
-  top: 24px;
-  right: 90px;
-  /* Separado del botón de salida */
+  position: relative;
+  display: inline-block;
+  width: fit-content;
+  height: auto;
+  margin: 2rem auto 0 auto;
+  /* Centrado extra por si acaso */
+
   background: rgba(42, 157, 143, 0.2);
   color: #2a9d8f;
   border: 2px solid #2a9d8f;
-  padding: 0.5rem 1.2rem;
+  padding: 0.8rem 2rem;
   border-radius: 8px;
-  /* Rectangular con bordes suaves */
   font-weight: bold;
-  font-size: 1rem;
+  font-size: 1.1rem;
   cursor: pointer;
   z-index: 2000;
   backdrop-filter: blur(5px);
@@ -845,13 +865,15 @@ body {
   box-shadow: 0 0 10px rgba(42, 157, 143, 0.3);
   text-transform: uppercase;
   letter-spacing: 1px;
+  line-height: normal;
+  /* Asegurar altura correcta */
 }
 
 .btn-new-word-rect:hover {
   background: #2a9d8f;
   color: #000;
   box-shadow: 0 0 20px rgba(42, 157, 143, 0.6);
-  transform: translateY(-2px);
+  transform: translateY(-5px);
 }
 
 .btn-new-word-rect.hidden {
@@ -860,10 +882,9 @@ body {
 
 @media (max-width: 600px) {
   .btn-new-word-rect {
-    top: 24px;
-    right: 80px;
-    padding: 0.4rem 0.8rem;
-    font-size: 0.8rem;
+    padding: 0.6rem 1.5rem;
+    font-size: 1rem;
+    margin-top: 1.5rem;
   }
 }
 
@@ -874,7 +895,8 @@ body {
   }
 
   50% {
-    transform: scale(1.1);
+    transform: scale(1.05);
+    /* Slight scale */
     box-shadow: 0 0 20px rgba(42, 157, 143, 0.8);
   }
 
@@ -882,4 +904,38 @@ body {
     transform: scale(1);
     box-shadow: 0 0 10px rgba(42, 157, 143, 0.3);
   }
+}
+
+/* LISTA DE JUGADORES CON SCROLLBAR PERSONALIZADO */
+.player-list-scroll {
+  list-style: none;
+  padding: 0;
+  max-width: 400px;
+  margin: 0 auto;
+  max-height: 40vh;
+  /* Un poco menos para asegurar que el botón se vea */
+  overflow-y: auto;
+  border-radius: 8px;
+  padding-right: 5px;
+  /* Espacio para el scrollbar */
+}
+
+/* Estilos del Scrollbar (Webkit: Chrome, Safari, Edge) */
+.player-list-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.player-list-scroll::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+
+.player-list-scroll::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.player-list-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-color);
 }

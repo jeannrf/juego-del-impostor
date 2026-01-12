@@ -48,14 +48,24 @@
         }
 
         .instruction-card .step-icon {
-            font-size: 4rem;
+            font-size: 5rem;
             margin-bottom: 1rem;
+            line-height: 1;
+            display: block;
+            /* Reset overrides from generic .step-icon in style.css */
+            width: auto;
+            height: auto;
+            background: transparent;
+            padding: 0;
         }
 
         .instruction-card h3 {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
+            margin-top: 10px;
             margin-bottom: 0.5rem;
             color: var(--primary-color);
+            position: relative;
+            z-index: 10;
         }
 
         .instruction-card p {
