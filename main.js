@@ -595,13 +595,13 @@ function startFinalDuel(impostorPlayer) {
 
     if (guees.toLowerCase() === correctWord.toLowerCase()) {
       showGameOver(
-        `¡${impostorPlayer.name} HA ACERTADO! 🎭`,
-        `La palabra era "${correctWord}".\nEL IMPOSTOR GANA.`
+        "¡EL IMPOSTOR GANA!",
+        `${impostorPlayer.name} adivinó la palabra secreta.`
       );
     } else {
       showGameOver(
-        `¡${impostorPlayer.name} FALLÓ!`,
-        `La palabra era "${correctWord}".\n👮 LOS CIVILES GANAN.`
+        "¡GANAN LOS CIVILES!",
+        `${impostorPlayer.name} falló el intento final.` // Redundancy removed
       );
     }
   });
@@ -614,18 +614,45 @@ function showGameOver(title, description) {
   if (screenFinalDuel) screenFinalDuel.classList.add('hidden');
 
   // Mostrar pantalla principal de ronda
-  if (screenGameRound) screenGameRound.classList.remove('hidden');
+  if (screenGameRound) {
+    screenGameRound.classList.remove('hidden');
+    screenGameRound.classList.add('results-mode'); // Add class for CSS scrolling
+  }
 
   // Referencias a elementos de Game Over
   const resultContainer = document.getElementById('game-result-container');
   const resultTitle = document.getElementById('game-result-title');
-  const resultDesc = document.getElementById('game-result-desc');
+  const resultSubtitle = document.getElementById('game-result-subtitle');
   const instructionsList = document.getElementById('game-instructions-list');
   const btnGotoVote = document.getElementById('btn-goto-vote');
 
-  // Actualizar contenido
+  // Referencias al Resumen
+  const sumWord = document.getElementById('summary-word');
+  const sumHint = document.getElementById('summary-hint');
+  const sumImpostors = document.getElementById('summary-impostors');
+
+  // Actualizar contenido Título y Subtítulo
   if (resultTitle) resultTitle.textContent = title;
-  if (resultDesc) resultDesc.innerText = description; // innerText permite saltos de línea
+  if (resultSubtitle) resultSubtitle.textContent = description;
+
+  // POPULAR DATOS DE RESUMEN
+  if (sumWord && gameSession.currentWordObj) {
+    sumWord.textContent = gameSession.currentWordObj.word;
+  }
+  if (sumHint && gameSession.currentWordObj) {
+    sumHint.textContent = gameSession.currentWordObj.hint;
+  }
+
+  if (sumImpostors) {
+    sumImpostors.innerHTML = ''; // Limpiar
+    // Filtrar impostores de la sesión
+    const impostors = gameSession.playersRoles.filter(p => p.isImpostor);
+    impostors.forEach(imp => {
+      const li = document.createElement('li');
+      li.textContent = imp.name;
+      sumImpostors.appendChild(li);
+    });
+  }
 
   // Mostrar contenedor de resultado y ocultar instrucciones
   if (resultContainer) resultContainer.classList.remove('hidden');
@@ -647,6 +674,8 @@ startGameRound = function () {
   const resultContainer = document.getElementById('game-result-container');
   const instructionsList = document.getElementById('game-instructions-list');
   const btnGotoVote = document.getElementById('btn-goto-vote');
+
+  if (screenGameRound) screenGameRound.classList.remove('results-mode'); // Reset CSS class
 
   if (resultContainer) resultContainer.classList.add('hidden');
   if (instructionsList) instructionsList.classList.remove('hidden');

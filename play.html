@@ -94,10 +94,41 @@
         <div class="hero">
             <!-- MENSAJE DE FIN DE JUEGO (Inicialmente oculto) -->
             <div id="game-result-container" class="hidden" style="margin-bottom: 2rem;">
-                <h1 id="game-result-title" style="font-size: 3rem; margin-bottom: 0.5rem;">GANAN LOS CIVILES</h1>
-                <p id="game-result-desc" style="color: #ccc; font-size: 1.2rem;">El impostor era...</p>
-                <div style="margin-top: 3rem;">
-                    <p style="color: var(--primary-color);">⬇️ ¡Presiona abajo para Jugar de Nuevo! ⬇️</p>
+                <h1 id="game-result-title" style="font-size: 3rem; margin-bottom: 0.5rem;">RESULTADO</h1>
+                <p id="game-result-subtitle" style="color: #ccc; font-size: 1.5rem; margin-bottom: 2rem;">...</p>
+
+                <!-- Resumen de Partida -->
+                <!-- Resumen de Partida Compacto -->
+                <div id="game-summary-details"
+                    style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 12px; margin: 0.5rem auto 1rem auto; max-width: 360px; text-align: center; border: 1px solid #333;">
+
+                    <div style="margin-bottom: 0.8rem;">
+                        <span
+                            style="color: #888; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 0.1rem;">Palabra
+                            Secreta</span>
+                        <div id="summary-word"
+                            style="font-size: 2rem; color: var(--primary-color); font-weight: bold; line-height: 1.1;">
+                            ...</div>
+                    </div>
+
+                    <div style="margin-bottom: 0.8rem; display: flex; justify-content: center; gap: 1rem;">
+                        <div>
+                            <span style="color: #888; font-size: 0.75rem; text-transform: uppercase;">Pista</span>
+                            <div id="summary-hint" style="font-size: 1.1rem; color: white;">...</div>
+                        </div>
+                    </div>
+
+                    <div style="border-top: 1px solid #444; padding-top: 0.8rem;">
+                        <span style="color: #888; font-size: 0.75rem; text-transform: uppercase;">Impostores</span>
+                        <ul id="summary-impostors"
+                            style="list-style: none; padding: 0; margin: 0.3rem 0 0 0; color: #ff6b6b; font-size: 1.1rem; font-weight: bold; display: flex; flex-direction: column; gap: 0.2rem;">
+                            <!-- JS populate -->
+                        </ul>
+                    </div>
+                </div>
+
+                <div style="margin-top: 1rem;">
+                    <!-- Botón Nueva Palabra se mostrará abajo -->
                 </div>
             </div>
 
