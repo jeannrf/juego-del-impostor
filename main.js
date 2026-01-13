@@ -350,7 +350,7 @@ function showRevealedScreen() {
     cardRoleDesc.textContent = "Eres un CIVIL.";
   }
 
-  btnCardAction.textContent = "Entendido / Borrar";
+  btnCardAction.textContent = "Entendido";
   btnCardAction.classList.add('btn-secondary');
 }
 
