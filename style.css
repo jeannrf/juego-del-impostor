@@ -578,6 +578,13 @@ body {
   }
 }
 
+/* Hide logo text on small screens to prevent overlap */
+@media (max-width: 480px) {
+  .logo-text {
+    display: none;
+  }
+}
+
 /* Base Responsive Utilities */
 .fullscreen-center {
   min-height: 100vh;
