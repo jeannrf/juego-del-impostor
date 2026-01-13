@@ -126,7 +126,7 @@ window.removePlayer = (index) => {
 let GAME_DATABASE = [];
 
 // Cargar datos al iniciar
-fetch('basededatos.json')
+fetch('database.json')
   .then(response => {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);

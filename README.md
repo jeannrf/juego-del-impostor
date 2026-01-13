@@ -33,7 +33,7 @@ Un emocionante juego web de deducción social optimizado para móviles (diseño 
 *   **HTML5**: Estructura semántica dividida en múltiples vistas (`index.html`, `play.html`, `how_to_play.html`) para mejor organización.
 *   **CSS3**: Estilos avanzados sin frameworks. Uso de Variables CSS, Flexbox, Grid y Media Queries específicas para móviles.
 *   **JavaScript (ES6+)**: Lógica de juego robusta, manejo del DOM y máquina de estados para las fases del juego.
-*   **JSON**: Base de datos de palabras flexible y fácil de expandir en `basededatos.json`.
+*   **JSON**: Base de datos de palabras flexible y fácil de expandir en `database.json`.
 
 ---
 
@@ -46,7 +46,7 @@ Un emocionante juego web de deducción social optimizado para móviles (diseño 
 ├── how_to_play.html    # Guía visual de instrucciones
 ├── style.css           # Estilos globales y temas
 ├── main.js             # Lógica principal y control de flujo
-├── basededatos.json    # Colección de palabras y pistas
+├── database.json       # Colección de palabras y pistas
 └── README.md           # Documentación
 ```
 
