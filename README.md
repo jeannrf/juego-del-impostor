@@ -1,6 +1,6 @@
 # 🎭 El Juego del Impostor
 
-![Estado del Proyecto](https://img.shields.io/badge/Estado-Terminado-green)
+![Estado del Proyecto](https://img.shields.io/badge/Estado-Funcional-green)
 ![Tecnologias](https://img.shields.io/badge/Tech-HTML%20%7C%20CSS%20%7C%20JS-orange)
 
 Un emocionante juego web de deducción social optimizado para móviles (diseño "Mobile First"). Reúnete con tus amigos, asignen roles y descubran quién es el impostor antes de que sea demasiado tarde.
