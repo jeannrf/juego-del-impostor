@@ -579,7 +579,7 @@ body {
 }
 
 /* Hide logo text on small screens to prevent overlap */
-@media (max-width: 480px) {
+@media (max-width: 768px) {
   .logo-text {
     display: none;
   }
