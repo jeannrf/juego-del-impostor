@@ -160,6 +160,45 @@ const btnCancelImpostors = document.getElementById('btn-cancel-impostors');
 const btnConfirmImpostors = document.getElementById('btn-confirm-impostors');
 const inputImpostorCount = document.getElementById('input-impostor-count');
 const labelMaxImpostors = document.getElementById('label-max-impostors');
+
+// Stepper Ref
+const btnDecImpostor = document.getElementById('btn-dec-impostor');
+const btnIncImpostor = document.getElementById('btn-inc-impostor');
+const displayImpostorCount = document.getElementById('display-impostor-count');
+
+function updateStepperUI(val, max) {
+  if (val < 1) val = 1;
+  if (val > max) val = max;
+
+  inputImpostorCount.value = val;
+  if (displayImpostorCount) displayImpostorCount.textContent = val;
+
+  if (btnDecImpostor) {
+    btnDecImpostor.style.opacity = val <= 1 ? "0.3" : "1";
+    btnDecImpostor.style.pointerEvents = val <= 1 ? "none" : "auto";
+  }
+  if (btnIncImpostor) {
+    btnIncImpostor.style.opacity = val >= max ? "0.3" : "1";
+    btnIncImpostor.style.pointerEvents = val >= max ? "none" : "auto";
+  }
+}
+
+// Stepper Listeners
+if (btnDecImpostor) {
+  btnDecImpostor.addEventListener('click', () => {
+    let max = parseInt(inputImpostorCount.getAttribute('max')) || 1;
+    let current = parseInt(inputImpostorCount.value) || 1;
+    updateStepperUI(current - 1, max);
+  });
+}
+
+if (btnIncImpostor) {
+  btnIncImpostor.addEventListener('click', () => {
+    let max = parseInt(inputImpostorCount.getAttribute('max')) || 1;
+    let current = parseInt(inputImpostorCount.value) || 1;
+    updateStepperUI(current + 1, max);
+  });
+}
 // Nota: selectCategory ya no es necesario con el nuevo JSON sin categorías fijas.
 
 // Referencias nuevas pantallas
@@ -182,13 +221,16 @@ const finalGuessOptions = document.getElementById('final-guess-options');
 
 // Botón "Hecho" (Antes Start Game) -> Configuración
 btnStartGame.addEventListener('click', () => {
-  const maxImpostors = Math.ceil(players.length / 2) - 1; // Regla: Max = ceil(N/2) - 1
+  let maxImpostors = Math.ceil(players.length / 2) - 1;
+  if (maxImpostors < 1) maxImpostors = 1;
 
-  inputImpostorCount.max = maxImpostors;
-  inputImpostorCount.value = 1;
-  if (inputImpostorCount.value > maxImpostors) inputImpostorCount.value = maxImpostors;
+  inputImpostorCount.setAttribute('max', maxImpostors);
 
   labelMaxImpostors.textContent = `Impostores (Máximo: ${maxImpostors})`;
+
+  // Init Stepper
+  updateStepperUI(1, maxImpostors);
+
   modalImpostors.classList.remove('hidden');
 });
 

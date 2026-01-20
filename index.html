@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Juego del Impostor</title>
   <!-- CSS Normal -->
-  <link rel="stylesheet" href="style.css?v=3">
+  <link rel="stylesheet" href="style.css?v=5">
   <style>
     /* Ajustes para celular (Responsive) */
     @media (max-width: 768px) {
@@ -189,7 +189,12 @@
       <div class="input-group">
         <label for="input-impostor-count" id="label-max-impostors"
           style="display:block; margin-bottom:0.5rem; color:#B0B0B0;">Impostores (Máximo: 1)</label>
-        <input type="number" id="input-impostor-count" min="1" value="1" class="input-dark">
+        <div class="stepper-control">
+          <button id="btn-dec-impostor" class="btn-stepper">−</button>
+          <span id="display-impostor-count" class="stepper-value">1</span>
+          <button id="btn-inc-impostor" class="btn-stepper">+</button>
+        </div>
+        <input type="hidden" id="input-impostor-count" value="1">
       </div>
 
       <div class="modal-actions">
@@ -279,7 +284,7 @@
   </div>
 
   <!-- JS Normal al final del body -->
-  <script src="main.js?v=2"></script>
+  <script src="main.js?v=3"></script>
 </body>
 
 </html>

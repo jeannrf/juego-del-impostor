@@ -1166,3 +1166,49 @@ body {
     margin-bottom: 0;
   }
 }
+
+/* Stepper Control */
+.stepper-control {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.btn-stepper {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  font-size: 2rem;
+  line-height: 1;
+  font-weight: bold;
+  background-color: var(--card-bg);
+  border: 2px solid #555;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  user-select: none;
+}
+
+.btn-stepper:hover {
+  border-color: var(--primary-color);
+  background-color: #333;
+  color: var(--primary-color);
+}
+
+.btn-stepper:active {
+  transform: scale(0.9);
+}
+
+.stepper-value {
+  font-size: 3.5rem;
+  font-weight: bold;
+  min-width: 60px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  color: white;
+}
