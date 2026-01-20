@@ -166,6 +166,9 @@ const btnDecImpostor = document.getElementById('btn-dec-impostor');
 const btnIncImpostor = document.getElementById('btn-inc-impostor');
 const displayImpostorCount = document.getElementById('display-impostor-count');
 
+// function updateStepperUI: Actualiza visualmente el contador y los botones
+// Verifica límites (mínimo 1, máximo dinámico según jugadores)
+// Deshabilita botones si se llega al límite
 function updateStepperUI(val, max) {
   if (val < 1) val = 1;
   if (val > max) val = max;
@@ -183,6 +186,8 @@ function updateStepperUI(val, max) {
   }
 }
 
+// Event Listeners para los botones del Stepper
+// Calculan el nuevo valor basándose en el input oculto y el atributo max asignado dinámicamente
 // Stepper Listeners
 if (btnDecImpostor) {
   btnDecImpostor.addEventListener('click', () => {
