@@ -1,552 +1,502 @@
 [
-    {
-        "id": 1,
-        "word": "Cajero Automático",
-        "hint": "Transacción"
-    },
-    {
-        "id": 2,
-        "word": "Paracaídas",
-        "hint": "Gravedad"
-    },
-    {
-        "id": 3,
-        "word": "Gimnasio",
-        "hint": "Esfuerzo"
-    },
-    {
-        "id": 4,
-        "word": "Biblioteca",
-        "hint": "Silencio"
-    },
-    {
-        "id": 5,
-        "word": "Cine",
-        "hint": "Espectador"
-    },
-    {
-        "id": 6,
-        "word": "Dentista",
-        "hint": "Instrumentos"
-    },
-    {
-        "id": 7,
-        "word": "Zoológico",
-        "hint": "Cautiverio"
-    },
-    {
-        "id": 8,
-        "word": "Panadería",
-        "hint": "Temperatura"
-    },
-    {
-        "id": 9,
-        "word": "Boda",
-        "hint": "Compromiso"
-    },
-    {
-        "id": 10,
-        "word": "Submarino",
-        "hint": "Profundidad"
-    },
-    {
-        "id": 11,
-        "word": "Cansado",
-        "hint": "Reposo"
-    },
-    {
-        "id": 12,
-        "word": "Luz",
-        "hint": "Claridad"
-    },
-    {
-        "id": 13,
-        "word": "Almuerzo",
-        "hint": "Nutrición"
-    },
-    {
-        "id": 14,
-        "word": "Golpe",
-        "hint": "Impacto"
-    },
-    {
-        "id": 15,
-        "word": "Arena",
-        "hint": "Partícula"
-    },
-    {
-        "id": 16,
-        "word": "Agua",
-        "hint": "Hidratación"
-    },
-    {
-        "id": 17,
-        "word": "Peso",
-        "hint": "Carga"
-    },
-    {
-        "id": 18,
-        "word": "Número",
-        "hint": "Cantidad"
-    },
-    {
-        "id": 19,
-        "word": "Suave",
-        "hint": "Textura"
-    },
-    {
-        "id": 20,
-        "word": "Pasta",
-        "hint": "Trigo"
-    },
-    {
-        "id": 21,
-        "word": "Entrar",
-        "hint": "Acceso"
-    },
-    {
-        "id": 22,
-        "word": "Brujas",
-        "hint": "Magia"
-    },
-    {
-        "id": 23,
-        "word": "Ratón",
-        "hint": "Pequeño"
-    },
-    {
-        "id": 24,
-        "word": "Círculo",
-        "hint": "Geometría"
-    },
-    {
-        "id": 25,
-        "word": "Verano",
-        "hint": "Estación"
-    },
-    {
-        "id": 26,
-        "word": "Dulce",
-        "hint": "Sabor"
-    },
-    {
-        "id": 27,
-        "word": "Desvelar",
-        "hint": "Nocturno"
-    },
-    {
-        "id": 28,
-        "word": "Cáscara",
-        "hint": "Protección"
-    },
-    {
-        "id": 29,
-        "word": "Mañana",
-        "hint": "Inicio"
-    },
-    {
-        "id": 30,
-        "word": "Amigo",
-        "hint": "Vínculo"
-    },
-    {
-        "id": 31,
-        "word": "Salvaje",
-        "hint": "Naturaleza"
-    },
-    {
-        "id": 32,
-        "word": "Cuernos",
-        "hint": "Animal"
-    },
-    {
-        "id": 33,
-        "word": "Fruta",
-        "hint": "Saludable"
-    },
-    {
-        "id": 34,
-        "word": "Silla",
-        "hint": "Soporte"
-    },
-    {
-        "id": 35,
-        "word": "Espejo",
-        "hint": "Reflejo"
-    },
-    {
-        "id": 36,
-        "word": "Reloj",
-        "hint": "Medición"
-    },
-    {
-        "id": 37,
-        "word": "Paraguas",
-        "hint": "Clima"
-    },
-    {
-        "id": 38,
-        "word": "Mochila",
-        "hint": "Traslado"
-    },
-    {
-        "id": 39,
-        "word": "Teléfono",
-        "hint": "Señal"
-    },
-    {
-        "id": 40,
-        "word": "Almohada",
-        "hint": "Descanso"
-    },
-    {
-        "id": 41,
-        "word": "Llave",
-        "hint": "Seguridad"
-    },
-    {
-        "id": 42,
-        "word": "Escoba",
-        "hint": "Higiene"
-    },
-    {
-        "id": 43,
-        "word": "Computadora",
-        "hint": "Procesamiento"
-    },
-    {
-        "id": 44,
-        "word": "Lentes",
-        "hint": "Visión"
-    },
-    {
-        "id": 45,
-        "word": "Botella",
-        "hint": "Contenedor"
-    },
-    {
-        "id": 46,
-        "word": "Control remoto",
-        "hint": "Distancia"
-    },
-    {
-        "id": 47,
-        "word": "Cámara",
-        "hint": "Recuerdo"
-    },
-    {
-        "id": 48,
-        "word": "Jabón",
-        "hint": "Espuma"
-    },
-    {
-        "id": 49,
-        "word": "Toalla",
-        "hint": "Secado"
-    },
-    {
-        "id": 50,
-        "word": "Tijeras",
-        "hint": "Corte"
-    },
-    {
-        "id": 51,
-        "word": "Pizza",
-        "hint": "Circular"
-    },
-    {
-        "id": 52,
-        "word": "Helado",
-        "hint": "Frío"
-    },
-    {
-        "id": 53,
-        "word": "Chocolate",
-        "hint": "Cacao"
-    },
-    {
-        "id": 54,
-        "word": "Café",
-        "hint": "Energía"
-    },
-    {
-        "id": 55,
-        "word": "Hamburguesa",
-        "hint": "Capas"
-    },
-    {
-        "id": 56,
-        "word": "Huevo",
-        "hint": "Origen"
-    },
-    {
-        "id": 57,
-        "word": "Pan",
-        "hint": "Horno"
-    },
-    {
-        "id": 58,
-        "word": "Leche",
-        "hint": "Ordeño"
-    },
-    {
-        "id": 59,
-        "word": "Queso",
-        "hint": "Lácteo"
-    },
-    {
-        "id": 60,
-        "word": "Sopa",
-        "hint": "Caliente"
-    },
-    {
-        "id": 61,
-        "word": "Pastel",
-        "hint": "Celebración"
-    },
-    {
-        "id": 62,
-        "word": "Papas fritas",
-        "hint": "Aceite"
-    },
-    {
-        "id": 63,
-        "word": "Jugo",
-        "hint": "Exprimido"
-    },
-    {
-        "id": 64,
-        "word": "Arroz",
-        "hint": "Grano"
-    },
-    {
-        "id": 65,
-        "word": "Galleta",
-        "hint": "Crujiente"
-    },
-    {
-        "id": 66,
-        "word": "Sal",
-        "hint": "Mineral"
-    },
-    {
-        "id": 67,
-        "word": "Mantequilla",
-        "hint": "Grasa"
-    },
-    {
-        "id": 68,
-        "word": "Ensalada",
-        "hint": "Vegetal"
-    },
-    {
-        "id": 69,
-        "word": "Perro",
-        "hint": "Lealtad"
-    },
-    {
-        "id": 70,
-        "word": "Gato",
-        "hint": "Felino"
-    },
-    {
-        "id": 71,
-        "word": "Elefante",
-        "hint": "Memoria"
-    },
-    {
-        "id": 72,
-        "word": "Jirafa",
-        "hint": "Altura"
-    },
-    {
-        "id": 73,
-        "word": "León",
-        "hint": "Realeza"
-    },
-    {
-        "id": 74,
-        "word": "Vaca",
-        "hint": "Granja"
-    },
-    {
-        "id": 75,
-        "word": "Caballo",
-        "hint": "Galope"
-    },
-    {
-        "id": 76,
-        "word": "Mono",
-        "hint": "Agilidad"
-    },
-    {
-        "id": 77,
-        "word": "Pájaro",
-        "hint": "Plumas"
-    },
-    {
-        "id": 78,
-        "word": "Pez",
-        "hint": "Escamas"
-    },
-    {
-        "id": 79,
-        "word": "Conejo",
-        "hint": "Salto"
-    },
-    {
-        "id": 80,
-        "word": "Pato",
-        "hint": "Pico"
-    },
-    {
-        "id": 81,
-        "word": "Mariposa",
-        "hint": "Vuelo"
-    },
-    {
-        "id": 82,
-        "word": "Cerdo",
-        "hint": "Lodo"
-    },
-    {
-        "id": 83,
-        "word": "Tigre",
-        "hint": "Rayas"
-    },
-    {
-        "id": 84,
-        "word": "Oso",
-        "hint": "Hibernación"
-    },
-    {
-        "id": 85,
-        "word": "Serpiente",
-        "hint": "Reptil"
-    },
-    {
-        "id": 86,
-        "word": "Oveja",
-        "hint": "Lana"
-    },
-    {
-        "id": 87,
-        "word": "Gallina",
-        "hint": "Cresta"
-    },
-    {
-        "id": 88,
-        "word": "Tiburón",
-        "hint": "Depredador"
-    },
-    {
-        "id": 89,
-        "word": "Escuela",
-        "hint": "Educación"
-    },
-    {
-        "id": 90,
-        "word": "Hospital",
-        "hint": "Emergencia"
-    },
-    {
-        "id": 91,
-        "word": "Playa",
-        "hint": "Costa"
-    },
-    {
-        "id": 92,
-        "word": "Parque",
-        "hint": "Recreación"
-    },
-    {
-        "id": 93,
-        "word": "Supermercado",
-        "hint": "Abastecimiento"
-    },
-    {
-        "id": 94,
-        "word": "Restaurante",
-        "hint": "Servicio"
-    },
-    {
-        "id": 95,
-        "word": "Cine",
-        "hint": "Pantalla"
-    },
-    {
-        "id": 96,
-        "word": "Estadio",
-        "hint": "Multitud"
-    },
-    {
-        "id": 97,
-        "word": "Aeropuerto",
-        "hint": "Equipaje"
-    },
-    {
-        "id": 98,
-        "word": "Banco",
-        "hint": "Finanzas"
-    },
-    {
-        "id": 99,
-        "word": "Iglesia",
-        "hint": "Fe"
-    },
-    {
-        "id": 100,
-        "word": "Gimnasio",
-        "hint": "Rutina"
-    },
-    {
-        "id": 101,
-        "word": "Farmacia",
-        "hint": "Medicina"
-    },
-    {
-        "id": 102,
-        "word": "Nieve",
-        "hint": "Congelado"
-    },
-    {
-        "id": 103,
-        "word": "Lluvia",
-        "hint": "Humedad"
-    },
-    {
-        "id": 104,
-        "word": "Sol",
-        "hint": "Estrella"
-    },
-    {
-        "id": 105,
-        "word": "Montaña",
-        "hint": "Elevación"
-    },
-    {
-        "id": 106,
-        "word": "Río",
-        "hint": "Corriente"
-    },
-    {
-        "id": 107,
-        "word": "Desierto",
-        "hint": "Aridez"
-    },
-    {
-        "id": 108,
-        "word": "Isla",
-        "hint": "Aislamiento"
-    },
-    {
-        "id": 109,
-        "word": "Profesor",
-        "hint": "Enseñanza"
-    },
-    {
-        "id": 110,
-        "word": "Doctor",
-        "hint": "Anatomía"
-    }
+    { "id": 1, "word": "Cajero Automático", "hint": "PIN" },
+    { "id": 2, "word": "Paracaídas", "hint": "Cordaje" },
+    { "id": 3, "word": "Gimnasio", "hint": "Vestuario" },
+    { "id": 4, "word": "Biblioteca", "hint": "Catálogo" },
+    { "id": 5, "word": "Cine", "hint": "Butaca" },
+    { "id": 6, "word": "Dentista", "hint": "Esmalte" },
+    { "id": 7, "word": "Zoológico", "hint": "Jaula" },
+    { "id": 8, "word": "Panadería", "hint": "Levadura" },
+    { "id": 9, "word": "Boda", "hint": "Alianza" },
+    { "id": 10, "word": "Submarino", "hint": "Periscopio" },
+    { "id": 11, "word": "Cansado", "hint": "Párpados" },
+    { "id": 12, "word": "Luz", "hint": "Fotón" },
+    { "id": 13, "word": "Almuerzo", "hint": "Mediodía" },
+    { "id": 14, "word": "Golpe", "hint": "Contusión" },
+    { "id": 15, "word": "Arena", "hint": "Cuarzo" },
+    { "id": 16, "word": "Agua", "hint": "Molécula" },
+    { "id": 17, "word": "Peso", "hint": "Balanza" },
+    { "id": 18, "word": "Número", "hint": "Dígito" },
+    { "id": 19, "word": "Suave", "hint": "Terciopelo" },
+    { "id": 20, "word": "Pasta", "hint": "Gluten" },
+    { "id": 21, "word": "Entrar", "hint": "Umbral" },
+    { "id": 22, "word": "Brujas", "hint": "Caldero" },
+    { "id": 23, "word": "Ratón", "hint": "Madriguera" },
+    { "id": 24, "word": "Círculo", "hint": "Radio" },
+    { "id": 25, "word": "Verano", "hint": "Solsticio" },
+    { "id": 26, "word": "Dulce", "hint": "Glucosa" },
+    { "id": 27, "word": "Desvelar", "hint": "Madrugada" },
+    { "id": 28, "word": "Cáscara", "hint": "Corteza" },
+    { "id": 29, "word": "Mañana", "hint": "Amanecer" },
+    { "id": 30, "word": "Amigo", "hint": "Confianza" },
+    { "id": 31, "word": "Salvaje", "hint": "Instinto" },
+    { "id": 32, "word": "Cuernos", "hint": "Queratina" },
+    { "id": 33, "word": "Fruta", "hint": "Semilla" },
+    { "id": 34, "word": "Silla", "hint": "Patas" },
+    { "id": 35, "word": "Espejo", "hint": "Azogue" },
+    { "id": 36, "word": "Reloj", "hint": "Manecilla" },
+    { "id": 37, "word": "Paraguas", "hint": "Varilla" },
+    { "id": 38, "word": "Mochila", "hint": "Correa" },
+    { "id": 39, "word": "Teléfono", "hint": "Marcación" },
+    { "id": 40, "word": "Almohada", "hint": "Funda" },
+    { "id": 41, "word": "Llave", "hint": "Cerrojo" },
+    { "id": 42, "word": "Escoba", "hint": "Cerdas" },
+    { "id": 43, "word": "Computadora", "hint": "Kernel" },
+    { "id": 44, "word": "Lentes", "hint": "Dioptrías" },
+    { "id": 45, "word": "Botella", "hint": "Tapón" },
+    { "id": 46, "word": "Control remoto", "hint": "Infrarrojo" },
+    { "id": 47, "word": "Cámara", "hint": "Obturador" },
+    { "id": 48, "word": "Jabón", "hint": "Surfactante" },
+    { "id": 49, "word": "Toalla", "hint": "Absorción" },
+    { "id": 50, "word": "Tijeras", "hint": "Pivote" },
+    { "id": 51, "word": "Pizza", "hint": "Levadura" },
+    { "id": 52, "word": "Helado", "hint": "Barquillo" },
+    { "id": 53, "word": "Chocolate", "hint": "Teobromina" },
+    { "id": 54, "word": "Café", "hint": "Cafeína" },
+    { "id": 55, "word": "Hamburguesa", "hint": "Bollo" },
+    { "id": 56, "word": "Huevo", "hint": "Yema" },
+    { "id": 57, "word": "Pan", "hint": "Miga" },
+    { "id": 58, "word": "Leche", "hint": "Caseína" },
+    { "id": 59, "word": "Queso", "hint": "Cuajo" },
+    { "id": 60, "word": "Sopa", "hint": "Caldo" },
+    { "id": 61, "word": "Pastel", "hint": "Betún" },
+    { "id": 62, "word": "Papas fritas", "hint": "Fritura" },
+    { "id": 63, "word": "Jugo", "hint": "Pulpa" },
+    { "id": 64, "word": "Arroz", "hint": "Almidón" },
+    { "id": 65, "word": "Galleta", "hint": "Harina" },
+    { "id": 66, "word": "Sal", "hint": "Sodio" },
+    { "id": 67, "word": "Mantequilla", "hint": "Batido" },
+    { "id": 68, "word": "Ensalada", "hint": "Aderezo" },
+    { "id": 69, "word": "Perro", "hint": "Ladrido" },
+    { "id": 70, "word": "Gato", "hint": "Bigotes" },
+    { "id": 71, "word": "Elefante", "hint": "Trompa" },
+    { "id": 72, "word": "Jirafa", "hint": "Manchas" },
+    { "id": 73, "word": "León", "hint": "Melena" },
+    { "id": 74, "word": "Vaca", "hint": "Ubre" },
+    { "id": 75, "word": "Caballo", "hint": "Herraduras" },
+    { "id": 76, "word": "Mono", "hint": "Primate" },
+    { "id": 77, "word": "Pájaro", "hint": "Migración" },
+    { "id": 78, "word": "Pez", "hint": "Branquias" },
+    { "id": 79, "word": "Conejo", "hint": "Madriguera" },
+    { "id": 80, "word": "Pato", "hint": "Plumaje" },
+    { "id": 81, "word": "Mariposa", "hint": "Crisálida" },
+    { "id": 82, "word": "Cerdo", "hint": "Gruñido" },
+    { "id": 83, "word": "Tigre", "hint": "Bengala" },
+    { "id": 84, "word": "Oso", "hint": "Guarida" },
+    { "id": 85, "word": "Serpiente", "hint": "Veneno" },
+    { "id": 86, "word": "Oveja", "hint": "Balido" },
+    { "id": 87, "word": "Gallina", "hint": "Incubación" },
+    { "id": 88, "word": "Tiburón", "hint": "Aleta" },
+    { "id": 89, "word": "Escuela", "hint": "Pizarrón" },
+    { "id": 90, "word": "Hospital", "hint": "Quirófano" },
+    { "id": 91, "word": "Playa", "hint": "Marea" },
+    { "id": 92, "word": "Parque", "hint": "Sendero" },
+    { "id": 93, "word": "Supermercado", "hint": "Carrito" },
+    { "id": 94, "word": "Restaurante", "hint": "Menú" },
+    { "id": 95, "word": "Estadio", "hint": "Tribuna" },
+    { "id": 96, "word": "Aeropuerto", "hint": "Terminal" },
+    { "id": 97, "word": "Banco", "hint": "Interés" },
+    { "id": 98, "word": "Iglesia", "hint": "Campanario" },
+    { "id": 99, "word": "Farmacia", "hint": "Receta" },
+    { "id": 100, "word": "Nieve", "hint": "Copo" },
+    { "id": 101, "word": "Lluvia", "hint": "Nube" },
+    { "id": 102, "word": "Sol", "hint": "Fusión" },
+    { "id": 103, "word": "Montaña", "hint": "Cima" },
+    { "id": 104, "word": "Río", "hint": "Cauce" },
+    { "id": 105, "word": "Desierto", "hint": "Duna" },
+    { "id": 106, "word": "Isla", "hint": "Arrecife" },
+    { "id": 107, "word": "Profesor", "hint": "Tiza" },
+    { "id": 108, "word": "Doctor", "hint": "Estetoscopio" },
+    { "id": 109, "word": "Avión", "hint": "Turbina" },
+    { "id": 110, "word": "Tren", "hint": "Vía" },
+    { "id": 111, "word": "Barco", "hint": "Ancla" },
+    { "id": 112, "word": "Bicicleta", "hint": "Cadena" },
+    { "id": 113, "word": "Moto", "hint": "Embrague" },
+    { "id": 114, "word": "Taxi", "hint": "Taxímetro" },
+    { "id": 115, "word": "Autobús", "hint": "Parada" },
+    { "id": 116, "word": "Cohete", "hint": "Combustible" },
+    { "id": 117, "word": "Helicóptero", "hint": "Rotor" },
+    { "id": 118, "word": "Globo aerostático", "hint": "Helio" },
+    { "id": 119, "word": "Canoa", "hint": "Remo" },
+    { "id": 120, "word": "Fútbol", "hint": "Fuera de juego" },
+    { "id": 121, "word": "Baloncesto", "hint": "Cancha" },
+    { "id": 122, "word": "Tenis", "hint": "Saque" },
+    { "id": 123, "word": "Béisbol", "hint": "Guante" },
+    { "id": 124, "word": "Natación", "hint": "Brazada" },
+    { "id": 125, "word": "Atletismo", "hint": "Cronómetro" },
+    { "id": 126, "word": "Boxeo", "hint": "Córner" },
+    { "id": 127, "word": "Golf", "hint": "Hoyo" },
+    { "id": 128, "word": "Ciclismo", "hint": "Pelotón" },
+    { "id": 129, "word": "Escalada", "hint": "Mosquetón" },
+    { "id": 130, "word": "Guitarra", "hint": "Traste" },
+    { "id": 131, "word": "Piano", "hint": "Tecla" },
+    { "id": 132, "word": "Batería", "hint": "Bombo" },
+    { "id": 133, "word": "Violín", "hint": "Arco" },
+    { "id": 134, "word": "Flauta", "hint": "Embocadura" },
+    { "id": 135, "word": "Trompeta", "hint": "Pistón" },
+    { "id": 136, "word": "Saxofón", "hint": "Lengüeta" },
+    { "id": 137, "word": "Arpa", "hint": "Cuerda" },
+    { "id": 138, "word": "Contrabajo", "hint": "Resonancia" },
+    { "id": 139, "word": "Acordeón", "hint": "Fuelle" },
+    { "id": 140, "word": "Pintura", "hint": "Pigmento" },
+    { "id": 141, "word": "Escultura", "hint": "Cincel" },
+    { "id": 142, "word": "Fotografía", "hint": "Exposición" },
+    { "id": 143, "word": "Dibujo", "hint": "Boceto" },
+    { "id": 144, "word": "Ballet", "hint": "Zapatilla" },
+    { "id": 145, "word": "Teatro", "hint": "Telón" },
+    { "id": 146, "word": "Ópera", "hint": "Libreto" },
+    { "id": 147, "word": "Circo", "hint": "Trapecio" },
+    { "id": 148, "word": "Magia", "hint": "Ilusión" },
+    { "id": 149, "word": "Comedia", "hint": "Monólogo" },
+    { "id": 150, "word": "Novela", "hint": "Capítulo" },
+    { "id": 151, "word": "Poesía", "hint": "Verso" },
+    { "id": 152, "word": "Cuento", "hint": "Narrador" },
+    { "id": 153, "word": "Periódico", "hint": "Titular" },
+    { "id": 154, "word": "Revista", "hint": "Portada" },
+    { "id": 155, "word": "Carta", "hint": "Sobre" },
+    { "id": 156, "word": "Correo electrónico", "hint": "Bandeja" },
+    { "id": 157, "word": "Redes sociales", "hint": "Algoritmo" },
+    { "id": 158, "word": "Videojuego", "hint": "Renderizado" },
+    { "id": 159, "word": "Película", "hint": "Guion" },
+    { "id": 160, "word": "Serie", "hint": "Temporada" },
+    { "id": 161, "word": "Documental", "hint": "Narración" },
+    { "id": 162, "word": "Podcast", "hint": "Episodio" },
+    { "id": 163, "word": "Radio", "hint": "Frecuencia" },
+    { "id": 164, "word": "Televisión", "hint": "Antena" },
+    { "id": 165, "word": "Internet", "hint": "Protocolo" },
+    { "id": 166, "word": "Satélite", "hint": "Órbita" },
+    { "id": 167, "word": "Telescopio", "hint": "Lente" },
+    { "id": 168, "word": "Microscopio", "hint": "Preparación" },
+    { "id": 169, "word": "Laboratorio", "hint": "Reactivo" },
+    { "id": 170, "word": "Química", "hint": "Enlace" },
+    { "id": 171, "word": "Física", "hint": "Inercia" },
+    { "id": 172, "word": "Matemáticas", "hint": "Axioma" },
+    { "id": 173, "word": "Biología", "hint": "Célula" },
+    { "id": 174, "word": "Historia", "hint": "Crónica" },
+    { "id": 175, "word": "Geografía", "hint": "Mapa" },
+    { "id": 176, "word": "Filosofía", "hint": "Dilema" },
+    { "id": 177, "word": "Psicología", "hint": "Conducta" },
+    { "id": 178, "word": "Economía", "hint": "Inflación" },
+    { "id": 179, "word": "Política", "hint": "Mandato" },
+    { "id": 180, "word": "Derecho", "hint": "Jurisprudencia" },
+    { "id": 181, "word": "Medicina", "hint": "Diagnóstico" },
+    { "id": 182, "word": "Arquitectura", "hint": "Cimiento" },
+    { "id": 183, "word": "Ingeniería", "hint": "Prototipo" },
+    { "id": 184, "word": "Astronomía", "hint": "Parsec" },
+    { "id": 185, "word": "Geología", "hint": "Estrato" },
+    { "id": 186, "word": "Volcán", "hint": "Magma" },
+    { "id": 187, "word": "Terremoto", "hint": "Epicentro" },
+    { "id": 188, "word": "Tormenta", "hint": "Relámpago" },
+    { "id": 189, "word": "Arcoíris", "hint": "Prisma" },
+    { "id": 190, "word": "Tornado", "hint": "Embudo" },
+    { "id": 191, "word": "Tsunami", "hint": "Sismógrafo" },
+    { "id": 192, "word": "Eclipse", "hint": "Penumbra" },
+    { "id": 193, "word": "Luna", "hint": "Mareas" },
+    { "id": 194, "word": "Planeta", "hint": "Excentricidad" },
+    { "id": 195, "word": "Galaxia", "hint": "Espiral" },
+    { "id": 196, "word": "Agujero negro", "hint": "Singularidad" },
+    { "id": 197, "word": "Cometa", "hint": "Perihelio" },
+    { "id": 198, "word": "Asteroide", "hint": "Cinturón" },
+    { "id": 199, "word": "Atmósfera", "hint": "Estratosfera" },
+    { "id": 200, "word": "Oxígeno", "hint": "Respiración" },
+    { "id": 201, "word": "Carbono", "hint": "Huella" },
+    { "id": 202, "word": "Hidrógeno", "hint": "Fusión" },
+    { "id": 203, "word": "Electricidad", "hint": "Voltio" },
+    { "id": 204, "word": "Magnetismo", "hint": "Polo" },
+    { "id": 205, "word": "Energía solar", "hint": "Panel" },
+    { "id": 206, "word": "Energía eólica", "hint": "Aerogenerador" },
+    { "id": 207, "word": "Petróleo", "hint": "Refinería" },
+    { "id": 208, "word": "Carbón", "hint": "Mina" },
+    { "id": 209, "word": "Plástico", "hint": "Polímero" },
+    { "id": 210, "word": "Madera", "hint": "Fibra" },
+    { "id": 211, "word": "Metal", "hint": "Aleación" },
+    { "id": 212, "word": "Vidrio", "hint": "Silicio" },
+    { "id": 213, "word": "Cemento", "hint": "Fraguado" },
+    { "id": 214, "word": "Ladrillo", "hint": "Arcilla" },
+    { "id": 215, "word": "Pincel", "hint": "Cerda" },
+    { "id": 216, "word": "Lápiz", "hint": "Grafito" },
+    { "id": 217, "word": "Borrador", "hint": "Caucho" },
+    { "id": 218, "word": "Regla", "hint": "Escala" },
+    { "id": 219, "word": "Calculadora", "hint": "Tecla" },
+    { "id": 220, "word": "Cuaderno", "hint": "Renglón" },
+    { "id": 221, "word": "Mapa", "hint": "Leyenda" },
+    { "id": 222, "word": "Brújula", "hint": "Norte magnético" },
+    { "id": 223, "word": "Termómetro", "hint": "Mercurio" },
+    { "id": 224, "word": "Barómetro", "hint": "Presión" },
+    { "id": 225, "word": "Microscopio electrónico", "hint": "Vacío" },
+    { "id": 226, "word": "ADN", "hint": "Hélice" },
+    { "id": 227, "word": "Virus", "hint": "Huésped" },
+    { "id": 228, "word": "Bacteria", "hint": "Flagelo" },
+    { "id": 229, "word": "Vacuna", "hint": "Anticuerpo" },
+    { "id": 230, "word": "Cirugía", "hint": "Bisturí" },
+    { "id": 231, "word": "Anestesia", "hint": "Inconsciencia" },
+    { "id": 232, "word": "Radiografía", "hint": "Placa" },
+    { "id": 233, "word": "Psiquiatría", "hint": "Neurotransmisor" },
+    { "id": 234, "word": "Genética", "hint": "Cromosoma" },
+    { "id": 235, "word": "Clonación", "hint": "Réplica" },
+    { "id": 236, "word": "Robot", "hint": "Servo" },
+    { "id": 237, "word": "Inteligencia artificial", "hint": "Entrenamiento" },
+    { "id": 238, "word": "Nube digital", "hint": "Servidor" },
+    { "id": 239, "word": "Ciberseguridad", "hint": "Cifrado" },
+    { "id": 240, "word": "Blockchain", "hint": "Descentralización" },
+    { "id": 241, "word": "Criptomoneda", "hint": "Minería" },
+    { "id": 242, "word": "Realidad virtual", "hint": "Latencia" },
+    { "id": 243, "word": "Impresora 3D", "hint": "Filamento" },
+    { "id": 244, "word": "Dron", "hint": "Telemetría" },
+    { "id": 245, "word": "Pantalla táctil", "hint": "Capacitancia" },
+    { "id": 246, "word": "Auriculares", "hint": "Driver" },
+    { "id": 247, "word": "Altavoz", "hint": "Membrana" },
+    { "id": 248, "word": "Micrófono", "hint": "Diafragma" },
+    { "id": 249, "word": "Batería recargable", "hint": "Litio" },
+    { "id": 250, "word": "Cargador", "hint": "Amperaje" },
+    { "id": 251, "word": "Semáforo", "hint": "Ciclo" },
+    { "id": 252, "word": "Señal de tráfico", "hint": "Normativa" },
+    { "id": 253, "word": "Puente", "hint": "Tensión" },
+    { "id": 254, "word": "Túnel", "hint": "Perforación" },
+    { "id": 255, "word": "Carretera", "hint": "Asfalto" },
+    { "id": 256, "word": "Autopista", "hint": "Peaje" },
+    { "id": 257, "word": "Puerto", "hint": "Muelle" },
+    { "id": 258, "word": "Faro", "hint": "Guía" },
+    { "id": 259, "word": "Mina", "hint": "Yacimiento" },
+    { "id": 260, "word": "Pozo de petróleo", "hint": "Plataforma" },
+    { "id": 261, "word": "Central nuclear", "hint": "Uranio" },
+    { "id": 262, "word": "Presa", "hint": "Compuerta" },
+    { "id": 263, "word": "Acueducto", "hint": "Arco romano" },
+    { "id": 264, "word": "Pirámide", "hint": "Sarcófago" },
+    { "id": 265, "word": "Coliseo", "hint": "Gladiador" },
+    { "id": 266, "word": "Catedral", "hint": "Crucero" },
+    { "id": 267, "word": "Castillo", "hint": "Foso" },
+    { "id": 268, "word": "Fortaleza", "hint": "Muralla" },
+    { "id": 269, "word": "Palacio", "hint": "Trono" },
+    { "id": 270, "word": "Templo", "hint": "Altar" },
+    { "id": 271, "word": "Museo", "hint": "Restauración" },
+    { "id": 272, "word": "Galería de arte", "hint": "Curaduría" },
+    { "id": 273, "word": "Planetario", "hint": "Cúpula" },
+    { "id": 274, "word": "Acuario", "hint": "Coral" },
+    { "id": 275, "word": "Jardín botánico", "hint": "Herbario" },
+    { "id": 276, "word": "Cementerio", "hint": "Epitafio" },
+    { "id": 277, "word": "Mercado", "hint": "Trueque" },
+    { "id": 278, "word": "Centro comercial", "hint": "Escalera mecánica" },
+    { "id": 279, "word": "Fábrica", "hint": "Cadena de montaje" },
+    { "id": 280, "word": "Almacén", "hint": "Inventario" },
+    { "id": 281, "word": "Oficina", "hint": "Cubículo" },
+    { "id": 282, "word": "Juzgado", "hint": "Veredicto" },
+    { "id": 283, "word": "Comisaría", "hint": "Celda" },
+    { "id": 284, "word": "Cuartel", "hint": "Rancho" },
+    { "id": 285, "word": "Embajada", "hint": "Cónsul" },
+    { "id": 286, "word": "Parlamento", "hint": "Sesión" },
+    { "id": 287, "word": "Casa Blanca", "hint": "Despacho oval" },
+    { "id": 288, "word": "ONU", "hint": "Resolución" },
+    { "id": 289, "word": "Cruz Roja", "hint": "Auxilio" },
+    { "id": 290, "word": "Bomberos", "hint": "Manguera" },
+    { "id": 291, "word": "Ambulancia", "hint": "Camilla" },
+    { "id": 292, "word": "Policía", "hint": "Placa" },
+    { "id": 293, "word": "Ejército", "hint": "Rango" },
+    { "id": 294, "word": "Marina", "hint": "Fragata" },
+    { "id": 295, "word": "Pirata", "hint": "Abordaje" },
+    { "id": 296, "word": "Vikingo", "hint": "Drakkar" },
+    { "id": 297, "word": "Samurái", "hint": "Katana" },
+    { "id": 298, "word": "Ninja", "hint": "Shurikén" },
+    { "id": 299, "word": "Gladiador", "hint": "Tridente" },
+    { "id": 300, "word": "Caballero", "hint": "Escudo de armas" },
+    { "id": 301, "word": "Hechicero", "hint": "Grimorio" },
+    { "id": 302, "word": "Dragón", "hint": "Escamas" },
+    { "id": 303, "word": "Unicornio", "hint": "Mito" },
+    { "id": 304, "word": "Fénix", "hint": "Ceniza" },
+    { "id": 305, "word": "Vampiro", "hint": "Colmillo" },
+    { "id": 306, "word": "Hombre lobo", "hint": "Lunar" },
+    { "id": 307, "word": "Zombie", "hint": "Decomposición" },
+    { "id": 308, "word": "Fantasma", "hint": "Ectoplasma" },
+    { "id": 309, "word": "Extraterrestre", "hint": "Abducción" },
+    { "id": 310, "word": "Robot", "hint": "Autónomo" },
+    { "id": 311, "word": "Clon", "hint": "Genotipo" },
+    { "id": 312, "word": "Mutante", "hint": "Radiación" },
+    { "id": 313, "word": "Superhéroe", "hint": "Poderes" },
+    { "id": 314, "word": "Villano", "hint": "Motivación" },
+    { "id": 315, "word": "Cofre del tesoro", "hint": "Cerrojo" },
+    { "id": 316, "word": "Mapa del tesoro", "hint": "Latitud" },
+    { "id": 317, "word": "Laberinto", "hint": "Minotauro" },
+    { "id": 318, "word": "Oráculo", "hint": "Augurio" },
+    { "id": 319, "word": "Hada", "hint": "Varita" },
+    { "id": 320, "word": "Elfo", "hint": "Arco élfico" },
+    { "id": 321, "word": "Enano", "hint": "Mithril" },
+    { "id": 322, "word": "Sirena", "hint": "Escama" },
+    { "id": 323, "word": "Medusa", "hint": "Tentáculo" },
+    { "id": 324, "word": "Minotauro", "hint": "Creta" },
+    { "id": 325, "word": "Centauro", "hint": "Quiron" },
+    { "id": 326, "word": "Grifo", "hint": "Garras" },
+    { "id": 327, "word": "Quimera", "hint": "Híbrido" },
+    { "id": 328, "word": "Calcetín", "hint": "Elástico" },
+    { "id": 329, "word": "Zapato", "hint": "Suela" },
+    { "id": 330, "word": "Cinturón", "hint": "Hebilla" },
+    { "id": 331, "word": "Corbata", "hint": "Nudo" },
+    { "id": 332, "word": "Sombrero", "hint": "Ala" },
+    { "id": 333, "word": "Guante", "hint": "Dedo" },
+    { "id": 334, "word": "Bufanda", "hint": "Fibra" },
+    { "id": 335, "word": "Abrigo", "hint": "Forro" },
+    { "id": 336, "word": "Pijama", "hint": "Tela" },
+    { "id": 337, "word": "Delantal", "hint": "Culinario" },
+    { "id": 338, "word": "Vestido", "hint": "Dobladillo" },
+    { "id": 339, "word": "Falda", "hint": "Vuelo" },
+    { "id": 340, "word": "Pantalón", "hint": "Bragueta" },
+    { "id": 341, "word": "Camiseta", "hint": "Serigrafía" },
+    { "id": 342, "word": "Campamento", "hint": "Tienda de campaña" },
+    { "id": 343, "word": "Escalada", "hint": "Piolet" },
+    { "id": 344, "word": "Senderismo", "hint": "Bastón" },
+    { "id": 345, "word": "Pesca", "hint": "Anzuelo" },
+    { "id": 346, "word": "Caza", "hint": "Señuelo" },
+    { "id": 347, "word": "Surf", "hint": "Tabla" },
+    { "id": 348, "word": "Buceo", "hint": "Aleta" },
+    { "id": 349, "word": "Parapente", "hint": "Ascendencia" },
+    { "id": 350, "word": "Esquí", "hint": "Telesilla" },
+    { "id": 351, "word": "Patines", "hint": "Cuchilla" },
+    { "id": 352, "word": "Skate", "hint": "Rodamiento" },
+    { "id": 353, "word": "Yoga", "hint": "Asana" },
+    { "id": 354, "word": "Meditación", "hint": "Mantra" },
+    { "id": 355, "word": "Acupuntura", "hint": "Meridiano" },
+    { "id": 356, "word": "Masaje", "hint": "Amasamiento" },
+    { "id": 357, "word": "Sauna", "hint": "Vapor" },
+    { "id": 358, "word": "Tatuaje", "hint": "Pigmento" },
+    { "id": 359, "word": "Piercing", "hint": "Aguja" },
+    { "id": 360, "word": "Peluquería", "hint": "Flequillo" },
+    { "id": 361, "word": "Barbería", "hint": "Navaja" },
+    { "id": 362, "word": "Manicura", "hint": "Cutícula" },
+    { "id": 363, "word": "Maquillaje", "hint": "Corrector" },
+    { "id": 364, "word": "Perfume", "hint": "Nota" },
+    { "id": 365, "word": "Joyería", "hint": "Engaste" },
+    { "id": 366, "word": "Anillo", "hint": "Engaste" },
+    { "id": 367, "word": "Collar", "hint": "Colgante" },
+    { "id": 368, "word": "Pendiente", "hint": "Lóbulo" },
+    { "id": 369, "word": "Pulsera", "hint": "Cierre" },
+    { "id": 370, "word": "Broche", "hint": "Pasador" },
+    { "id": 371, "word": "Cartera", "hint": "Billetero" },
+    { "id": 372, "word": "Maleta", "hint": "Bisagra" },
+    { "id": 373, "word": "Linterna", "hint": "Pila" },
+    { "id": 374, "word": "Vela", "hint": "Parafina" },
+    { "id": 375, "word": "Chimenea", "hint": "Tiro" },
+    { "id": 376, "word": "Calefacción", "hint": "Radiador" },
+    { "id": 377, "word": "Aire acondicionado", "hint": "Compresor" },
+    { "id": 378, "word": "Ventilador", "hint": "Aspas" },
+    { "id": 379, "word": "Lavadora", "hint": "Centrifugado" },
+    { "id": 380, "word": "Secadora", "hint": "Tambor" },
+    { "id": 381, "word": "Lavavajillas", "hint": "Dosificador" },
+    { "id": 382, "word": "Microondas", "hint": "Magnetrón" },
+    { "id": 383, "word": "Nevera", "hint": "Compresor" },
+    { "id": 384, "word": "Horno", "hint": "Resistencia" },
+    { "id": 385, "word": "Batidora", "hint": "Cuchillas" },
+    { "id": 386, "word": "Cafetera", "hint": "Émbolo" },
+    { "id": 387, "word": "Tostadora", "hint": "Resistencia" },
+    { "id": 388, "word": "Plancha", "hint": "Vapor" },
+    { "id": 389, "word": "Aspiradora", "hint": "Ciclón" },
+    { "id": 390, "word": "Cortadora de césped", "hint": "Embrague" },
+    { "id": 391, "word": "Taladro", "hint": "Broca" },
+    { "id": 392, "word": "Sierra", "hint": "Diente" },
+    { "id": 393, "word": "Martillo", "hint": "Cabeza" },
+    { "id": 394, "word": "Destornillador", "hint": "Torque" },
+    { "id": 395, "word": "Llave inglesa", "hint": "Mordaza" },
+    { "id": 396, "word": "Alicate", "hint": "Quijada" },
+    { "id": 397, "word": "Nivel", "hint": "Burbuja" },
+    { "id": 398, "word": "Cinta métrica", "hint": "Graduación" },
+    { "id": 399, "word": "Escalera", "hint": "Travesaño" },
+    { "id": 400, "word": "Andamio", "hint": "Tubo" },
+    { "id": 401, "word": "Ajedrez", "hint": "Enroque" },
+    { "id": 402, "word": "Damas", "hint": "Coronación" },
+    { "id": 403, "word": "Dominó", "hint": "Farol" },
+    { "id": 404, "word": "Naipes", "hint": "Baraja" },
+    { "id": 405, "word": "Ruleta", "hint": "Bola" },
+    { "id": 406, "word": "Póker", "hint": "Farol" },
+    { "id": 407, "word": "Sudoku", "hint": "Cuadrícula" },
+    { "id": 408, "word": "Crucigrama", "hint": "Definición" },
+    { "id": 409, "word": "Rompecabezas", "hint": "Pieza" },
+    { "id": 410, "word": "Jenga", "hint": "Equilibrio" },
+    { "id": 411, "word": "Alergia", "hint": "Histamina" },
+    { "id": 412, "word": "Gripe", "hint": "Cepa" },
+    { "id": 413, "word": "Fractura", "hint": "Yeso" },
+    { "id": 414, "word": "Quemadura", "hint": "Ampolla" },
+    { "id": 415, "word": "Apendicitis", "hint": "Laparoscopia" },
+    { "id": 416, "word": "Migraña", "hint": "Aura" },
+    { "id": 417, "word": "Insomnio", "hint": "Melatonina" },
+    { "id": 418, "word": "Diabetes", "hint": "Insulina" },
+    { "id": 419, "word": "Asma", "hint": "Broncodilatador" },
+    { "id": 420, "word": "Presión arterial", "hint": "Sistólica" },
+    { "id": 421, "word": "Corazón", "hint": "Sístole" },
+    { "id": 422, "word": "Pulmón", "hint": "Alvéolo" },
+    { "id": 423, "word": "Cerebro", "hint": "Sinapsis" },
+    { "id": 424, "word": "Hueso", "hint": "Médula" },
+    { "id": 425, "word": "Músculo", "hint": "Fibra" },
+    { "id": 426, "word": "Sangre", "hint": "Plasma" },
+    { "id": 427, "word": "Nervio", "hint": "Axón" },
+    { "id": 428, "word": "Piel", "hint": "Dermis" },
+    { "id": 429, "word": "Ojo", "hint": "Córnea" },
+    { "id": 430, "word": "Oído", "hint": "Cóclea" },
+    { "id": 431, "word": "Nariz", "hint": "Mucosa" },
+    { "id": 432, "word": "Boca", "hint": "Paladar" },
+    { "id": 433, "word": "Hígado", "hint": "Bilis" },
+    { "id": 434, "word": "Riñón", "hint": "Nefrona" },
+    { "id": 435, "word": "Estómago", "hint": "Peristaltismo" },
+    { "id": 436, "word": "Intestino", "hint": "Vellosidad" },
+    { "id": 437, "word": "Columna vertebral", "hint": "Vértebra" },
+    { "id": 438, "word": "Codo", "hint": "Olécranon" },
+    { "id": 439, "word": "Rodilla", "hint": "Rótula" },
+    { "id": 440, "word": "Tobillo", "hint": "Esguince" },
+    { "id": 441, "word": "Idioma", "hint": "Fonema" },
+    { "id": 442, "word": "Diccionario", "hint": "Etimología" },
+    { "id": 443, "word": "Gramática", "hint": "Sintaxis" },
+    { "id": 444, "word": "Metáfora", "hint": "Comparación" },
+    { "id": 445, "word": "Ironía", "hint": "Sarcasmo" },
+    { "id": 446, "word": "Paradoja", "hint": "Contradicción" },
+    { "id": 447, "word": "Hipérbole", "hint": "Exageración" },
+    { "id": 448, "word": "Sínoma", "hint": "Sustitución" },
+    { "id": 449, "word": "Antónimo", "hint": "Opuesto" },
+    { "id": 450, "word": "Sinónimo", "hint": "Equivalente" },
+    { "id": 451, "word": "Capitalismo", "hint": "Mercado" },
+    { "id": 452, "word": "Socialismo", "hint": "Colectivo" },
+    { "id": 453, "word": "Democracia", "hint": "Sufragio" },
+    { "id": 454, "word": "Dictadura", "hint": "Censura" },
+    { "id": 455, "word": "Revolución", "hint": "Levantamiento" },
+    { "id": 456, "word": "Colonia", "hint": "Metrópolis" },
+    { "id": 457, "word": "Imperio", "hint": "Expansión" },
+    { "id": 458, "word": "República", "hint": "Constitución" },
+    { "id": 459, "word": "Monarquía", "hint": "Heredero" },
+    { "id": 460, "word": "Anarquía", "hint": "Ausencia" },
+    { "id": 461, "word": "Espada", "hint": "Filo" },
+    { "id": 462, "word": "Arco y flecha", "hint": "Tensión" },
+    { "id": 463, "word": "Lanza", "hint": "Astil" },
+    { "id": 464, "word": "Escudo", "hint": "Blasón" },
+    { "id": 465, "word": "Ballesta", "hint": "Cerrojo" },
+    { "id": 466, "word": "Cañón", "hint": "Pólvora" },
+    { "id": 467, "word": "Pistola", "hint": "Percutor" },
+    { "id": 468, "word": "Rifle", "hint": "Mira telescópica" },
+    { "id": 469, "word": "Bomba", "hint": "Detonador" },
+    { "id": 470, "word": "Mina", "hint": "Presión" },
+    { "id": 471, "word": "Avalancha", "hint": "Acumulación" },
+    { "id": 472, "word": "Inundación", "hint": "Desbordamiento" },
+    { "id": 473, "word": "Sequía", "hint": "Evotranspiración" },
+    { "id": 474, "word": "Huracán", "hint": "Ojo" },
+    { "id": 475, "word": "Granizo", "hint": "Núcleo" },
+    { "id": 476, "word": "Niebla", "hint": "Visibilidad" },
+    { "id": 477, "word": "Brisa", "hint": "Beaufort" },
+    { "id": 478, "word": "Helada", "hint": "Escarcha" },
+    { "id": 479, "word": "Sequoia", "hint": "Anillo" },
+    { "id": 480, "word": "Bambu", "hint": "Rizoma" },
+    { "id": 481, "word": "Cactus", "hint": "Areola" },
+    { "id": 482, "word": "Lirio", "hint": "Bulbo" },
+    { "id": 483, "word": "Rosa", "hint": "Espina" },
+    { "id": 484, "word": "Girasol", "hint": "Heliotropismo" },
+    { "id": 485, "word": "Orquídea", "hint": "Polen" },
+    { "id": 486, "word": "Loto", "hint": "Trampa" },
+    { "id": 487, "word": "Hongo", "hint": "Micelio" },
+    { "id": 488, "word": "Alga", "hint": "Clorofila" },
+    { "id": 489, "word": "Musgo", "hint": "Rizoides" },
+    { "id": 490, "word": "Helecho", "hint": "Espora" },
+    { "id": 491, "word": "Hormiga", "hint": "Colonia" },
+    { "id": 492, "word": "Abeja", "hint": "Danza" },
+    { "id": 493, "word": "Araña", "hint": "Seda" },
+    { "id": 494, "word": "Escorpión", "hint": "Pinza" },
+    { "id": 495, "word": "Pulpo", "hint": "Melanina" },
+    { "id": 496, "word": "Medusa", "hint": "Cnidocito" },
+    { "id": 497, "word": "Cangrejo", "hint": "Quitina" },
+    { "id": 498, "word": "Langosta", "hint": "Exoesqueleto" },
+    { "id": 499, "word": "Cocodrilo", "hint": "Mandíbula" },
+    { "id": 500, "word": "Pingüino", "hint": "Plumaje impermeable" }
 ]
