@@ -321,6 +321,8 @@ let revealState = 'handover';
 function startRoleRevealPhase() {
   if (screenSetup) screenSetup.classList.add('hidden');
   if (screenRoleReveal) screenRoleReveal.classList.remove('hidden');
+  // Insertar entrada falsa en el historial para interceptar el botón "Atrás" del celular
+  pushFakeHistory();
   showHandoverScreen();
 }
 
@@ -745,6 +747,43 @@ startGameRound = function () {
     roundStarterMsg.innerHTML = `El jugador <strong style="color:var(--primary-color)">${starterName}</strong> comienza la ronda`;
   }
 };
+
+/* BOTÓN FÍSICO "ATRÁS" DEL CELULAR */
+// Cuando empieza la fase de revelación, empujamos un estado falso al historial.
+// Así el botón "Atrás" no sale de la página, sino que dispara un popstate
+// que podemos interceptar para mostrar el modal de confirmación.
+
+function pushFakeHistory() {
+  history.pushState({ gameActive: true }, '', window.location.href);
+}
+
+window.addEventListener('popstate', (e) => {
+  // Solo actuar si el juego está activo (la pantalla de revelación o de ronda está visible)
+  const revealVisible = screenRoleReveal && !screenRoleReveal.classList.contains('hidden');
+  const roundVisible = screenGameRound && !screenGameRound.classList.contains('hidden');
+  const votingVisible = screenVoting && !screenVoting.classList.contains('hidden');
+  const duelVisible = screenFinalDuel && !screenFinalDuel.classList.contains('hidden');
+
+  if (revealVisible || roundVisible || votingVisible || duelVisible) {
+    // Re-empujar el estado falso para que el botón "Atrás" vuelva a funcionar la próxima vez
+    pushFakeHistory();
+
+    // Mostrar modal de confirmación reutilizando el sistema ya existente
+    showModal(
+      '¿Salir de la partida?',
+      '¿Estás seguro que quieres salir?\nSe perderá el progreso de la partida actual.',
+      () => {
+        // Confirmado: ir al inicio
+        window.location.href = 'index.html';
+      },
+      () => {
+        // Cancelado: no hacer nada
+      },
+      'Sí, salir',
+      'Seguir jugando'
+    );
+  }
+});
 
 /* LOGICA SALIDA DEL JUEGO (Botón X) */
 const btnExitGame = document.getElementById('btn-exit-game');
