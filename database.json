@@ -1,4 +1,4 @@
-const GAME_DATABASE = [
+[
     {
         "id": 1,
         "word": "Cajero Automático",
@@ -6069,4 +6069,4 @@ const GAME_DATABASE = [
         "hint": "Frita",
         "category": "Verduras"
     }
-];
+]
