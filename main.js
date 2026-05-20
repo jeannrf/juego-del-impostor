@@ -15,6 +15,7 @@ const btnBackHome = document.getElementById('btn-back-home'); // En how_to_play.
 
 /* ESTADO (La memoria) */
 let players = [];
+let lastRoundImpostors = [];
 
 /* EVENTOS (Las acciones) */
 
@@ -91,16 +92,15 @@ function updateUI() {
 
   players.forEach((player, index) => {
     const li = document.createElement('li');
-    li.style.background = '#333';
-    li.style.margin = '5px 0';
-    li.style.padding = '10px';
-    li.style.borderRadius = '8px';
-    li.style.display = 'flex';
-    li.style.justifyContent = 'space-between';
+    li.className = 'draggable-item';
+    li.dataset.playerName = player;
 
     li.innerHTML = `
-            <span>${player}</span>
-            <button onclick="removePlayer(${index})" style="background:transparent; border:none; color: #ff6b6b; cursor:pointer;">❌</button>
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span class="drag-handle">☰</span>
+                <span>${player}</span>
+            </div>
+            <button onclick="removePlayer(${index})" style="background:transparent; border:none; color: #ff6b6b; cursor:pointer; font-size:1.1rem; padding: 4px;">❌</button>
         `;
     playerList.appendChild(li);
   });
@@ -122,28 +122,7 @@ window.removePlayer = (index) => {
 };
 
 /* LOGICA DE JUEGO Y DATOS */
-// BBDD vacía, se llenará con fetch
-let GAME_DATABASE = [];
-
-// Cargar datos al iniciar
-fetch('database.json')
-  .then(response => {
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    return response.json();
-  })
-  .then(data => {
-    GAME_DATABASE = data;
-    console.log("Base de datos cargada:", GAME_DATABASE.length, "palabras.");
-  })
-  .catch(error => {
-    console.error("No se pudo cargar la base de datos:", error);
-    // Solo alertar si estamos en la página de jugar
-    if (screenSetup) {
-      alert("Error: No se carga la base de datos. Usa live-server o servidor local.");
-    }
-  });
+// BBDD cargada desde database.js (GAME_DATABASE)
 
 
 let gameSession = {
@@ -250,7 +229,7 @@ if (btnCancelImpostors) {
 if (btnConfirmImpostors) {
   btnConfirmImpostors.addEventListener('click', () => {
     const count = parseInt(inputImpostorCount.value);
-    // const cat = selectCategory.value; // Ya no usamos categorías
+    const knowEachOther = document.getElementById('checkbox-impostors-know-each-other') ? document.getElementById('checkbox-impostors-know-each-other').checked : false;
 
     if (players.length < 3) {
       showModal("Error", "Necesitas al menos 3 jugadores para jugar.", null, null, "Entendido");
@@ -259,6 +238,9 @@ if (btnConfirmImpostors) {
 
     modalImpostors.classList.add('hidden');
     initGame(count);
+    
+    // Asignar el valor del checkbox a la sesión
+    gameSession.impostorsKnowEachOther = knowEachOther;
   });
 }
 
@@ -276,27 +258,40 @@ function initGame(impostorCount) {
   const randomIndex = Math.floor(Math.random() * GAME_DATABASE.length);
   const selectedObj = GAME_DATABASE[randomIndex];
 
-  // 2. Asignar Roles
-  // Creamos array de indices [0, 1, 2...]
-  let indices = players.map((_, i) => i);
-  // Mezclamos indices usando Fisher-Yates (Mejor aleatoriedad)
-  for (let i = indices.length - 1; i > 0; i--) {
+  // 2. Asignar Roles (evitando repeticiones consecutivas)
+  // Dividimos a los jugadores activos en dos grupos
+  let nonLastImpostors = players.filter(p => !lastRoundImpostors.includes(p));
+  let lastImpostors = players.filter(p => lastRoundImpostors.includes(p));
+
+  // Mezclamos cada grupo de forma independiente con Fisher-Yates
+  for (let i = nonLastImpostors.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [indices[i], indices[j]] = [indices[j], indices[i]];
+    [nonLastImpostors[i], nonLastImpostors[j]] = [nonLastImpostors[j], nonLastImpostors[i]];
+  }
+  for (let i = lastImpostors.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [lastImpostors[i], lastImpostors[j]] = [lastImpostors[j], lastImpostors[i]];
   }
 
-  // Los primeros 'impostorCount' son impostores
-  const impostorIndices = indices.slice(0, impostorCount);
+  // Combinamos: priorizamos a los que NO fueron impostores la ronda anterior
+  let candidates = [...nonLastImpostors, ...lastImpostors];
+
+  // Los primeros 'impostorCount' de la lista 'candidates' serán los nuevos impostores
+  let currentImpostors = candidates.slice(0, impostorCount);
+
+  // Guardamos los impostores elegidos para la siguiente ronda
+  lastRoundImpostors = [...currentImpostors];
 
   gameSession = {
     impostorCount: impostorCount,
-    currentWordObj: selectedObj, // Guardamos el objeto completo (word + hint)
-    playersRoles: players.map((p, i) => ({
+    currentWordObj: selectedObj,
+    playersRoles: players.map(p => ({
       name: p,
-      isImpostor: impostorIndices.includes(i),
+      isImpostor: currentImpostors.includes(p),
       isAlive: true
     })),
-    currentPlayerRevealIndex: 0
+    currentPlayerRevealIndex: 0,
+    impostorsKnowEachOther: gameSession.impostorsKnowEachOther || false
   };
 
   // 3. Ir a Pantalla de "Pasar el móvil"
@@ -384,16 +379,30 @@ function showRevealedScreen() {
     cardReveal.classList.add('is-impostor');
     cardReveal.classList.remove('is-civil');
     cardWord.textContent = `PISTA: ${gameSession.currentWordObj.hint}`;
-    // Estilos en línea eliminados a favor de clases CSS
     cardWord.removeAttribute('style');
     cardInstruction.textContent = "Eres el IMPOSTOR";
-    cardRoleDesc.textContent = "¡Nadie sabe que eres tú!";
+    
+    // Si la opción está activa, listamos a los demás impostores
+    if (gameSession.impostorsKnowEachOther) {
+      const otherImpostors = gameSession.playersRoles
+        .filter(pr => pr.isImpostor && pr.name.trim().toLowerCase() !== player.name.trim().toLowerCase())
+        .map(pr => pr.name);
+      
+      if (otherImpostors.length > 0) {
+        cardRoleDesc.innerHTML = `¡Nadie sabe que eres tú!<br>
+          <div class="co-impostors-list">Tus aliados impostores:<br><span>${otherImpostors.join(', ')}</span></div>`;
+      } else {
+        cardRoleDesc.innerHTML = `¡Nadie sabe que eres tú!<br>
+          <div class="co-impostors-list">Eres el <span>único impostor</span></div>`;
+      }
+    } else {
+      cardRoleDesc.textContent = "¡Nadie sabe que eres tú!";
+    }
   } else {
     // CIVIL: Ve la PALABRA (Word)
     cardReveal.classList.remove('is-impostor');
     cardReveal.classList.add('is-civil');
     cardWord.textContent = gameSession.currentWordObj.word;
-    // Estilos en línea eliminados a favor de clases CSS
     cardWord.removeAttribute('style');
     cardInstruction.textContent = "Memoriza tu palabra secreta.";
     cardRoleDesc.textContent = "Eres un CIVIL.";
@@ -411,8 +420,20 @@ if (btnCardAction) {
     } else if (revealState === 'ready') {
       showRevealedScreen();
     } else if (revealState === 'revealed') {
-      gameSession.currentPlayerRevealIndex++;
-      showHandoverScreen();
+      if (gameSession && gameSession.midGameRevealActive) {
+        gameSession.midGameRevealActive = false;
+        if (screenRoleReveal) screenRoleReveal.classList.add('hidden');
+        if (screenGameRound) screenGameRound.classList.remove('hidden');
+        
+        const modalManagePlayers = document.getElementById('modal-manage-players');
+        if (modalManagePlayers) {
+          modalManagePlayers.classList.remove('hidden');
+          updateManagePlayerList();
+        }
+      } else {
+        gameSession.currentPlayerRevealIndex++;
+        showHandoverScreen();
+      }
     }
   });
 }
@@ -806,5 +827,290 @@ if (btnCancelExit) {
 if (btnConfirmExit) {
   btnConfirmExit.addEventListener('click', () => {
     window.location.href = 'index.html';
+  });
+}
+
+/* ========================================================
+   SISTEMA DE GESTIÓN DE JUGADORES Y ARRASTRAR (DRAG & DROP)
+   ======================================================== */
+
+// Pointer-based Drag & Drop (Compatible con móviles y ordenadores)
+function setupDraggableList(container, onOrderChange) {
+  if (!container) return;
+
+  container.addEventListener('pointerdown', (e) => {
+    // Solo iniciar arrastre si se hace click en el tirador drag-handle
+    const handle = e.target.closest('.drag-handle');
+    if (!handle) return;
+
+    const item = handle.closest('.draggable-item');
+    if (!item) return;
+
+    // Prevenir el comportamiento por defecto (scroll táctil en móviles)
+    e.preventDefault();
+
+    item.classList.add('dragging');
+
+    // Obtener los demás elementos hermanos para calcular colisiones
+    let siblings = [...container.querySelectorAll('.draggable-item:not(.dragging)')];
+
+    const onPointerMove = (moveEvent) => {
+      moveEvent.preventDefault();
+      const y = moveEvent.clientY;
+
+      // Buscar el hermano más cercano a la coordenada Y del puntero
+      let nextSibling = null;
+      let minDistance = Infinity;
+
+      siblings.forEach(sibling => {
+        const box = sibling.getBoundingClientRect();
+        const boxCenter = box.top + box.height / 2;
+        const distance = Math.abs(y - boxCenter);
+
+        if (distance < minDistance) {
+          minDistance = distance;
+          if (y < boxCenter) {
+            nextSibling = sibling;
+          } else {
+            nextSibling = sibling.nextElementSibling;
+          }
+        }
+      });
+
+      // Insertar el elemento en la nueva posición visual
+      if (nextSibling !== item && nextSibling !== item.nextElementSibling) {
+        container.insertBefore(item, nextSibling);
+      }
+    };
+
+    const onPointerUp = () => {
+      item.classList.remove('dragging');
+      window.removeEventListener('pointermove', onPointerMove);
+      window.removeEventListener('pointerup', onPointerUp);
+
+      // Recopilar el nuevo orden de nombres
+      const newOrder = [...container.querySelectorAll('.draggable-item')].map(el => el.dataset.playerName);
+      if (onOrderChange) {
+        onOrderChange(newOrder);
+      }
+    };
+
+    window.addEventListener('pointermove', onPointerMove, { passive: false });
+    window.addEventListener('pointerup', onPointerUp);
+  });
+}
+
+// Pintar la lista de gestión en el Modal
+function updateManagePlayerList() {
+  const managePlayerList = document.getElementById('manage-player-list');
+  if (!managePlayerList) return;
+  managePlayerList.innerHTML = '';
+
+  const isMidGame = gameSession && gameSession.playersRoles;
+  const isResultsMode = document.getElementById('game-result-container') && !document.getElementById('game-result-container').classList.contains('hidden');
+
+  players.forEach((player) => {
+    const li = document.createElement('li');
+    li.className = 'draggable-item';
+    li.dataset.playerName = player;
+
+    let statusText = '';
+    let statusStyle = '';
+    
+    if (isMidGame && !isResultsMode) {
+      const pr = gameSession.playersRoles.find(p => p.name === player);
+      if (pr) {
+        if (!pr.isAlive) {
+          statusText = ' (Eliminado)';
+          statusStyle = 'color: #ff6b6b; opacity: 0.6; text-decoration: line-through;';
+        }
+      }
+    }
+
+    li.innerHTML = `
+      <div style="display: flex; align-items: center; gap: 0.5rem; ${statusStyle}">
+        <span class="drag-handle" style="touch-action: none;">☰</span>
+        <span>${player}${statusText}</span>
+      </div>
+      <button onclick="removePlayerFromGame('${player.replace(/'/g, "\\'")}')" style="background:transparent; border:none; color: #ff6b6b; cursor:pointer; font-size:1.1rem; padding: 4px;">❌</button>
+    `;
+    managePlayerList.appendChild(li);
+  });
+}
+
+// Agregar jugador desde el Modal de Gestión
+function addPlayerFromManage() {
+  const input = document.getElementById('input-manage-player');
+  if (!input) return;
+  const name = input.value.trim();
+  if (!name) return;
+
+  if (players.includes(name)) {
+    showModal("Error", "Ya existe un jugador con ese nombre.", null, null, "Entendido");
+    return;
+  }
+
+  input.value = '';
+
+  const isResultsMode = document.getElementById('game-result-container') && !document.getElementById('game-result-container').classList.contains('hidden');
+
+  if (gameSession && gameSession.playersRoles && !isResultsMode) {
+    // A mitad de partida: Ocultar modal y preguntar rol
+    const modalManage = document.getElementById('modal-manage-players');
+    if (modalManage) modalManage.classList.add('hidden');
+
+    showModal(
+      `Asignar Rol a ${name}`,
+      `¿Qué rol deseas asignarle a ${name}?\nAl confirmar, se iniciará el paso de móvil para revelar su rol.`,
+      () => {
+        addPlayerToActiveGame(name, false); // Civil
+      },
+      () => {
+        addPlayerToActiveGame(name, true); // Impostor
+      },
+      "Civil 😇",
+      "Impostor 😈"
+    );
+  } else {
+    // En setup o resultados: añadir y actualizar
+    players.push(name);
+    if (gameSession && gameSession.playersRoles) {
+      gameSession.playersRoles.push({
+        name: name,
+        isImpostor: false,
+        isAlive: true
+      });
+    }
+    updateUI();
+    updateManagePlayerList();
+  }
+}
+
+// Lógica de adición a mitad de partida
+function addPlayerToActiveGame(name, isImpostor) {
+  players.push(name);
+
+  const newPlayerObj = {
+    name: name,
+    isImpostor: isImpostor,
+    isAlive: true
+  };
+  gameSession.playersRoles.push(newPlayerObj);
+
+  if (isImpostor) {
+    lastRoundImpostors.push(name);
+  }
+
+  // Ocultar pantalla de juego y configurar revelación de este jugador
+  if (screenGameRound) screenGameRound.classList.add('hidden');
+  
+  gameSession.currentPlayerRevealIndex = gameSession.playersRoles.length - 1;
+  gameSession.midGameRevealActive = true;
+
+  startRoleRevealPhase();
+}
+
+// Eliminar jugador desde el Modal de Gestión
+window.removePlayerFromGame = (playerName) => {
+  const isResultsMode = document.getElementById('game-result-container') && !document.getElementById('game-result-container').classList.contains('hidden');
+  const isMidGame = gameSession && gameSession.playersRoles && !isResultsMode;
+
+  if (isMidGame) {
+    showModal(
+      "¿Eliminar Jugador?",
+      `¿Seguro que deseas eliminar permanentemente a ${playerName} de la partida actual?\nEsto afectará las condiciones de victoria de inmediato.`,
+      () => {
+        // Confirmar eliminación
+        players = players.filter(p => p !== playerName);
+        gameSession.playersRoles = gameSession.playersRoles.filter(p => p.name !== playerName);
+        
+        updateUI();
+        updateManagePlayerList();
+
+        // Verificar condiciones de victoria tras remover al jugador
+        const aliveImpostors = gameSession.playersRoles.filter(p => p.isImpostor && p.isAlive).length;
+        const aliveCivilians = gameSession.playersRoles.filter(p => !p.isImpostor && p.isAlive).length;
+
+        if (aliveImpostors === 0) {
+          const modalManage = document.getElementById('modal-manage-players');
+          if (modalManage) modalManage.classList.add('hidden');
+          showGameOver("¡GANAN LOS CIVILES!", "Todos los impostores han abandonado la partida.");
+        } else if (aliveImpostors >= aliveCivilians) {
+          const modalManage = document.getElementById('modal-manage-players');
+          if (modalManage) modalManage.classList.add('hidden');
+          showGameOver("¡LOS IMPOSTORES GANAN!", "Los impostores han superado a los civiles activos.");
+        } else {
+          // Actualizar mensaje de jugador inicial
+          if (roundStarterMsg && players.length > 0) {
+            const starterName = players[currentStarterIndex % players.length];
+            roundStarterMsg.innerHTML = `El jugador <strong style="color:var(--primary-color)">${starterName}</strong> comienza la ronda`;
+          }
+        }
+      },
+      () => {}
+    );
+  } else {
+    // Setup o resultados: eliminar normalmente
+    players = players.filter(p => p !== playerName);
+    if (gameSession && gameSession.playersRoles) {
+      gameSession.playersRoles = gameSession.playersRoles.filter(p => p.name !== playerName);
+    }
+    updateUI();
+    updateManagePlayerList();
+  }
+};
+
+// Listeners del Modal de Gestión
+const btnManagePlayers = document.getElementById('btn-manage-players');
+const modalManagePlayers = document.getElementById('modal-manage-players');
+const btnCloseManage = document.getElementById('btn-close-manage');
+const btnManageAddPlayer = document.getElementById('btn-manage-add-player');
+const inputManagePlayer = document.getElementById('input-manage-player');
+
+if (btnManagePlayers && modalManagePlayers) {
+  btnManagePlayers.addEventListener('click', () => {
+    modalManagePlayers.classList.remove('hidden');
+    updateManagePlayerList();
+  });
+}
+
+if (btnCloseManage && modalManagePlayers) {
+  btnCloseManage.addEventListener('click', () => {
+    modalManagePlayers.classList.add('hidden');
+  });
+}
+
+if (btnManageAddPlayer) {
+  btnManageAddPlayer.addEventListener('click', addPlayerFromManage);
+}
+
+if (inputManagePlayer) {
+  inputManagePlayer.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      addPlayerFromManage();
+    }
+  });
+}
+
+// Registrar Drag & Drop en el Modal de Gestión al iniciar
+const manageList = document.getElementById('manage-player-list');
+if (manageList) {
+  setupDraggableList(manageList, (newOrder) => {
+    players = newOrder;
+    if (gameSession && gameSession.playersRoles) {
+      gameSession.playersRoles.sort((a, b) => {
+        return newOrder.indexOf(a.name) - newOrder.indexOf(b.name);
+      });
+    }
+    updateUI();
+    updateManagePlayerList();
+  });
+}
+
+// Registrar Drag & Drop en el Lobby (Setup) al iniciar
+if (playerList) {
+  setupDraggableList(playerList, (newOrder) => {
+    players = newOrder;
+    updateUI();
   });
 }

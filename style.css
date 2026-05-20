@@ -883,9 +883,11 @@ body {
 
 /* Enforce a fixed height so both 'Turn' and 'Reveal' cards look identical */
 .role-card {
-  height: 380px;
-  max-height: 60vh;
+  min-height: 380px;
+  height: auto;
+  max-height: 90vh;
   justify-content: center;
+  overflow: visible;
 }
 
 /* When the role is revealed, hide the icon to save space and match the height of the Turn card */
@@ -1210,5 +1212,173 @@ body {
   min-width: 60px;
   text-align: center;
   font-variant-numeric: tabular-nums;
+  color: white;
+}
+
+/* =========================================
+   ESTILOS DE MEJORAS: DRAG AND DROP, SWITCH Y GESTIÓN
+   ========================================= */
+
+/* Modal de Gestión de Jugadores */
+#modal-manage-players .modal-content {
+  max-width: 450px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+#manage-player-list {
+  margin: 1rem 0;
+  max-height: 250px;
+}
+
+/* Drag and Drop y elementos de lista */
+.draggable-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid #333;
+  margin: 8px 0;
+  padding: 12px 16px;
+  border-radius: 12px;
+  transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none; /* Previene scroll nativo al arrastrar */
+}
+
+.draggable-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: #555;
+}
+
+.drag-handle {
+  font-size: 1.2rem;
+  color: #666;
+  cursor: grab;
+  padding: 0 10px;
+  user-select: none;
+  -webkit-user-select: none;
+  display: flex;
+  align-items: center;
+}
+
+.drag-handle:active {
+  cursor: grabbing;
+}
+
+.draggable-item.dragging {
+  opacity: 0.6;
+  background: rgba(232, 93, 4, 0.15); /* Tinte de color primario */
+  border-color: var(--primary-color);
+  box-shadow: 0 0 15px rgba(232, 93, 4, 0.4);
+  transform: scale(1.02);
+  z-index: 9999;
+}
+
+/* Interruptor Neón Premium (Switch) */
+.switch-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 12px 16px;
+  border-radius: 12px;
+  margin: 1.5rem 0;
+  cursor: pointer;
+}
+
+.switch-label {
+  color: var(--text-muted);
+  font-size: 1rem;
+  font-weight: 500;
+  user-select: none;
+}
+
+.switch-control {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 26px;
+}
+
+.switch-control input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider-switch {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #333;
+  transition: .3s;
+  border-radius: 34px;
+  border: 1px solid #444;
+}
+
+.slider-switch:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .3s;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+}
+
+input:checked + .slider-switch {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 10px rgba(232, 93, 4, 0.5);
+}
+
+input:checked + .slider-switch:before {
+  transform: translateX(24px);
+}
+
+/* Lista de Co-Impostores en Tarjeta de Revelación */
+.co-impostors-list {
+  background: rgba(255, 0, 0, 0.08);
+  border: 1px dashed rgba(255, 68, 68, 0.3);
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 10px;
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+.co-impostors-list span {
+  font-weight: bold;
+  color: #ff6b6b;
+}
+
+/* Ajustes a tarjetas y botones de gestión */
+.btn-manage-trigger {
+  background-color: transparent;
+  border: 2px solid #555;
+  color: var(--text-muted);
+  border-radius: 8px;
+  font-size: 1rem;
+  padding: 0.6rem 1.2rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 0.8rem;
+  font-weight: 600;
+}
+
+.btn-manage-trigger:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-color: #888;
   color: white;
 }

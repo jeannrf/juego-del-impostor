@@ -1,4 +1,4 @@
-[
+const GAME_DATABASE = [
     { "id": 1, "word": "Cajero Automático", "hint": "PIN" },
     { "id": 2, "word": "Paracaídas", "hint": "Cordaje" },
     { "id": 3, "word": "Gimnasio", "hint": "Vestuario" },
@@ -499,4 +499,4 @@
     { "id": 498, "word": "Langosta", "hint": "Exoesqueleto" },
     { "id": 499, "word": "Cocodrilo", "hint": "Mandíbula" },
     { "id": 500, "word": "Pingüino", "hint": "Plumaje impermeable" }
-]
+];

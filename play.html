@@ -62,6 +62,14 @@
                 <input type="hidden" id="input-impostor-count" value="1">
             </div>
 
+            <div class="switch-container">
+                <span class="switch-label">Los impostores se conocen</span>
+                <label class="switch-control">
+                    <input type="checkbox" id="checkbox-impostors-know-each-other">
+                    <span class="slider-switch"></span>
+                </label>
+            </div>
+
             <div class="modal-actions">
                 <button id="btn-cancel-impostors" class="btn btn-secondary">Cancelar</button>
                 <button id="btn-confirm-impostors" class="btn">Confirmar</button>
@@ -189,6 +197,11 @@
             <div style="width: 100%; text-align: center;">
                 <button id="btn-new-word" class="btn-new-word-rect hidden" title="Nueva Palabra">Nueva Palabra</button>
             </div>
+
+            <!-- GESTIONAR JUGADORES BUTTON -->
+            <div style="width: 100%; text-align: center; margin-top: 1.5rem; margin-bottom: 2rem;">
+                <button id="btn-manage-players" class="btn btn-secondary">Gestionar Jugadores</button>
+            </div>
         </div>
     </div>
 
@@ -246,7 +259,32 @@
         </div>
     </div>
 
-    <script src="main.js?v=6"></script>
+    <!-- MODAL: GESTIONAR JUGADORES -->
+    <div id="modal-manage-players" class="modal hidden">
+        <div class="modal-content">
+            <h2>Gestionar Jugadores</h2>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">
+                Arrastra <span style="color: var(--primary-color); font-weight: bold;">☰</span> para ordenar, o elimina con <span style="color: #ff6b6b;">❌</span>
+            </p>
+
+            <div style="display: flex; gap: 0.5rem; justify-content: center; margin-bottom: 1rem;">
+                <input type="text" id="input-manage-player" placeholder="Nombre del jugador"
+                    style="padding: 10px; border-radius: 8px; border: 1px solid #333; background: #222; color: white; flex-grow: 1; font-size: 1rem;">
+                <button id="btn-manage-add-player" class="btn" style="padding: 10px 15px;">Agregar</button>
+            </div>
+
+            <ul id="manage-player-list" class="player-list-scroll">
+                <!-- JS populated -->
+            </ul>
+
+            <div class="modal-actions" style="margin-top: 1.5rem;">
+                <button id="btn-close-manage" class="btn">Listo</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="database.js?v=7"></script>
+    <script src="main.js?v=7"></script>
 </body>
 
 </html>
