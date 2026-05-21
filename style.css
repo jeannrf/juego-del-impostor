@@ -1264,8 +1264,7 @@ body {
 /* Modal de Gestión de Jugadores */
 #modal-manage-players .modal-content {
   max-width: 450px;
-  height: 85vh; /* Forzamos a que siempre tome el 85% de la pantalla */
-  max-height: 90vh;
+  max-height: 85vh; /* Se expande de forma natural hasta un máximo del 85% */
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
