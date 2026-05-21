@@ -1268,6 +1268,8 @@ body {
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  overflow-y: auto; /* Fallback si la pantalla es en extremo pequeña */
+  overscroll-behavior: contain; /* Evita que el scroll afecte a la pantalla de fondo */
 }
 
 #modal-manage-players .modal-content > * {
@@ -1277,10 +1279,11 @@ body {
 #manage-player-list {
   margin: 1rem 0;
   max-height: none;
-  min-height: 150px;
+  min-height: 50px; /* Reducido para permitir encogerse más en móviles */
   flex-grow: 1;
   flex-shrink: 1 !important; /* Permitir que la lista se encoja solo hasta min-height */
   overflow-y: auto; /* Para que la lista haga scroll interno */
+  overscroll-behavior: contain; /* Evita que el scroll afecte a la pantalla de fondo */
   padding-right: 5px; /* Espacio para la barra de scroll */
 }
 
