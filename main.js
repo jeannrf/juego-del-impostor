@@ -97,7 +97,7 @@ function updateUI() {
 
     li.innerHTML = `
             <div style="display: flex; align-items: center; gap: 0.5rem;">
-                <span class="drag-handle">☰</span>
+                <span class="drag-handle" style="touch-action: none;">☰</span>
                 <span>${player}</span>
             </div>
             <button onclick="removePlayer(${index})" style="background:transparent; border:none; color: #ff6b6b; cursor:pointer; font-size:1.1rem; padding: 4px;">❌</button>
@@ -849,18 +849,42 @@ function setupDraggableList(container, onOrderChange) {
     // Prevenir el comportamiento por defecto (scroll táctil en móviles)
     e.preventDefault();
 
+    const rect = item.getBoundingClientRect();
+    const startY = e.clientY;
+
+    // Crear un placeholder para mantener el espacio
+    const placeholder = document.createElement('li');
+    placeholder.className = 'draggable-item placeholder';
+    placeholder.style.height = `${rect.height}px`;
+    placeholder.style.background = 'transparent';
+    placeholder.style.border = '2px dashed #555';
+    placeholder.style.margin = window.getComputedStyle(item).margin;
+    placeholder.style.boxSizing = 'border-box';
+    placeholder.style.opacity = '0.5';
+    
+    // Insertar placeholder en la posición original
+    container.insertBefore(placeholder, item);
+
+    // Configurar elemento arrastrado (absoluto para fluidez y evitar recortes)
+    item.style.position = 'fixed';
+    item.style.top = `${rect.top}px`;
+    item.style.left = `${rect.left}px`;
+    item.style.width = `${rect.width}px`;
+    item.style.margin = '0';
+    item.style.zIndex = '9999';
+    item.style.transition = 'none';
+
     item.classList.add('dragging');
 
-    // Obtener los demás elementos hermanos para calcular colisiones
-    let siblings = [...container.querySelectorAll('.draggable-item:not(.dragging)')];
+    // Obtener los demás elementos hermanos para calcular colisiones (excluir dragging y placeholder)
+    let currentTranslateY = 0;
+    let lastY = startY;
+    let autoScrollInterval = null;
 
-    const onPointerMove = (moveEvent) => {
-      moveEvent.preventDefault();
-      const y = moveEvent.clientY;
-
-      // Buscar el hermano más cercano a la coordenada Y del puntero
+    const updatePlaceholder = (y) => {
       let nextSibling = null;
       let minDistance = Infinity;
+      const siblings = [...container.querySelectorAll('.draggable-item:not(.dragging):not(.placeholder)')];
 
       siblings.forEach(sibling => {
         const box = sibling.getBoundingClientRect();
@@ -877,22 +901,86 @@ function setupDraggableList(container, onOrderChange) {
         }
       });
 
-      // Insertar el elemento en la nueva posición visual
-      if (nextSibling !== item && nextSibling !== item.nextElementSibling) {
-        container.insertBefore(item, nextSibling);
+      // Mover el placeholder visualmente
+      if (nextSibling !== placeholder && nextSibling !== placeholder.nextElementSibling) {
+        container.insertBefore(placeholder, nextSibling);
+      }
+    };
+
+    const startAutoScroll = (direction) => {
+      if (autoScrollInterval) return;
+      autoScrollInterval = setInterval(() => {
+        container.scrollTop += direction * 7;
+        updatePlaceholder(lastY);
+      }, 16);
+    };
+
+    const stopAutoScroll = () => {
+      if (autoScrollInterval) {
+        clearInterval(autoScrollInterval);
+        autoScrollInterval = null;
+      }
+    };
+
+    const onPointerMove = (moveEvent) => {
+      moveEvent.preventDefault();
+      const currentY = moveEvent.clientY;
+      lastY = currentY;
+      const deltaY = currentY - startY;
+      currentTranslateY = deltaY;
+      
+      // Aplicar movimiento fluido y efecto de elevación (scale)
+      item.style.transform = `translateY(${deltaY}px) scale(1.02)`;
+
+      updatePlaceholder(currentY);
+
+      // Lógica de auto-scroll si el puntero está cerca de los bordes del contenedor
+      const containerRect = container.getBoundingClientRect();
+      const edgeThreshold = 40; // píxeles desde el borde para activar el scroll
+
+      if (currentY < containerRect.top + edgeThreshold) {
+        startAutoScroll(-1); // Arriba
+      } else if (currentY > containerRect.bottom - edgeThreshold) {
+        startAutoScroll(1); // Abajo
+      } else {
+        stopAutoScroll();
       }
     };
 
     const onPointerUp = () => {
-      item.classList.remove('dragging');
+      stopAutoScroll();
       window.removeEventListener('pointermove', onPointerMove);
       window.removeEventListener('pointerup', onPointerUp);
 
-      // Recopilar el nuevo orden de nombres
-      const newOrder = [...container.querySelectorAll('.draggable-item')].map(el => el.dataset.playerName);
-      if (onOrderChange) {
-        onOrderChange(newOrder);
-      }
+      // Obtener la posición final donde quedó el placeholder
+      const placeholderRect = placeholder.getBoundingClientRect();
+      const finalTranslateY = placeholderRect.top - rect.top;
+      
+      // Transición fluida de regreso a su lugar original
+      item.style.transition = 'transform 0.2s ease, box-shadow 0.2s ease';
+      item.style.transform = `translateY(${finalTranslateY}px) scale(1)`;
+      item.classList.remove('dragging');
+
+      // Esperar a que termine la animación para restaurar estado DOM normal
+      setTimeout(() => {
+        item.style.position = '';
+        item.style.top = '';
+        item.style.left = '';
+        item.style.width = '';
+        item.style.margin = '';
+        item.style.zIndex = '';
+        item.style.transform = '';
+        item.style.transition = '';
+        
+        container.insertBefore(item, placeholder);
+        placeholder.remove();
+
+        // Recopilar el nuevo orden de nombres
+        const newOrder = [...container.querySelectorAll('.draggable-item:not(.placeholder)')].map(el => el.dataset.playerName);
+        if (onOrderChange) {
+          onOrderChange(newOrder);
+        }
+      }, 200);
     };
 
     window.addEventListener('pointermove', onPointerMove, { passive: false });
