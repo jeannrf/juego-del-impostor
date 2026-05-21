@@ -70,6 +70,14 @@
                 </label>
             </div>
 
+            <div class="switch-container">
+                <span class="switch-label">Modo Estricto (Votación)</span>
+                <label class="switch-control">
+                    <input type="checkbox" id="checkbox-strict-mode">
+                    <span class="slider-switch"></span>
+                </label>
+            </div>
+
             <div class="modal-actions">
                 <button id="btn-cancel-impostors" class="btn btn-secondary">Cancelar</button>
                 <button id="btn-confirm-impostors" class="btn">Confirmar</button>
@@ -191,7 +199,7 @@
             <div style="margin-top: 1rem; margin-bottom: 2rem; display: flex; gap: 0.5rem; justify-content: center; width: 100%; padding: 0 5px; box-sizing: border-box; align-items: stretch;">
                 <button id="btn-goto-vote" class="btn" style="background-color: #d62828; flex: 1; padding: 0.6rem 0.2rem; font-size: 0.8rem; margin: 0; line-height: 1.2;">Mostrar<br>resultados</button>
                 <button id="btn-new-word" class="btn-new-word-rect hidden" title="Nueva Palabra" style="flex: 1; padding: 0.6rem 0.2rem; font-size: 0.8rem; margin: 0; height: auto; line-height: 1.2;">Nueva<br>Palabra</button>
-                <button id="btn-manage-players" class="btn btn-secondary" style="flex: 1; padding: 0.6rem 0.2rem; font-size: 0.8rem; margin: 0; line-height: 1.2;">Gestionar<br>Jugadores</button>
+                <button id="btn-manage-players" class="btn btn-secondary" style="flex: 1; padding: 0.6rem 0.2rem; font-size: 0.8rem; margin: 0; line-height: 1.2;">Configuración<br>⚙️</button>
             </div>
         </div>
     </div>
@@ -250,12 +258,31 @@
         </div>
     </div>
 
-    <!-- MODAL: GESTIONAR JUGADORES -->
+    <!-- MODAL: GESTIONAR JUGADORES (CONFIGURACIÓN) -->
     <div id="modal-manage-players" class="modal hidden">
         <div class="modal-content">
-            <h2>Gestionar Jugadores</h2>
-            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">
-                Arrastra <span style="color: var(--primary-color); font-weight: bold;">☰</span> para ordenar, o elimina con <span style="color: #ff6b6b;">❌</span>
+            <h2>Configuración de Partida</h2>
+            
+            <div style="background: #222; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; border: 1px solid #333;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <span style="font-size: 0.95rem; font-weight: bold;">Impostores</span>
+                    <div class="stepper-control-mini">
+                        <button id="btn-manage-dec-impostor" class="btn-stepper-mini">−</button>
+                        <span id="display-manage-impostor" class="stepper-value-mini">1</span>
+                        <button id="btn-manage-inc-impostor" class="btn-stepper-mini">+</button>
+                    </div>
+                </div>
+                <div class="switch-container" style="padding: 0; border: none; margin: 0; background: transparent;">
+                    <span class="switch-label" style="font-size: 0.95rem; font-weight: bold;">Modo Estricto</span>
+                    <label class="switch-control">
+                        <input type="checkbox" id="checkbox-manage-strict">
+                        <span class="slider-switch"></span>
+                    </label>
+                </div>
+            </div>
+
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem; border-top: 1px solid #333; padding-top: 1rem;">
+                Jugadores (Arrastra <span style="color: var(--primary-color); font-weight: bold;">☰</span> para ordenar)
             </p>
 
             <div style="display: flex; gap: 0.5rem; justify-content: center; margin-bottom: 1rem;">
@@ -268,8 +295,9 @@
                 <!-- JS populated -->
             </ul>
 
-            <div class="modal-actions" style="margin-top: 1.5rem;">
-                <button id="btn-close-manage" class="btn">Listo</button>
+            <div class="modal-actions" style="margin-top: 1.5rem; flex-direction: column; gap: 0.5rem;">
+                <span id="manage-error-msg" style="color: #ff6b6b; font-size: 0.85rem; font-weight: bold; display: none;"></span>
+                <button id="btn-close-manage" class="btn" style="width: 100%;">Guardar</button>
             </div>
         </div>
     </div>

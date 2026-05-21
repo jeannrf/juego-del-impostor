@@ -1215,6 +1215,48 @@ body {
   color: white;
 }
 
+.stepper-control-mini {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.btn-stepper-mini {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  line-height: 1;
+  font-weight: bold;
+  background-color: var(--card-bg);
+  border: 1px solid #555;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  user-select: none;
+}
+
+.btn-stepper-mini:hover {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.btn-stepper-mini:active {
+  transform: scale(0.9);
+}
+
+.stepper-value-mini {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: white;
+  min-width: 1.5rem;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
 /* =========================================
    ESTILOS DE MEJORAS: DRAG AND DROP, SWITCH Y GESTIÓN
    ========================================= */
@@ -1222,15 +1264,24 @@ body {
 /* Modal de Gestión de Jugadores */
 #modal-manage-players .modal-content {
   max-width: 450px;
-  max-height: 85vh;
+  max-height: 90vh; /* Se expande un poco más en móviles */
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
 }
 
+#modal-manage-players .modal-content > * {
+  flex-shrink: 0; /* Evitar que los controles superiores se aplasten */
+}
+
 #manage-player-list {
   margin: 1rem 0;
-  max-height: 250px;
+  max-height: none;
+  min-height: 150px;
+  flex-grow: 1;
+  flex-shrink: 1 !important; /* Permitir que la lista se encoja solo hasta min-height */
+  overflow-y: auto; /* Para que la lista haga scroll interno */
+  padding-right: 5px; /* Espacio para la barra de scroll */
 }
 
 /* Drag and Drop y elementos de lista */

@@ -230,6 +230,7 @@ if (btnConfirmImpostors) {
   btnConfirmImpostors.addEventListener('click', () => {
     const count = parseInt(inputImpostorCount.value);
     const knowEachOther = document.getElementById('checkbox-impostors-know-each-other') ? document.getElementById('checkbox-impostors-know-each-other').checked : false;
+    const strictMode = document.getElementById('checkbox-strict-mode') ? document.getElementById('checkbox-strict-mode').checked : false;
 
     if (players.length < 3) {
       showModal("Error", "Necesitas al menos 3 jugadores para jugar.", null, null, "Entendido");
@@ -239,8 +240,9 @@ if (btnConfirmImpostors) {
     modalImpostors.classList.add('hidden');
     initGame(count);
     
-    // Asignar el valor del checkbox a la sesión
+    // Asignar los valores a la sesión
     gameSession.impostorsKnowEachOther = knowEachOther;
+    gameSession.strictMode = strictMode;
   });
 }
 
@@ -291,7 +293,8 @@ function initGame(impostorCount) {
       isAlive: true
     })),
     currentPlayerRevealIndex: 0,
-    impostorsKnowEachOther: gameSession.impostorsKnowEachOther || false
+    impostorsKnowEachOther: gameSession ? gameSession.impostorsKnowEachOther : false,
+    strictMode: gameSession ? gameSession.strictMode : false
   };
 
   // 3. Ir a Pantalla de "Pasar el móvil"
@@ -462,8 +465,19 @@ function startGameRound() {
   // En caso de volver de votación:
   if (screenVoting) screenVoting.classList.add('hidden');
 
-  // Mostrar botón de Nueva Palabra (Fixed)
-  if (btnNewWord) btnNewWord.classList.remove('hidden');
+  // El botón de Nueva Palabra SIEMPRE oculto al iniciar la ronda (se muestra al ver resultados)
+  if (btnNewWord) btnNewWord.classList.add('hidden');
+
+  const btnManage = document.getElementById('btn-manage-players');
+  if (btnManage) btnManage.classList.add('hidden');
+
+  if (btnGotoVote) {
+    if (gameSession && gameSession.strictMode) {
+      btnGotoVote.textContent = "Votación";
+    } else {
+      btnGotoVote.textContent = "Mostrar Resultados";
+    }
+  }
 
   // Actualizar mensaje del jugador inicial
   if (roundStarterMsg && players.length > 0) {
@@ -472,10 +486,15 @@ function startGameRound() {
   }
 }
 
-// Botón "Mostrar resultados" (Ir a votación)
+// Botón de acción principal de la ronda
 if (btnGotoVote) {
   btnGotoVote.addEventListener('click', () => {
-    startVotingPhase();
+    if (gameSession && gameSession.strictMode) {
+      startVotingPhase();
+    } else {
+      showGameOver("RESULTADOS", "Estos fueron los roles y la palabra secreta.");
+      if (btnNewWord) btnNewWord.classList.remove('hidden');
+    }
   });
 }
 
@@ -729,6 +748,9 @@ function showGameOver(title, description) {
   if (instructionsList) instructionsList.classList.add('hidden');
   if (btnGotoVote) btnGotoVote.classList.add('hidden');
 
+  const btnManage = document.getElementById('btn-manage-players');
+  if (btnManage) btnManage.classList.remove('hidden');
+
   // Mostrar botón "Nueva Palabra" RESALTADO
   if (btnNewWord) {
     btnNewWord.classList.remove('hidden');
@@ -754,14 +776,24 @@ startGameRound = function () {
   // Resetear animación del botón
   if (btnNewWord) btnNewWord.style.animation = "";
 
-  // Llamar a la función original (que ya habíamos definido arriba, pero como es function declaration, esto puede ser tricky. 
-  // Mejor reescribimos el cuerpo de la función original aquí para evitar problemas de hoisting/redefinición complejos).
-
   if (screenRoleReveal) screenRoleReveal.classList.add('hidden');
   if (screenGameRound) screenGameRound.classList.remove('hidden');
   if (screenVoting) screenVoting.classList.add('hidden');
 
-  if (btnNewWord) btnNewWord.classList.remove('hidden');
+  // El botón de Nueva Palabra SIEMPRE oculto al iniciar la ronda
+  if (btnNewWord) btnNewWord.classList.add('hidden');
+
+  const btnManage = document.getElementById('btn-manage-players');
+  if (btnManage) btnManage.classList.add('hidden');
+
+  // Ajustar texto del botón de acción según el modo
+  if (btnGotoVote) {
+    if (gameSession && gameSession.strictMode) {
+      btnGotoVote.textContent = "Votación";
+    } else {
+      btnGotoVote.textContent = "Mostrar Resultados";
+    }
+  }
 
   if (roundStarterMsg && players.length > 0) {
     const starterName = players[currentStarterIndex % players.length];
@@ -994,31 +1026,15 @@ function updateManagePlayerList() {
   if (!managePlayerList) return;
   managePlayerList.innerHTML = '';
 
-  const isMidGame = gameSession && gameSession.playersRoles;
-  const isResultsMode = document.getElementById('game-result-container') && !document.getElementById('game-result-container').classList.contains('hidden');
-
   players.forEach((player) => {
     const li = document.createElement('li');
     li.className = 'draggable-item';
     li.dataset.playerName = player;
 
-    let statusText = '';
-    let statusStyle = '';
-    
-    if (isMidGame && !isResultsMode) {
-      const pr = gameSession.playersRoles.find(p => p.name === player);
-      if (pr) {
-        if (!pr.isAlive) {
-          statusText = ' (Eliminado)';
-          statusStyle = 'color: #ff6b6b; opacity: 0.6; text-decoration: line-through;';
-        }
-      }
-    }
-
     li.innerHTML = `
-      <div style="display: flex; align-items: center; gap: 0.5rem; ${statusStyle}">
+      <div style="display: flex; align-items: center; gap: 0.5rem;">
         <span class="drag-handle" style="touch-action: none;">☰</span>
-        <span>${player}${statusText}</span>
+        <span>${player}</span>
       </div>
       <button onclick="removePlayerFromGame('${player.replace(/'/g, "\\'")}')" style="background:transparent; border:none; color: #ff6b6b; cursor:pointer; font-size:1.1rem; padding: 4px;">❌</button>
     `;
@@ -1026,7 +1042,30 @@ function updateManagePlayerList() {
   });
 }
 
-// Agregar jugador desde el Modal de Gestión
+// Lógica para el modal de Configuración (antes Gestionar Jugadores)
+let manageImpostorCount = 1;
+
+function validateConfigState() {
+  const btnClose = document.getElementById('btn-close-manage');
+  const errorMsg = document.getElementById('manage-error-msg');
+  if (!btnClose || !errorMsg) return;
+
+  const minPlayers = Math.max(3, (manageImpostorCount * 2) + 1);
+  if (players.length < minPlayers) {
+    btnClose.disabled = true;
+    btnClose.style.opacity = '0.5';
+    btnClose.style.cursor = 'not-allowed';
+    errorMsg.textContent = `Error: Se requieren al menos ${minPlayers} jugadores para ${manageImpostorCount} impostor(es).`;
+    errorMsg.style.display = 'block';
+  } else {
+    btnClose.disabled = false;
+    btnClose.style.opacity = '1';
+    btnClose.style.cursor = 'pointer';
+    errorMsg.style.display = 'none';
+  }
+}
+
+// Agregar jugador desde el Modal de Configuración
 function addPlayerFromManage() {
   const input = document.getElementById('input-manage-player');
   if (!input) return;
@@ -1039,131 +1078,78 @@ function addPlayerFromManage() {
   }
 
   input.value = '';
-
-  const isResultsMode = document.getElementById('game-result-container') && !document.getElementById('game-result-container').classList.contains('hidden');
-
-  if (gameSession && gameSession.playersRoles && !isResultsMode) {
-    // A mitad de partida: Ocultar modal y preguntar rol
-    const modalManage = document.getElementById('modal-manage-players');
-    if (modalManage) modalManage.classList.add('hidden');
-
-    showModal(
-      `Asignar Rol a ${name}`,
-      `¿Qué rol deseas asignarle a ${name}?\nAl confirmar, se iniciará el paso de móvil para revelar su rol.`,
-      () => {
-        addPlayerToActiveGame(name, false); // Civil
-      },
-      () => {
-        addPlayerToActiveGame(name, true); // Impostor
-      },
-      "Civil 😇",
-      "Impostor 😈"
-    );
-  } else {
-    // En setup o resultados: añadir y actualizar
-    players.push(name);
-    if (gameSession && gameSession.playersRoles) {
-      gameSession.playersRoles.push({
-        name: name,
-        isImpostor: false,
-        isAlive: true
-      });
-    }
-    updateUI();
-    updateManagePlayerList();
-  }
-}
-
-// Lógica de adición a mitad de partida
-function addPlayerToActiveGame(name, isImpostor) {
   players.push(name);
-
-  const newPlayerObj = {
-    name: name,
-    isImpostor: isImpostor,
-    isAlive: true
-  };
-  gameSession.playersRoles.push(newPlayerObj);
-
-  if (isImpostor) {
-    lastRoundImpostors.push(name);
-  }
-
-  // Ocultar pantalla de juego y configurar revelación de este jugador
-  if (screenGameRound) screenGameRound.classList.add('hidden');
-  
-  gameSession.currentPlayerRevealIndex = gameSession.playersRoles.length - 1;
-  gameSession.midGameRevealActive = true;
-
-  startRoleRevealPhase();
+  updateUI();
+  updateManagePlayerList();
+  validateConfigState();
 }
 
-// Eliminar jugador desde el Modal de Gestión
+// Eliminar jugador desde el Modal de Configuración
 window.removePlayerFromGame = (playerName) => {
-  const isResultsMode = document.getElementById('game-result-container') && !document.getElementById('game-result-container').classList.contains('hidden');
-  const isMidGame = gameSession && gameSession.playersRoles && !isResultsMode;
-
-  if (isMidGame) {
-    showModal(
-      "¿Eliminar Jugador?",
-      `¿Seguro que deseas eliminar permanentemente a ${playerName} de la partida actual?\nEsto afectará las condiciones de victoria de inmediato.`,
-      () => {
-        // Confirmar eliminación
-        players = players.filter(p => p !== playerName);
-        gameSession.playersRoles = gameSession.playersRoles.filter(p => p.name !== playerName);
-        
-        updateUI();
-        updateManagePlayerList();
-
-        // Verificar condiciones de victoria tras remover al jugador
-        const aliveImpostors = gameSession.playersRoles.filter(p => p.isImpostor && p.isAlive).length;
-        const aliveCivilians = gameSession.playersRoles.filter(p => !p.isImpostor && p.isAlive).length;
-
-        if (aliveImpostors === 0) {
-          const modalManage = document.getElementById('modal-manage-players');
-          if (modalManage) modalManage.classList.add('hidden');
-          showGameOver("¡GANAN LOS CIVILES!", "Todos los impostores han abandonado la partida.");
-        } else if (aliveImpostors >= aliveCivilians) {
-          const modalManage = document.getElementById('modal-manage-players');
-          if (modalManage) modalManage.classList.add('hidden');
-          showGameOver("¡LOS IMPOSTORES GANAN!", "Los impostores han superado a los civiles activos.");
-        } else {
-          // Actualizar mensaje de jugador inicial
-          if (roundStarterMsg && players.length > 0) {
-            const starterName = players[currentStarterIndex % players.length];
-            roundStarterMsg.innerHTML = `El jugador <strong style="color:var(--primary-color)">${starterName}</strong> comienza la ronda`;
-          }
-        }
-      },
-      () => {}
-    );
-  } else {
-    // Setup o resultados: eliminar normalmente
-    players = players.filter(p => p !== playerName);
-    if (gameSession && gameSession.playersRoles) {
-      gameSession.playersRoles = gameSession.playersRoles.filter(p => p.name !== playerName);
-    }
-    updateUI();
-    updateManagePlayerList();
-  }
+  players = players.filter(p => p !== playerName);
+  updateUI();
+  updateManagePlayerList();
+  validateConfigState();
 };
 
-// Listeners del Modal de Gestión
+// Interacción del stepper en Configuración
+const btnManageDec = document.getElementById('btn-manage-dec-impostor');
+const btnManageInc = document.getElementById('btn-manage-inc-impostor');
+const displayManageImp = document.getElementById('display-manage-impostor');
+
+if (btnManageDec) {
+  btnManageDec.addEventListener('click', () => {
+    if (manageImpostorCount > 1) {
+      manageImpostorCount--;
+      if (displayManageImp) displayManageImp.textContent = manageImpostorCount;
+      validateConfigState();
+    }
+  });
+}
+
+if (btnManageInc) {
+  btnManageInc.addEventListener('click', () => {
+    manageImpostorCount++;
+    if (displayManageImp) displayManageImp.textContent = manageImpostorCount;
+    validateConfigState();
+  });
+}
+
+// Listeners del Modal de Configuración
 const btnManagePlayers = document.getElementById('btn-manage-players');
 const modalManagePlayers = document.getElementById('modal-manage-players');
 const btnCloseManage = document.getElementById('btn-close-manage');
 const btnManageAddPlayer = document.getElementById('btn-manage-add-player');
 const inputManagePlayer = document.getElementById('input-manage-player');
+const checkboxManageStrict = document.getElementById('checkbox-manage-strict');
 
 if (btnManagePlayers && modalManagePlayers) {
   btnManagePlayers.addEventListener('click', () => {
     modalManagePlayers.classList.remove('hidden');
+    
+    // Inicializar valores desde la sesión activa
+    if (gameSession) {
+      manageImpostorCount = gameSession.impostorCount || 1;
+      if (displayManageImp) displayManageImp.textContent = manageImpostorCount;
+      if (checkboxManageStrict) checkboxManageStrict.checked = gameSession.strictMode || false;
+    }
+    
     updateManagePlayerList();
+    validateConfigState();
   });
 }
 
 if (btnCloseManage && modalManagePlayers) {
   btnCloseManage.addEventListener('click', () => {
+    // Si el botón está desactivado, ignorar clic
+    if (btnCloseManage.disabled) return;
+
+    // Guardar ajustes de partida
+    if (gameSession) {
+      gameSession.impostorCount = manageImpostorCount;
+      if (checkboxManageStrict) gameSession.strictMode = checkboxManageStrict.checked;
+    }
+
     modalManagePlayers.classList.add('hidden');
   });
 }
